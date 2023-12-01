@@ -1,0 +1,137 @@
+PHP
+----------------------------------------------------------------------
+
+HTML
+	<?php  ?>
+	<script language="PHP"> </script>
+Comments
+	// one row
+	# one row
+	/* more rows */
+Types
+	boolean, int, float, string, array, object
+Const
+	define("pi", 3.13159 ) ; echo pi ;
+Var
+	$prom = (($prom - 5) * 2 ) -10 ;
+	$prom += 2 ;
+	$prom++ ;
+	$prom *= 2 ;
+	$prom = 'word1' ; $prom .= " word2" ;  /* contatenation */
+Strings
+	'' ... zadne substituce s vyjimkou \' a \\
+	"" ... obvykle chovani se substitucemi
+	
+	string sprintf( string format [,mixed args, ...])
+Conversions, type-tests
+	string strval( mixed var )
+	int    intval( mixed var )
+	float  floatval( mixed var )
+
+	(<typecast>) $prom
+        <typecast> IN { int, bool, float, double, string, array, objects }
+
+	boolean is_int( mixed var )
+	boolean is_float( mixed var )
+	boolean is_bool( mixed var )
+	boolean is_string( mixed var )
+	boolean is_array( mixed var )
+	boolean is_object( mixed var )
+
+        string gettype( mixed var )
+
+	boolean isset( mixed var )
+	boolean empty( mixed var )
+	unset( mixed var [, mixed var ...] )
+Debug dump
+	print_r( mixed expression )
+	var_dump( mixed expression [, mixed expression ...] )
+
+	$prom = 15 ; var_dump( $prom ) ; // prints 'int(15)'
+Podminky a vetveni
+	if ($ prom > 5 ) { } else { }
+	if ($ prom > 5 ) { } elseif( ) { } elseif( ) { }
+	switch ( $prom )
+	{ case 1: echo 'One' ; break ;
+	  default: echo 'Something other' ;
+	}
+Cykly
+	while( expr ) { }
+	do { expr } { }
+	for( $i = 0 ; $i < 10 ; $i++ ) { ...; break ; ... ; continue ; }
+	foreach( $<array> as $prom ) { }
+	foreach( $<array> as $key => $prom ) { }
+	while (list( $key, $prom ) = each( $<array> )) { } // odp. prev. line
+Arrays
+	$numbers = array( 2, 4, 5 , 6 ) ; echo $numbers[ 1 ] ; // 4
+	$stack = array() ;
+	$stack[] = 'First' ;
+	$stack[] = 'Second' ;  /* stack : ('First','Second') */
+	$nums = array( 1=>"one", "two", "three") ; // zmena poc. indexu
+	$odds = array( 1=>"one", 3=>"three", 5=>"five") ;
+	$arr  = array("first"=>1, "second"=>2, "third"=>3 ) ;
+	$arr["second"] = ...
+
+	Funkce pracujici s vnitrnim ukazatelem (indexem) pole:
+	  current(), each(), end(); next(); prev(); reset(); key();
+	$a = array('a','b','c','d') ;
+	echo current ($a) ; // print 'a'
+	print_r each( $a) ;
+	// array( [1]=>'a' ['value']=>'a' [0]=>0 ['key']=>0 )
+	// [0],[key] ... index, [1],[value] ... hodnota
+
+	Jazykova konstrukce list();
+	list( $prom1, $prom2, $prom3, ...) = array_expr ;
+
+	Funkce pro praci s polem:
+	int count( mixed var ) ;  // pocet elementu pole
+	number max( array numbers ) ;
+	number min( array numbers ) ;
+	boolean in_array( mixed what, array where [,boolean strict] ) ;
+	// strict: navic typova kontrola (musi souhlasit dat.typy)
+	mixed array_search( mixed what, array where [, boolean strict ]) ;
+	sort( array what [,integer sort_flg ]) ;
+	rsort( array what [,integer sort_flg ]) ;
+	// sort_flg: SORT_STRING, SORT_NUMERIC, SORT_REGULAR
+User Def Functions
+	function alfa( $var1, $var2 )
+	  {
+	   .....
+	   return( $x ) ;
+ 	  }
+	function beta( &$var1 )   // argument predany odkazem
+	function gama( $text, $level = 2 )  // implicitni hodnota argumentu
+
+	include "funkce.inc" ;  // zaclenuje se v okamziku provadeni
+	require "funkce.inc" ;  // zaclenuje se vzdy (pred provadenim)
+Errors
+	validator.w3.org ... pro HTML kod
+	flush()
+	error_reporting(E_ALL)
+Global Variables
+	php.ini: register_globals=false => (initialization order):
+	$HTTP_ENV_VARS		(Environment Vars)
+	$HTTP_GET_VARS
+	$HTTP_POST_VARS
+	$HTTP_COOKIE_VARS
+	$HTTP_SESSION_VARS	(Php User Session Vars)
+	$HTTP_SERVER_VARS	(Apache vars)
+Reference
+	$a =& $b
+
+	$bar =& new fooclass();
+	$foo =& find_var ($bar);
+
+	$var =& $GLOBALS["var"];  // the same as 'global $var'
+
+
+	function &find_var ($param)
+	{
+    	...nìjaký kód...
+    	return $found_var;
+	}
+
+	$foo =& find_var ($bar);
+	$foo->x = 2;
+
+

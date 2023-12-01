@@ -1,0 +1,189 @@
+Oracle SQL Developer
+--------------------------------------------------------------------------------
+www.oracle.com/sqldeveloper
+
+# -- Preferences ---------------------------------------------------------------
+
+  SQL Editor Code Templates
+    example:
+    II <Ctrl+SPACE>
+  
+  Database: Advanced
+    - display Null value options
+  
+  Database: Navigation Filter
+
+  Database: Worksheet
+    - grid in checker board or Zebra pattern
+
+# -- SQL Developer UI language -------------------------------------------------
+
+  sqldeveloper.conf
+    AddVMOption -Duser.language=en
+  shortcut
+    <pathname_to_sqld> -- AddVMOption -Duser.language=en
+  LOV:
+    <path_to_sqld_home>\ide\bin\ide.boot
+      Oracle.translated.locales
+
+# -- Datagrid ------------------------------------------------------------------
+
+  Ctrl+Shift+C    copy dataset with header
+  Ctrl+End        fetch all rows
+  Col header - <double click> : sort
+  Ctrl+F          search/highlight (all cols, textually), saved with appropriate sqltext
+
+# -- Reports -------------------------------------------------------------------
+
+  Gauge: value, min, max, low, high ( min < low < high < max )
+  Charts:
+    - group (categories)
+    - series
+    - value
+  Command line report generation:
+    <path_to_sqld>\bin\sdcli reports generate -report <name> -db <connection_name> -file x.html
+
+  Add custom action:
+
+  <item reload="true" reloadparent="false" removeFromParent="false">
+	<title>Increase Salary by 10%</title>
+	<prompt type="confirm">
+		<label>Are you sure you want to increase this employee's Salary by 10%?</label>
+	</prompt>
+	<sql>
+		<![CDATA[UPDATE emp SET sal = sal * 1.1 WHERE empno = #empno#]]>
+	</sql>
+	<help>This action will update the employee's salary, so that it is 10% more than it was before.</help>
+  </item>
+
+  Problems:
+  - neni podporovano v SQL Dev. report editor (po editaci v SQL Dev. "custom action" zmizi)
+  - pro master/detail report se funkce promitne na master i na detail
+  - if saved as snippet, is necessary to insert ' ' into "] ]"
+
+# -- Menu ----------------------------------------------------------------------
+
+  View -> Snippets
+
+# -- Code Editor ---------------------------------------------------------------
+
+  Ctrl+G   : Go to line
+
+  Shift+F4 :
+    - on table name  -> table properties window
+    - on PL/SQL proc -> PL/SQL code editor
+
+  Ctrl+click
+    - on table name  -> table properties tab
+    - on PL/SQL proc -> PL/SQL code editor
+
+  Ctrl+/ : comment
+  Alt + [ Pgdn Pgup ]
+
+  Ctrl+Shift+V - extended paste
+
+  Bookmarks
+    Ctrl+Shift+<N> : define
+    Ctrl+<N>       : skip to
+
+  Ctrl+Space : code completion
+
+  select /*csv*/ * from <table_name> ; -- and run script
+
+  multi cursor:
+    Click, Ctrl+Shift+Click, ...
+
+Line Gutter:
+  Preferences->Code Editor->Line Gutter
+  - show line numbers
+  - enable line selection by Click-Dragging in Gutter
+
+Float window
+
+# -- Code Editor - commands ----------------------------------------------------
+
+desc <table>
+info <table>
+info+ <table>
+
+# -- Shortcuts -----------------------------------------------------------------
+
+  Shift+F5     : change worksheet
+  Shift+Alt+F5 : change worksheet
+  Ctrl+TAB,TAB
+
+# -- Debugger ------------------------------------------------------------------
+
+  Preferences -> Debugger -> Use DBMS_DEBUG
+
+  These are the pre-requisites for debugging:
+  - You need the DEBUG CONNECT SESSION and DEBUG ANY PROCEDURE privileges
+  - You need to allow the connection through the ACL
+    (ORA-24247: network access denied by access control list (ACL) error)
+    https://www.virtual-dba.com/resolving-the-ora-24247/
+  - And you need to compile the code for debug.
+
+  -- This needs to be done with a DBA account:
+  grant DEBUG CONNECT SESSION, DEBUG ANY PROCEDURE to HR ;
+
+  -- To allow the connection from the database to the local machine (127.0.0.1)
+  -- to debug code in the "hr" schema through the ACL:
+
+  -- This needs to be done with a DBA account:
+  BEGIN
+    DBMS_NETWORK_ACL_ADMIN.APPEND_HOST_ACE(
+      host => '127.0.0.1',
+      ace  => xs$ace_type( privilege_list => xs$name_list('jdwp'),
+                           principal_name => 'HR',
+                           principal_type => xs_acl.ptype_db)
+    );
+  END ;
+/
+
+# -- Diagram -------------------------------------------------------------------
+
+data modeler
+- drag and drop + Ctrl - table with related tables
+- icon <copy_to_data_modeler_view>
+
+# -- SQL Worksheet - formatting output (HTML) ----------------------------------
+
+select '<html><h1>'||TABLE_NAME||'</h1><html>' as NAME, TABLE_TYPE
+from   CAT ;
+
+select
+  '<html><font color="red" face="comic sans ms" size=2>'||TABLE_NAME as NAME,
+  '<html><img src = "http://bit.ly/1UqHQAX">' as ICON,
+  TABLE_TYPE
+from
+  CAT ;
+
+select LAST_NAME, 'SQLDEV:GAUGE:1:25000:2500:15000:'|| SALARY as THE_SAL_GAUGE, SALARY
+-- <min>:<max>:<lowtreshold>:<high_tresh>:<value>
+from   EMPLOYEES
+order by SALARY desc ;
+
+
+# -- SQL Worksheet "hints" for formatting output (Run Script (F5)) -------------
+
+select /*ansiconsole*/ * from EMPLOYEES ; -— Best appearance for ANSI terminal.
+select /*csv*/ *         from EMPLOYEES ; -— Comma-separated values
+select /*delimited*/ *   from EMPLOYEES ; -— (Same as csv)
+select /*fixed*/ *       from EMPLOYEES ; -— Fixed-width fields with trailing blanks
+select /*html*/ *        from EMPLOYEES ; -— Marked-up HTML table
+select /*insert*/ *      from EMPLOYEES ; -— SQL INSERT statements
+select /*json*/ *        from EMPLOYEES ; -— JSON object format
+select /*loader*/ *      from EMPLOYEES ; -— Pipe-delimited format for SQL*Loader
+select /*text*/ *        from EMPLOYEES ; -— Plain text
+select /*xml*/ *         from EMPLOYEES ; -— Tagged XML
+
+set sqlformat html
+
+# -- Tuning Advisor ------------------------------------------------------------
+
+root db:
+  alter system set control_management_pack_access='DIAGNOSTIC+TUNING' ;
+plug db:
+  grant ADVISOR to <user_name> ;
+  grant ADMINISTER SQL TUNING SET to <user_name> ;
+  grant SELECT ANY DICTIONARY to <user_name> ;

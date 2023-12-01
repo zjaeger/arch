@@ -1,0 +1,196 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<HTML>
+<HEAD>
+<TITLE>vim - nahrazovani</TITLE>
+<LINK REL=StyleSheet HREF="vim.css" TYPE="text/css">
+</HEAD>
+<BODY BACKGROUND="papir.gif" BGCOLOR="#FFFFFF" TEXT="#000000" LINK="#FF0000"
+      VLINK="#990000" ALINK="#00FF00">
+
+<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="0">
+<TR>
+ <TD><IMG SRC="nic.gif" WIDTH="150" HEIGHT="1"></TD>
+ <TD>
+<!--STRANKA-->
+
+<H1>Nahrazování</H1>
+
+Jedním z nejèastìji pou¾ívaných pøíkazù editoru <EM>ex</EM> je nahrazování.
+Pøíkaz se nazývá <CODE CLASS=prikaz>s</CODE> (substitute) a má následující
+tvar:
+
+<BLOCKQUOTE>
+&lt;<EM>øádky</EM>&gt;<CODE>s/</CODE>&lt;<EM>co_hledat</EM>&gt;<CODE>/</CODE>&lt;<EM>èím_nahradit</EM>&gt;<CODE>/</CODE>&lt;<EM>volby</EM>&gt;
+</BLOCKQUOTE>
+
+Jako v¹echny ostatní zaèíná urèením <EM>øádkù</EM>, kterých se má nahrazení
+týkat. Za pøíkazem <CODE CLASS=prikaz>s</CODE> se uvádìjí dva øetìzce, jako
+obvykle vymezené lomítky. První urèuje, jaký text má editor hledat, a druhý èím
+jej nahradit.
+<P>
+
+<BLOCKQUOTE CLASS=priklad>
+<STRONG>Pøíklad:</STRONG><BR>
+Kdybych chtìl v celém textu nahradit øetìzec <CODE>raz</CODE> øetìzcem
+<CODE>dva</CODE>, pou¾il bych:
+<BLOCKQUOTE>
+<CODE CLASS=prikaz>:%s/raz/dva/</CODE>
+</BLOCKQUOTE>
+Pøipomínám, ¾e procento ztìlesòuje v¹echny øádky souboru.
+</BLOCKQUOTE>
+
+Takto triviální pøípad vás samozøejmì tì¾ko ohromí, ale pøedev¹ím pøi
+vyhledávání se ukazuje síla regulárních výrazù. Navíc je mù¾ete pou¾ívat hned
+na dvou místech: jednak ve specifikaci øádkù (kde se má pravidlo pou¾ít),
+jednak v parametrech vyhledávání. Pokroèilej¹í pøíklady uvedu pozdìji.
+<P>
+
+
+<H2>Volby</H2>
+
+Úèinek nahrazování lze ovlivòovat volbami, které se uvádìjí za závìreèným
+lomítkem. Nejèastìji pou¾ívané jsou dvì: <CODE>g</CODE> a <CODE>c</CODE>.
+<P>
+
+Volba <CODE CLASS=prikaz>g</CODE> zpùsobí, ¾e <EM>vim</EM> nahradí v¹echny
+výskyty øetìzce na øádku. Implicitnì toti¾ nahrazuje pouze první z nich, tak¾e
+z øádku
+
+<BLOCKQUOTE>
+<CODE>raz raz raz dvá raz</CODE>
+</BLOCKQUOTE>
+(oblíbené vojenské zaklínadlo pro synchronizaci pochodujících) by pøíkaz
+<BLOCKQUOTE>
+<CODE CLASS=prikaz>:s/raz/dva/</CODE>
+</BLOCKQUOTE>
+udìlal
+<BLOCKQUOTE>
+<CODE>dva raz raz dvá raz</CODE>
+</BLOCKQUOTE>
+Teprve pøíkaz
+<BLOCKQUOTE>
+<CODE CLASS=prikaz>:s/raz/dva/g</CODE>
+</BLOCKQUOTE>
+zajistí nahrazení v¹ech slov a vznikne
+<BLOCKQUOTE>
+<CODE>dva dva dva dvá dva</CODE>
+</BLOCKQUOTE>
+
+Abych mluvil skuteènou pravdu, chování <EM>vim</EM> závisí na nastavení
+parametru <CODE CLASS=prikaz>gdefault</CODE>. Pokud je zapnut (<CODE
+CLASS=prikaz>:set gdefault</CODE>), editor implicitnì nahrazuje v¹echny výskyty
+øetìzce na øádku. Pøi pou¾ití volby <CODE CLASS=prikaz>g</CODE> pak bude
+nahrazovat v¾dy jen první kousek na ka¾dém øádku. Vypnutý parametr (<CODE
+CLASS=prikaz>:set nogdefault</CODE>) pak zajistí vý¹e popsané chování, které je
+implicitní pro pùvodní editor <EM>vi</EM> i øadu dal¹ích programù systému
+Unix.
+<P>
+
+Druhá volba umo¾òuje potvrzování ka¾dé náhrady. Zadáte-li
+
+<BLOCKQUOTE>
+<CODE CLASS=prikaz>:%s/raz/dva/gc</CODE>
+</BLOCKQUOTE>
+
+<EM>vim</EM> se pokusí nahradit v¹echny øetìzce <CODE>raz</CODE> v textu, ale
+ka¾dý z nich nejprve pøedvede a dotá¾e se, zda jej má skuteènì nahradit. Tato
+vlastnost je velmi u¾iteèná, pokud se necítíte silní v kolenou a máte jisté
+obavy, ¾e hledanému øetìzci by mohlo vyhovìt i nìco navíc proti va¹emu zámìru.
+Svou odpovìï mù¾ete vybírat z obvyklých mo¾ností:
+
+<DIV ALIGN=CENTER>
+<TABLE BORDER="0">
+<TR>
+ <TD><CODE CLASS=klavesa>y</CODE></TD>
+ <TD>nahradit daný výskyt</TD>
+</TR>
+<TR>
+ <TD><CODE CLASS=klavesa>n</CODE></TD>
+ <TD>ponechat tento výskyt v pùvodním tvaru a pokraèovat dál</TD>
+</TR>
+<TR>
+ <TD><CODE CLASS=klavesa>[Esc]</CODE> nebo <CODE CLASS=klavesa>q</CODE></TD>
+ <TD>ponechat tento výskyt v pùvodním tvaru a ukonèit nahrazování</TD>
+</TR>
+<TR>
+ <TD><CODE CLASS=klavesa>a</CODE></TD>
+ <TD>nahradit tento a v¹echny následující výskyty</TD>
+</TR>
+</TABLE>
+</DIV>
+
+
+
+<H2>Komplikovanìj¹í pøíklady</H2>
+
+Kdysi jsem v jednom zdrojovém textu potøeboval v¹echny èíselné údaje vydìlit
+deseti. To vlastnì znamená vyhledat v¹echna èísla a pøed poslední èíslici do
+nich vlo¾it teèku. Zmínìnou akci obstará pøíkaz
+
+<BLOCKQUOTE>
+<CODE CLASS=prikaz>:%s/\([0-9]*\)\([0-9]\)/\1.\2/g</CODE>
+</BLOCKQUOTE>
+
+Hledá skupiny èíslic a ty si díky mechanismu zapamatování (kulaté závorky s
+lomítkem) rozdìlí v¾dy na dvì èásti. První je dlouhá podle potøeby a druhá
+obsahuje v¾dy právì jednu (poslední) èíslici. V nahrazovacím øetìzci jen
+zopakuje tyto zapamatované skupiny, av¹ak mezi nì vlo¾í teèku.
+<P>
+
+Nedávno jsme mìnili strukturu domácích adresáøù u¾ivatelù na disku. Pro ka¾dého
+u¾ivatele obsahoval soubor informace o u¾ivatelském jménì a domácím
+adresáøi&nbsp;- napøíklad
+
+<BLOCKQUOTE>
+<CODE>PAVEL.SATRAPA,USR:HOME\KIT\SATRAPA</CODE>
+</BLOCKQUOTE>
+
+Soubor byl uspoøádán abecednì podle u¾ivatelských jmen. My jsme v¹ak
+potøebovali seskupit u¾ivatele podle kateder, které se projevují v cestì k
+domácímu adresáøi za adresáøem <CODE>HOME</CODE> (jako¾to pøíslu¹ník katedry
+informaèních technologií bydlím v adresáøi <CODE>KIT</CODE>). Potøebovali jsme
+tudí¾ vycucnout dotyèné jméno adresáøe a zapsat je jako první údaj na
+øádku&nbsp;- abychom obdr¾eli
+
+<BLOCKQUOTE>
+<CODE>KIT,PAVEL.SATRAPA,USR:HOME\KIT\SATRAPA</CODE>
+</BLOCKQUOTE>
+
+Takový soubor pak staèí protáhnout standardním programem <CODE>sort</CODE> a
+èlenové jednotlivých kateder se rázem ocitnou pospolu. Potøebnou transformaci
+obstará
+
+<BLOCKQUOTE>
+<CODE CLASS=prikaz>:%s/^\(.*:HOME\\\)\([^\\]*\)/\2,\1\2</CODE>
+</BLOCKQUOTE>
+
+Pøi vyhledávání si pøíkaz zapamatuje v¹e od zaèátku øádku a¾ po øetìzec
+<CODE>:HOME\</CODE> (jeliko¾ lomítko má speciální význam, musí se v hledaném
+øetìzci zdvojit). Pod èíslem&nbsp;2 se následnì zapamatuje øetìzec znakù,
+odli¹ných od lomítka (jinými slovy celý název adresáøe a¾ po následující
+lomítko). V nahrazovacím øetìzci se nejprve vypí¹e tento název adresáøe, za
+ním èárka a pak beze zmìny obì zapamatované èásti textu. Zbytek øádku zùstane
+zachován (hledaný regulární výraz se na nìj nevztahuje).
+<P>
+
+<!--/STRANKA-->
+<!--NAVIG-->
+<DIV ALIGN=RIGHT>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0">
+<TR>
+<TD><A HREF="ex.htm"><IMG SRC="zpet.gif" ALT="&lt;-- predchozi " BORDER="0"></A></TD>
+<TD><A HREF="index.htm"><IMG SRC="obs.gif" ALT=" [obsah] " BORDER="0"></A></TD>
+<TD><A HREF="histor.htm"><IMG SRC="vpred.gif" ALT=" dalsi --&gt;" BORDER="0"></A></TD>
+</TR>
+</TABLE>
+</DIV>
+<!--/NAVIG-->
+
+<SMALL>&copy; 1997, 1998 Pavel Satrapa</SMALL>
+
+ </TD>
+</TR>
+</TABLE>
+
+</BODY>
+</HTML>

@@ -1,0 +1,218 @@
+
+Oracle 8.1.7 Server
+---------------------------------------
+15.4.2002
+
+## 0. Requirements
+------------------
+
+  RAM: 128 MB
+  swap >= 400 MB
+  disk: sw cca 800 MB, /tmp (or $TMP) cca 75 MB
+  Linux kernel >= 2.2
+  GLIBC >= 2.1
+
+## 1. Instalace Oracle 8.1.7
+----------------------------
+
+## 1.1. root: configure kernel
+------------------------------
+
+  /usr/src/linux/include/asm/shmparam.h
+    SHMMAX = 0x8 000 000  ( = 0x100 << 15 : page_size << shm_idx_bits )
+                            tj. 128 MB
+    SHMMIN = 1
+    SHMMNI = 100
+    SHMSEG = 10
+  /usr/src/linux/include/linux/sem.h
+    SEMMNI = 100   (128 ok)
+    SEMMSL = processes+10 (init.ora) (32)
+    SEMMNS = 200  (128*32 ok)
+    SEMOPM = 100
+    SEMVMX = 32767
+
+  rebuild kernel:
+  $ cd /usr/src/linux
+  $ make menuconfig
+  $ make clean
+  $ make dep
+  $ make bzImage
+  $ make modules
+  $ rm -rf /lib/modules/<kernel_version>/*  # ev. zazalohovat predem
+  $ make modules_install
+  $ depmod -a	# create dependency file: /lib/modules/n/modules.dep
+  $ cp ./arch/i386/boot/bzImage /boot/linux1
+  $ uprava /etc/lilo.conf
+  $ /sbin/lilo
+  $ init 6
+
+## 1.2. root: priprava instalace
+--------------------------------
+
+- create new groups -> /etc/group
+  $ groupadd -g 80 dba
+  $ groupadd -g 81 oinstall
+
+- create new users
+  $ useradd -d /u01/app/oracle -g 81 -G 80 -m -u 200 oracle
+  $ passwd oracle
+  $ useradd -d /u01/app/apache -g 81 -G 100 -m -u 201 apache
+  $ passwd apache
+
+- mount the Product Instalation CD-ROM
+  $ mount -t iso9660 /dev/cdrom /cdrom
+
+
+## 1.3. oracle: "environment"
+-----------------------------
+
+- upravit .bash_profile
+  doplnit (na zacatek):
+    ORACLE_BASE=$HOME ; export ORACLE_BASE
+    . $ORACLE_BASE/.oraenv
+  upravit:
+    umask 022
+    PATH=$PATH:.  (??? je to treba ???)
+
+- vytvorit soubor .oraenv
+
+  ORACLE_HOME=$ORACLE_BASE/prod/817 ; export ORACLE_HOME
+  DISPLAY=<xwin_node>:0.0 ; export DISPLAY
+  PATH=$PATH:$ORACLE_HOME/bin ; export PATH
+  ORACLE_SID=DB1 ; export ORACLE_SID
+  ORACLE_DOC=$ORACLE_BASE/doc ; export ORACLE_DOC
+
+  # NLS_LANG='english_united kingdom.we8iso8859p1'
+  # ORA_NLS33=$ORACLE_HOME/ocommon/nls/admin/data
+  # ORACLE_TERM=vt100
+  # LD_LIBRARY_PATH=$ORACLE_HOME/lib
+  # export NLS_LANG ORA_NLS33 PATH LD_LIBRARY_PATH
+  # TNS_ADMIN=$ORACLE_HOME/network/admin
+
+- zalozit adresarovy strom
+  mkdir: $ORACLE_HOME
+
+
+## 1.4. oracle: vlastni instalace
+---------------------------------
+
+JDK
+Download from: http://java.sun.com/products/jdk/1.2/download-linux.html 
+Install as root: 
+% cp jdk-1_2_2_009-linux-i386.tar.gz /usr/local
+% gunzip jdk-1_2_2_009-linux-i386.tar.gz
+% tar xvf jdk-1_2_2_009-linux-i386.tar
+% ln -s /usr/local/jdk1.2.2 /usr/local/java
+% rm jdk-1_2_2_009-linux-i386.tar
+
+$ startx
+run xterm
+$ xhost +<oracle_node>  # pokud Xserver bezi jinde
+$ rlogin <oracle_node> -l oracle
+$ export DISPLAY=<xserver_node>:0
+$ cd /cdrom
+$ ./runInstaller
+UNIX group name: dba
+
+$ su root
+# cd $ORACLE_HOME
+# ./orainstRoot.sh
+# exit
+
+Inventory Location: /u01/app/oracle/oraInventory
+UNIX Group Name: dba
+Oracle Home: /u01/app/oracle/prod/817
+Oracle Universal Installer in: /u01/app/oracle/oui
+JDK Home: /usr/local/java
+
+
+
+## 1.6. opravy
+------------------------------------------------------------
+
+$ORACLE_HOME/rdbms/admin/utlsampl.sql  ... vypusten posledni radek: EXIT
+
+$ORACLE_HOME/bin/dbshut ... namisto shutdown -> shutdowm immediate
+
+
+## 2. Create database (s pouzitim konkterniho pripadu: db ALFA)
+---------------------------------------------------------------
+
+## 2.1. vytvoreni adresarove struktury
+--------------------------------------
+
+  cd /var/oracle/admin
+  mkdir ALFA		# odpovida jmenu databaze a $ORACLE_SID
+  cd ALFA
+  mkdir bdump cdump create pfile udump
+
+  mkdir /home/dbs/ALFA	# pokud je k dispozici jen jeden disk
+
+
+## 2.2. soubor init.ora
+-----------------------
+
+   soubor: /var/oracle/admin/ALFA/initALFA.ora
+   ... zkontrolovat "control files"
+   $ ln -s /var/oracle/admin/ALFA/initALFA.ora $ORACLE_HOME/dbs/initALFA.ora
+
+## 2.3. priprava 'create' scriptu
+---------------------------------
+
+   'create' scripty: soubory v adresari /var/oracle/admin/ALFA/create :
+
+    crdbALFA_1.sql   ... create database
+    crdbALFA_2.sql   ... data dictionary views
+    crdbALFA_3.sql   ... next database files
+    crdbALFA_4.sql   ... public synonyms (?) ...
+
+    upravit dle potreby je treba: crdbALFA_1.sql a crdbALFA_3.sql
+
+## 2.4. vytvoreni databaze
+--------------------------
+
+- nastaveni ORACLE_SID=ALFA
+- uprava crdbALFA_1.sql a crdbALFA_3.sql ... absolutni cesty, tablespaces.
+- svrmgrl @crdbALFA_1.sql ... crdbALFA_4.sql
+
+## 2.5. konfigurace
+--------------------------
+
+- /etc/oratab
+  ALFA:/usr/oracle/product/8.1.5:Y
+- $TNS_ADMIN: listener.ora sqlnet.ora tnsnames.ors
+  ... opravit hostname
+
+
+## 3. Import dat (full) do nove databaze (INTERGRAM)
+---------------------------------------------
+
+- nastaveni 'temporary tabespace' uzivateli SYSTEM
+
+  ALTER USER SYSTEM default tablespace TEMP ;
+
+  /* -----------------------------
+  CREATE USER inter IDENTIFIED BY inter
+  DEFAULT TABLESPACE i01
+  TEMPORARY TABLESPACE temp ;
+
+  GRANT connect, resource TO inter ;
+  ------------------------------------------ */
+
+- nastavit: NLS_LANG='czech_czechoslovakia.EE8ISO8859P2'; export NLS_LANG
+
+- init<SID>.ora: nastavit parametr 'sort_area_size' na vyssi hodnotu
+  napr. 16777216 (= 16MB)
+  V souvislosti s tim upravit INITIAL a NEXT extent PRO temporary
+  tablespace; pro sort_area_size=16 MB =>
+  INITIAL 32MB, NEXT 32MB, PCTINCREASE 0, optimal 64 MB
+
+- provest import
+  a) z komprimovaneho souboru (named pipe vytvorena: mknod <name> p)
+     compress -dv <all.dmp.Z >/n.pipe &
+     imp userid=system/manager buffer=16777216 file=all ignore=y
+         log=all_imp full=y commit=y
+
+  b) s pasky
+     imp userid=system/manager buffer=16777216 file=/dev/nrct0 volsize=250m
+         ignore=y log=all_imp full=y commit=y

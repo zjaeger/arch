@@ -1,0 +1,145 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<HTML>
+<HEAD>
+<TITLE>vim - rezimy</TITLE>
+<LINK REL=StyleSheet HREF="vim.css" TYPE="text/css">
+</HEAD>
+<BODY BACKGROUND="papir.gif" BGCOLOR="#FFFFFF" TEXT="#000000" LINK="#FF0000"
+      VLINK="#990000" ALINK="#00FF00">
+
+<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="0">
+<TR>
+ <TD><IMG SRC="nic.gif" WIDTH="150" HEIGHT="1"></TD>
+ <TD>
+<!--STRANKA-->
+
+<H1>Tøi re¾imy pro Popelku</H1>
+
+Jednou z nejvýznamnìj¹ích odli¹ností <EM>vim</EM> od zbytku svìta jsou jeho tøi
+re¾imy práce. Sortiment èinností, které mù¾ete provádìt, závisí na momentálním
+re¾imu editoru. Jejich vazby a vzájemné pøechody znázoròuje obrázek:
+<P>
+
+<DIV ALIGN=CENTER>
+<IMG SRC="schema.gif" ALT="" WIDTH="341" HEIGHT="191">
+</DIV>
+<P>
+
+<DL>
+<DT><STRONG>Normální (pøíkazový) re¾im</STRONG>
+ <DD> je základní. V nìm se ocitnete, kdy¾ <EM>vim</EM> spustíte a z nìj také
+ zahajujete v¹echny své akce. Jak název napovídá, editor v tomto re¾imu oèekává
+ pøíkazy. Jednotlivým klávesám jsou pøiøazeny speciální významy a jejich
+ stisknutí okam¾itì zahájí urèenou akci. Pí¹ete-li text, bude v normálním
+ re¾imu pochopen jako posloupnost pøíkazù. Ty vás mohou posouvat po textu,
+ kopírovat èi mazat jeho èásti a podobnì.
+ <P>
+
+ Témìø z libovolné situace se mù¾ete vrátit do normálního re¾imu klávesou
+ <CODE CLASS=klavesa>Esc</CODE>.
+ <P>
+ 
+
+<DT><STRONG>Vkládací re¾im</STRONG>
+ <DD> Slou¾í pro vlastní vytváøení textu. Ve vkládacím re¾imu jsou znaky,
+ zadávané u¾ivatelem, zapisovány do editovaného textu. Pro aktivaci vkládacího
+ re¾imu existuje nìkolik zpùsobù:
+
+ <DIV ALIGN=CENTER>
+ <TABLE BORDER="0" CELLSPACING="5">
+ <TR VALIGN=TOP><TD><CODE CLASS=klavesa><STRONG>a</STRONG></CODE></TD>
+     <TD>znaky zapisované ve vkládacím re¾imu budou umístìny <EM>za</EM> znak
+     oznaèený kurzorem (append)</TD></TR>
+ <TR VALIGN=TOP><TD><CODE CLASS=klavesa><STRONG>i</STRONG></CODE></TD>
+     <TD>znaky budou vkládány <EM>pøed</EM> znak oznaèený kurzorem
+     (insert)</TD></TR>
+ <TR VALIGN=TOP><TD><CODE CLASS=klavesa><STRONG>A</STRONG></CODE></TD>
+     <TD>znaky budou vkládány za poslední znak na aktuálním øádku</TD></TR>
+ <TR VALIGN=TOP><TD><CODE CLASS=klavesa><STRONG>I</STRONG></CODE></TD>
+     <TD>znaky budou vkládány pøed první neprázdný znak na aktuálním
+     øádku</TD></TR>
+ <TR VALIGN=TOP><TD><CODE CLASS=klavesa><STRONG>o</STRONG></CODE></TD>
+     <TD>editor vytvoøí nový øádek <EM>pod</EM> aktuálním øádkem; znaky budou
+     vkládány do nìj</TD></TR>
+ <TR VALIGN=TOP><TD><CODE CLASS=klavesa><STRONG>O</STRONG></CODE></TD>
+     <TD>editor vytvoøí nový øádek <EM>nad</EM> aktuálním øádkem; znaky budou
+     vkládány do nìj</TD></TR>
+ </TABLE>
+ </DIV>
+
+ Zejména ¹ikovné jsou klávesy <CODE CLASS=klavesa>A</CODE> a <CODE
+ CLASS=klavesa>I</CODE> (zadávají se v normálním re¾imu), proto¾e potøeba
+ pøidat nìco na konec èi zaèátek øádku je pomìrnì èastá.
+ <P>
+
+ Jistì by se daly najít i dal¹í zpùsoby. Napøíklad náhrada èásti textu jiným v
+ podstatì spoèívá v tom, ¾e se pùvodní text vyma¾e a zapne vkládací re¾im, v
+ nìm¾ u¾ivatel zapí¹e nové znìní.
+ <P>
+
+ Jistou speciální odrùdou tohoto re¾imu je pøepisování. Dostanete se do nìj z
+ normálního re¾imu klávesou <CODE CLASS=klavesa>R</CODE>. Chováním se podobá
+ klasickému vkládání, ale nový text je pøepisován pøes pùvodní.
+ <P>
+
+ Vkládací re¾im opustíte standardnì klávesou <CODE CLASS=klavesa>Esc</CODE>,
+ která vás vrátí zpìt do re¾imu normálního.
+ <P>
+
+
+<DT><STRONG>Re¾im ex (té¾ re¾im pøíkazového øádku)</STRONG>
+ <DD> slou¾í k zadávání pøíkazù na pøíkazovém øádku. V nìm se realizují
+ nejkomplikovanìj¹í operace, jako je vyhledání a náhrada øetìzce znakù, práce
+ se soubory a podobnì.
+ <P>
+
+ Re¾im ex je zahájen znakem <CODE CLASS=klavesa>:</CODE>. Bývá zvykem (a já se
+ jej budu dr¾et) jména pøíkazù pro pøíkazový øádek zahajovat dvojteèkou, aby se
+ tato skuteènost zdùraznila. Re¾im ex je jednorázový. Po provedení pøíkazu
+ (který ode¹lete klávesou <CODE CLASS=klavesa>Enter</CODE>) se editor vrátí do
+ normálního re¾imu. Pokud chcete dosáhnout tého¾, ale bez provedení pøíkazu,
+ pou¾ijte jako obvykle <CODE CLASS=klavesa>[Esc]</CODE>.
+ 
+</DL>
+
+<BLOCKQUOTE CLASS=priklad>
+<STRONG>Pøíklad:</STRONG><BR>
+Zkuste si vytvoøit jednoduchý textový soubor. Spus»te editor øeknìme pøíkazem
+
+<BLOCKQUOTE>
+<CODE>vim pokus.txt</CODE>
+</BLOCKQUOTE>
+
+klávesou <CODE CLASS=klavesa>a</CODE> pøejdìte do vkládacího re¾imu a napi¹te
+pár øádkù textu. Pokud se pøeklepnete, mù¾ete chybné znaky vymazat klávesou
+<CODE CLASS=klavesa>[Backspace]</CODE>. Pokroèilej¹í editaèní operace si necháme
+na pozdìji.
+<P>
+
+A¾ budete hotovi, vra»te se do normálního re¾imu pomocí <EM>Esc</EM>. Následnì
+pøíkazem <CODE CLASS=klavesa>ZZ</CODE> ulo¾te vytvoøený text a ukonèete editor.
+
+</BLOCKQUOTE>
+<P>
+
+<!--/STRANKA-->
+<!--NAVIG-->
+<DIV ALIGN=RIGHT>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0">
+<TR>
+<TD><A HREF="vzhled.htm"><IMG SRC="zpet.gif" ALT="&lt;-- predchozi " BORDER="0"></A></TD>
+<TD><A HREF="index.htm"><IMG SRC="obs.gif" ALT=" [obsah] " BORDER="0"></A></TD>
+<TD><A HREF="pohyby.htm"><IMG SRC="vpred.gif" ALT=" dalsi --&gt;" BORDER="0"></A></TD>
+</TR>
+</TABLE>
+</DIV>
+<!--/NAVIG-->
+
+<SMALL>&copy; 1997, 1998 Pavel Satrapa</SMALL>
+
+ </TD>
+</TR>
+</TABLE>
+
+</BODY>
+</HTML>

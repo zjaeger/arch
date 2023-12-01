@@ -1,0 +1,84 @@
+sqlldr
+USERID={username[/password][@net_service_name]|/}
+CONTROL=control_file_name
+LOG=path_file_name 
+BAD=path_file_name
+DATA=path_file_name
+DISCARD=path_file_name
+DISCARDMAX=logical_record_count
+SKIP=logical_record_count
+SKIP_INDEX_MAINTENANCE={TRUE | FALSE}
+SKIP_UNUSABLE_INDEXES={TRUE | FALSE}
+LOAD=logical_record_count
+ERRORS=insert_error_count
+ROWS=rows_in_bind_array
+BINDSIZE=bytes_in_bind_array
+SILENT=[(]keyword[,keyword...][)]
+DIRECT={TRUE | FALSE}
+PARFILE=path_file_name
+PARALLEL={TRUE | FALSE}
+READSIZE=bytes_in_read_buffer
+FILE=database_datafile_name
+
+control file
+--------------------------------------------------------------------------------
+OPTIONS (ERRORS=9999, ROWS=800)
+
+LOAD DATA
+INFILE br_mira_2.csv
+APPEND
+INTO TABLE br_mira_2
+FIELDS TERMINATED BY ';' TRAILING NULLCOLS
+( cust_rating, coll_rating, midas_rating, rat_type_code, cust_rating_corp )
+--------------------------------------------------------------------------------
+
+LOAD DATA:
+--------------------------------------------------------------------------------
+[UNRECOVERABLE | RECOVERABLE] {LOAD | CONTINUE_LOAD} [DATA]
+   [CHARACTERSET character_set] [BYTEORDER]
+   [INFILE clause [INFILE clause...]]
+   [MAXRECORDSIZE bytes
+   [READBUFFERS integer]
+   [INSERT | APPEND | REPLACE | TRUNCATE]
+   [concatenate_rules]
+   [PRESERVE BLANKS]
+   INTO TABLE clause [INTO TABLE clause...]
+   [BEGINDATA]
+--------------------------------------------------------------------------------
+
+https://stackoverflow.com/questions/21278726/can-variables-be-passed-to-a-sqlloader-control-file-via-sqlldr-command
+echo "create table myschema.temp_table_name (
+    DATE_ID       INTEGER,
+    DESC1         char(1000),
+    DESC2         char(1000),
+    DISP_URL      char(1000),
+    DEST_URL      char(1000),
+    ACCT_ID       INTEGER,
+    Acct_num      INTEGER,
+    created_date  DATE)
+   organization external
+     (
+     type oracle_loader
+     default directory mydir
+     access parameters (
+       records delimited by newline
+       badfile bad_dir: 'temp_ext_temp_table_name_load.bad'
+       logfile log_dir: 'temp_ext_temp_table_name_load.log'
+       fields terminated by ',' (
+          DESC1         char(1000),
+          DESC2         char(1000),
+          DISP_URL      char(1000),
+          DEST_URL      char(1000)
+       )
+       column transforms (
+          DATE_ID       FROM CONSTANT '$DATE_ID_VALUE',
+          ACCT_ID       FROM CONSTANT '$ACCOUNTID_VALUE',
+          Acct_num      FROM CONSTANT '$ACCOUNT_NUM',
+          created_date  FROM CONSTANT \"`date '+%d-%b-%Y'`\"
+       )
+     )
+     location ('temp_table_name.dat')
+     )
+     reject limit 1000;" | sqlplus -s /
+
+http://www.orafaq.com/wiki/SQL*Loader_FAQ

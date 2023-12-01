@@ -1,0 +1,124 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<HTML>
+<HEAD>
+<TITLE>vim - hledani</TITLE>
+<LINK REL=StyleSheet HREF="vim.css" TYPE="text/css">
+</HEAD>
+<BODY BACKGROUND="papir.gif" BGCOLOR="#FFFFFF" TEXT="#000000" LINK="#FF0000"
+      VLINK="#990000" ALINK="#00FF00">
+
+<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="0">
+<TR>
+ <TD><IMG SRC="nic.gif" WIDTH="150" HEIGHT="1"></TD>
+ <TD>
+<!--STRANKA-->
+
+<H1>Hledání</H1>
+
+Pøíkaz k vyhledání øetìzce znakù mù¾ete ve <EM>vim</EM> zadat dvìma základními
+zpùsoby. Klávesa <CODE CLASS=klavesa>/</CODE> zahájí hledání smìrem vpøed (ke
+konci souboru), zatímco <CODE CLASS=klavesa>?</CODE> po¾aduje hledání v
+protismìru (k zaèátku textu). Oba pøíkazy se zamozøejmì zadávají v normálním
+re¾imu.
+<P>
+
+Jakmile stisknete <CODE CLASS=klavesa>/</CODE> èi <CODE CLASS=klavesa>?</CODE>,
+ocitne se kurzor ve stavovém øádku, do jeho¾ první pozice vepí¹e vámi zadaný
+pøíkaz, abyste vìdìli, na èem jste. Pøipi¹te za nìj hledaný øetìzec a zahajte
+hledání klávesou <CODE CLASS=klavesa>[Enter]</CODE>. Kurzor pøistane na prvním
+znaku nejbli¾¹ího výskytu hledaného øetìzce v daném smìru.
+<P>
+
+Jestli¾e text po¾adovaný øetìzec neobsahuje, ohlásí editor
+<BLOCKQUOTE>
+<CODE>Pattern not found</CODE>
+</BLOCKQUOTE>
+a kurzor ponechá na pùvodní pozici. Speciálním pøípadem je, kdy¾ text sice
+hledaný øetìzec obsahuje, ne v¹ak v po¾adovaném smìru. Øeknìme, ¾e hledáte
+smìrem vpøed, ale od aktuální pozice do konce souboru se øetìzec nevyskytuuje.
+Zato je k nalezení v textu pøed kurzorem. Chování <EM>vim</EM> v tomto pøípadì
+závisí na nastavení promìnné <CODE CLASS=prikaz>wrapscan</CODE>. Pokud je
+zapnuta (implicitnì je, lze nastavit pøíkazem <CODE
+CLASS=prikaz>:set&nbsp;wrapscan</CODE>), editor bude po dosa¾ení konce souboru
+pokraèovat v hledání od jeho zaèátku. Najde-li jej, pøesune kurzor obvyklým
+zpùsobem na jeho zaèátek a doprovodí svùj èin hlá¹ením
+<BLOCKQUOTE>
+<CODE>Search hit BOTTOM, continuing at TOP</CODE>
+</BLOCKQUOTE>
+<P>
+
+Zda editor má èi nemá rozli¹ovat malá a velká písmena øídí promìnná <CODE
+CLASS=prikaz>ignorecase</CODE>. Je-li nastaveno <CODE
+CLASS=klavesa>:set&nbsp;ignorecase</CODE>, <EM>vim</EM> je nebude rozli¹ovat.
+Pokud naopak pou¾ijete <CODE CLASS=prikaz>:set&nbsp;noignorecase</CODE>, budou
+malá a velká písmena pova¾ována za odli¹ná (to je implicitní stav). Pøi
+nastavení <CODE CLASS=prikaz>:set&nbsp;smartcase</CODE> se rozli¹ování
+malých/velkých písmen zna¾í chovat inteligentnì. Zapí¹ete-li hledaný øetìzec
+malými písmeny, hledá malá i velká. Pokud pou¾ijete nìjaká velká písmena,
+hledá øetìzec pøesnì v tom tvaru, ve kterém jste jej zadali.<P>
+
+Hlavní kouzlo vyhledávání spoèívá v tom, ¾e pro specifikaci hledaného textu
+máte k dispozici <EM>velmi</EM> silné prostøedky. Jedná se o tak zvané
+<A HREF="regvyr.htm">regulární výrazy</A>. Jejich problematika je v¹ak ponìkud
+obsáhlá, tak¾e jsem jim vìnoval samostatnou kapitolu.
+<P>
+
+
+<H2>Opakování</H2>
+
+Chcete-li zopakovat hledání stejného øetìzce, staèí zadat <CODE
+CLASS=klavesa>/[Enter]</CODE>. Jestli¾e toti¾ vynecháte hledaný øetìzec,
+pou¾ije se automaticky ten pøedchozí. Toté¾ samozøejmì platí pro pøíkaz <CODE
+CLASS=klavesa>?</CODE>.
+<P>
+
+Aby vìc byla je¹tì rychlej¹í, jsou pro opakované hledání pøipraveny dva
+speciální pøíkazy. <CODE CLASS=klavesa>n</CODE> pøesnì opakuje poslední
+hledání, zatímco <CODE CLASS=klavesa>N</CODE> hledá tentý¾ øetìzec, av¹ak v
+opaèném smìru, ne¾ poslední pou¾ité hledání. Pokud tedy pøejedete nejvhodnìj¹í
+výskyt, mù¾ete se pomocí <CODE CLASS=klavesa>N</CODE> snadno a rychle vrátit.
+<P>
+
+V¹imnìte si, ¾e dvojice kláves <CODE CLASS=klavesa>/</CODE>, <CODE
+CLASS=klavesa>?</CODE> a <CODE CLASS=klavesa>n</CODE>, <CODE
+CLASS=klavesa>N</CODE> dìlají toté¾, av¹ak v opaèných smìrech. Pøitom druhou
+klávesu ve dvojici dostanete z první pouhým stisknutím <CODE
+CLASS=klavesa>[Shift]</CODE> (v pøípadì <CODE CLASS=klavesa>/</CODE> a <CODE
+CLASS=klavesa>?</CODE> mluvím o pùvodní americké klávesnici). Tato logika, kdy
+<CODE CLASS=klavesa>[Shift]</CODE> obrací smìr pøíkazu, je ve <EM>vim</EM>
+pomìrnì èastá. Setkali jsme se s ní napøíklad pøi vyhledávání znaku na øádku
+(<CODE CLASS=klavesa>f</CODE> hledá vpøed, <CODE CLASS=klavesa>F</CODE> vzad).
+<P>
+
+
+<H2>Strhující závìr</H2>
+
+Na závìr jsem si nechal opravdovou lahùdku. Hledání je toti¾ pohyb se v¹ím, co
+k nìmu nále¾í. Mù¾ete je proto kombinovat s <A
+HREF="edit.htm#pohyb">modifikátory</A>, které jsem popsal v kapitole o editaci
+textu. Tak¾e napøíklad <CODE CLASS=klavesa>d/ahoj</CODE> vyma¾e v¹e od
+stávající pozice kurzoru a¾ k nejbli¾¹ímu následujícímu výskytu øetìzce "ahoj".
+Zatím jsem nevidìl editor, který by umo¾òoval nìco podobného tak jednodu¹e.
+
+
+<!--/STRANKA-->
+<!--NAVIG-->
+<DIV ALIGN=RIGHT>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0">
+<TR>
+<TD><A HREF="edit.htm"><IMG SRC="zpet.gif" ALT="&lt;-- predchozi " BORDER="0"></A></TD>
+<TD><A HREF="index.htm"><IMG SRC="obs.gif" ALT=" [obsah] " BORDER="0"></A></TD>
+<TD><A HREF="regvyr.htm"><IMG SRC="vpred.gif" ALT=" dalsi --&gt;" BORDER="0"></A></TD>
+</TR>
+</TABLE>
+</DIV>
+<!--/NAVIG-->
+
+<SMALL>&copy; 1997, 1998 Pavel Satrapa</SMALL>
+
+ </TD>
+</TR>
+</TABLE>
+
+</BODY>
+</HTML>

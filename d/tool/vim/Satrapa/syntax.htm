@@ -1,0 +1,183 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<HTML>
+<HEAD>
+<TITLE>vim - zvýrazòování syntaxe</TITLE>
+<LINK REL=StyleSheet HREF="vim.css" TYPE="text/css">
+</HEAD>
+<BODY BACKGROUND="papir.gif" BGCOLOR="#FFFFFF" TEXT="#000000" LINK="#FF0000"
+      VLINK="#990000" ALINK="#00FF00">
+
+<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="0">
+<TR>
+ <TD><IMG SRC="nic.gif" WIDTH="150" HEIGHT="1"></TD>
+ <TD>
+<!--STRANKA-->
+
+<H1>Zvýrazòování syntaxe</H1>
+
+<EM>vim</EM> dovede rozpoznávat syntaktické prvky v rùzných typech souborù a
+vizuálnì (nejèastìji barevnì) je odli¹ovat. Tak¾e ve zdrojových textech
+programù budou odli¹nì zobrazena klíèová slova, identifikátory a tøeba
+øetìzce znakù. V HTML èi textech pro TeX budou zvýraznìny pøíkazy, jejich
+parametry, komentáøe a dal¹í prvky. Standardní barvy jsou sice tì¾ce
+psychedelické, ale je to mimoøádnì praktické.
+<P>
+
+Pokud nechcete pøíli¹ pøemý¹let a jen si u¾ívat, pou¾ijte pøíkaz <CODE
+CLASS="prikaz">:syntax&nbsp;on</CODE>. Mìl by se vám naskytnout pohled podobný
+tomu, který vidíte na následujícím obrázku.
+<P>
+
+<DIV ALIGN="CENTER">
+<IMG SRC="syntax.gif" ALT="[Obrázek]" WIDTH="400" HEIGHT="234">
+</DIV>
+<P>
+
+Pøíkaz <CODE CLASS="prikaz">:syntax&nbsp;on</CODE> naète tak zvaný syntaktický
+soubor. Jeho jméno urèí podle pøípony aktuálního souboru. Distribuce
+<EM>vim</EM> obsahuje syntaktické soubory pro celou øadu typù souborù (ve
+verzi&nbsp;6.0 jich je asi&nbsp;300). Najdete je v domácím adresáøi editoru (v
+Unixu to je <CODE>/usr/share/vim</CODE> nebo
+<CODE>/usr/local/share/vim</CODE>), konkrétnì v podadresáøi
+<CODE>syntax</CODE>.
+<P>
+
+Syntaktický soubor obsahuje pravidla pro zvýrazòování daného typu souboru.
+Jestli¾e se vám nelíbí, mù¾ete si je upravit buï pøímo v nìm (pokud k tomu máte
+oprávnìní) nebo v lokální konfiguraci <EM>vim</EM>.
+<P>
+
+Zvýraznìní je tvoøeno dvìma slo¾kami. Nejprve jsou definovány syntaktické
+polo¾ky a skupiny. V podstatì øíkají, jaký text má být zaøazen do které
+kategorie. Druhá slo¾ka pak urèuje, jak mají být jednotlivé polo¾ky
+prezentovány.
+
+
+<H2>Definice syntaktických polo¾ek</H2>
+
+Pro tento krátký text je problematika definice syntaktických polo¾ek pøíli¹
+obsáhlá. Je realizována sadou pøíkazù <CODE CLASS="prikaz">:syntax</CODE>.
+Definují jednotlivé vzory, které mají být v textu vyhledávány a zaøazují je do
+syntaktických skupin.
+<P>
+
+Existují tøi typy vzorù. <EM>Klíèové slovo</EM> je tvoøeno pouze "bì¾nými
+neprázdnými znaky". Jejich výèet obsahuje volba <CODE
+CLASS="prikaz">iskeyword</CODE>. Vzoru typu <EM>shoda</EM> mù¾e vyhovìt
+libovolný øetìzec, který splní vzorem stanovená pravidla. Posledním typem vzoru
+je <EM>oblast</EM>, u ní¾ definujete, jak vypadá zaèátek a konec. Syntaktická
+polo¾ka pak bude uplatnìna na celý text mezi nimi.
+<P>
+
+Chcete-li se o definování syntaktických polo¾ek dozvìdìt více, pou¾ijte <CODE
+CLASS="prikaz">:help&nbsp;syntax</CODE> a prohlédnìte si syntaktické soubory z
+distribuce editoru.
+
+
+<H2>Zvýrazòování</H2>
+
+Zatímco definice syntaktických kategorií je ¹amanismus pomìrnì hrubého zrna, do
+zmìn v jejich podobì mù¾e bez tragiètìj¹ích následkù zasahovat i laik. Jeho
+základem je pøíkaz
+
+<BLOCKQUOTE>
+<CODE CLASS="prikaz">:highlight &lt;skupina&gt; &lt;re¾im&gt;=&lt;hodnota&gt;</CODE>
+</BLOCKQUOTE>
+
+<EM>&lt;skupina&gt;</EM> je název syntakticé skupiny, které se zvýraznìní týká.
+Ten musíte odhalit ze syntaktického souboru. Zde budu chování pøedvádìt na
+skupinì <CODE>Normal</CODE>, která reprezentuje bì¾ný text a pou¾ívá se pro ty
+znaky, které nebyly zaøazeny do ¾ádné jiné.
+<P>
+
+<EM>&lt;re¾im&gt;</EM> urèuje, pro jaký re¾im zobrazení je zvýraznìní urèeno.
+<EM>vim</EM> rozli¹uje tøi: bì¾ný terminál (<CODE>term</CODE>), barevný
+terminál (<CODE>cterm</CODE>) a grafické u¾ivatelské rozhraní
+(<CODE>gui</CODE>).
+<P>
+
+<DL>
+<DT><STRONG>Bì¾ný terminál</STRONG>
+ <DD> Zde se pro <EM>&lt;hodnotu&gt;</EM> nabízejí pouze nejzákladnìj¹í zpùsoby
+ zvýraznìní, jako je <CODE>bold</CODE> (tuènì), <CODE>underline</CODE>
+ (podtr¾ení), <CODE>reverse</CODE> (inverzní zobrazení), <CODE>italic</CODE>
+ (kurzíva) a <CODE>NONE</CODE> (v¹echno vypne). Navíc vá¹ terminál nemusí ani
+ v¹echny pou¾ívat.
+ <P>
+
+ Doporuèuji dávat si pozor na zvýraznìní podtr¾ením, proto¾e splývá se znakem
+ "podtr¾ítko" (_). Pokud v programech pou¾íváte identifikátory obsahující
+ podtr¾ítko, je to pomìrnì nepøíjemné.
+ <P>
+ 
+<DT><STRONG>Barevný terminál</STRONG>
+ <DD> Pro re¾im <CODE>cterm</CODE> mù¾ete pou¾ívat stejné hodnoty, jako u
+ <CODE>term</CODE>. Navíc v¹ak máte k dispozici "re¾imy" <CODE>ctermfg</CODE>
+ pro stanovení barvy písma a <CODE>ctermbg</CODE> pro barvu pozadí.
+ <P>
+
+ <BLOCKQUOTE CLASS="priklad">
+ <STRONG>Pøíklad:</STRONG><BR>
+ 
+ Øeknìme, ¾e bych chtìl mít standardní text vyveden
+ <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="4" BGCOLOR="#000066">
+ <TR><TD>
+ <STRONG><FONT COLOR="#FFFF00">tuèným ¾lutým písmem na tmavì modrém
+  pozadí</FONT></STRONG>
+ </TD></TR>
+ </TABLE>
+ (já bych tedy nechtìl, mám své oèi rád, ale vezmìme to
+ jako pøíklad). Pou¾il bych pøíkaz <CODE
+ CLASS="prikaz">:highlight&nbsp;Normal&nbsp;cterm=bold&nbsp;ctermfg=Yellow&nbsp;ctermbg=DarkBlue</CODE>
+ </BLOCKQUOTE>
+
+<DT><STRONG>Grafické u¾ivatelské rozhraní</STRONG>
+ <DD> Re¾im <CODE>gui</CODE> se podobá pøedchozímu. Opìt máte k dispozici
+ hodnoty pro <CODE>term</CODE> a k definici barev slou¾í <CODE>guifg</CODE> a
+ <CODE>guibg</CODE>. Tentokrát navíc mù¾ete jako jejich hodnotu pøímo definovat
+ slo¾ení barvy konstrukcí "#rrggbb", kde <EM>rr</EM>, <EM>gg</EM> a <EM>bb</EM>
+ jsou dvojice ¹estnáctkových èíslic udávajících postupnì intenzitu èervené,
+ zelené a modré slo¾ky barvy.
+ <P>
+
+ <BLOCKQUOTE CLASS="priklad">
+ <STRONG>Pøíklad:</STRONG><BR>
+ <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="4" BGCOLOR="#ff9999">
+ <TR><TD>
+ <STRONG><FONT COLOR="#666600">olivové písmo na lososovì rù¾ovém
+  pozadí</FONT></STRONG>
+ </TD></TR>
+ </TABLE>
+ (fuj!) bych vyrobil pøíkazem
+ <CODE CLASS="prikaz">:highlight&nbsp;Normal&nbsp;gui=bold&nbsp;guibg=#ff9999&nbsp;guifg=#666600</CODE>
+ </BLOCKQUOTE>
+ <P>
+
+ K dispozici máte je¹tì "re¾im" <CODE>font</CODE>, kterým mù¾ete pro danou
+ syntaktickou skupinu pøedepsat druh písma. Ov¹em pozor! V¹echna pou¾itá písma
+ musí mít stejnou velikost znaku. Jinak mohou být výsledky nepøedvídatelné.
+
+</DL>
+<P>
+
+<!--/STRANKA-->
+<!--NAVIG-->
+<DIV ALIGN=RIGHT>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0">
+<TR>
+<TD><A HREF="okna.htm"><IMG SRC="zpet.gif" ALT="&lt;-- predchozi " BORDER="0"></A></TD>
+<TD><A HREF="index.htm"><IMG SRC="obs.gif" ALT=" [obsah] " BORDER="0"></A></TD>
+<TD><A HREF="gui.htm"><IMG SRC="vpred.gif" ALT=" dalsi --&gt;" BORDER="0"></A></TD>
+</TR>
+</TABLE>
+</DIV>
+<!--/NAVIG-->
+
+<SMALL>&copy; 1997, 1998 Pavel Satrapa</SMALL>
+
+ </TD>
+</TR>
+</TABLE>
+
+</BODY>
+</HTML>

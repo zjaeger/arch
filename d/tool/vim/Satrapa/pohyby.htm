@@ -1,0 +1,384 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<HTML>
+<HEAD>
+<TITLE>vim - pohyby v textu</TITLE>
+<LINK REL=StyleSheet HREF="vim.css" TYPE="text/css">
+</HEAD>
+<BODY BACKGROUND="papir.gif" BGCOLOR="#FFFFFF" TEXT="#000000" LINK="#FF0000"
+      VLINK="#990000" ALINK="#00FF00">
+
+<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="0">
+<TR>
+ <TD><IMG SRC="nic.gif" WIDTH="150" HEIGHT="1"></TD>
+ <TD>
+<!--STRANKA-->
+
+<H1>Pohyby v textu</H1>
+
+<EM>vim</EM> nabízí velmi ¹iroký sortiment pøíkazù pro pohyby v textu.
+Samozøejmì nemá smysl sna¾it si je v¹echny vsoukat do hlavy hned zpoèátku.
+Zaènìte se skromnìj¹í kolekcí a sna¾te se ji postupnì rozhojòovat.
+<P>
+
+Svého èasu jsem se domníval, ¾e vùbec nemá smysl zatì¾ovat si hlavu myriádou
+nejrùznìj¹ích pohybových pøíkazù. Napøíklad taková <CODE CLASS=klavesa>}</CODE>
+vás pøesune na konec odstavce. No bó¾e, to je toho! Staèí pár pohybù o øádek
+dolù a dostanu se tam také. Vtip spoèívá v tom, ¾e <EM>vim</EM> dovede
+zkombinovat libovolný pohybový pøíkaz s pøíkazem editaèním (podrobnìji o tom
+pohovoøím v èásti o <A HREF="edit.htm">editaci textu</A>). Výsledkem je, ¾e
+bych líbal nohy tomu, kdo vymyslel, ¾e pravá slo¾ená závorka mne pøesune na
+konec odstavce, proto¾e díky ní mohu zcela triviálnì pouhými dvìma znaky
+odstavec vymazat, pøeformátovat èi zkopírovat do vyrovnávací pamìti. A to jsou
+operace, které potøebuji velmi èasto.
+<P>
+
+
+<H2>Základní pohyby</H2>
+
+Pohyby v¾dy vycházejí z normálního re¾imu. Základní ètveøice samozøejmì
+umo¾òuje posunout se o jeden znak doleva, doprava, nahoru a dolù. V ka¾dém
+slu¹ném editoru tuto funkci zabezpeèují kurzorové klávesy. Ve <EM>vim</EM> ji
+mají na starosti klávesy <CODE>h</CODE>, <CODE>l</CODE>, <CODE>k</CODE> a
+<CODE>j</CODE>.
+<P>
+
+<DIV ALIGN=CENTER>
+<IMG SRC="smery.gif"
+     ALT="h-doleva; l-doprava, k-nahoru, j-dolu" WIDTH="251" HEIGHT="251">
+</DIV>
+<P>
+
+Teï se pravdìpodobnì domníváte, ¾e autoøi <EM>vim</EM> se udeøili hlavou o
+futro nebo je postihlo nìco daleko hor¹ího. Nám pamìtníkùm to trochu pøipomíná
+ovládání her pro ZX&nbsp;Spectrum. Pro zmínìnou obludnost v¹ak existují dva
+rozumné dùvody:
+
+<OL>
+<LI> Ovládání je pøevzato z editoru <EM>vi</EM>, který vznikal v dobì, kdy
+     K.&nbsp;Kurzor je¹tì chodil po houbách a zdaleka ne ka¾dý terminál oplýval
+     po nìm pojmenovanými klávesami.
+
+<LI> Lidé, pí¹ící na rozdíl ode mne v¹emi deseti, nemusejí pøestìhovávat ruce
+     ze základní klávesnice a zoufale se tak brzdit.
+</OL>
+
+A abych vás uklidnil je¹tì více: jen zcela výjimeènì se ocitnete v situaci, kdy
+byste skuteènì museli tyto klávesy pou¾ívat (pokud nechcete). Vìt¹ina moderních
+poèítaèù, terminálù a jejich emulátorù toti¾ má stejné funkce i na obvyklých
+kurzorových klávesách. Mù¾ete tedy pracovat tak, jak jste zvyklí.
+<P>
+
+Druhým nejèastìj¹ím pohybem je posun o jednu obrazovku. Ten ve <EM>vim</EM>
+zajistí klávesové kombinace <CODE CLASS=klavesa>Ctrl-F</CODE> (smìrem dolù) a
+<CODE CLASS=klavesa>Ctrl-B</CODE> (vzhùru). V bì¾ných implementacích mù¾ete
+pro tyto pohyby pou¾ívat i obvyklé klávesy <CODE
+CLASS=klavesa>[PageDown]</CODE> a <CODE CLASS=klavesa>[PageUp]</CODE>.
+
+
+<H2>Opakování pøíkazù</H2>
+
+Ne¾ se pustím do podrobnìj¹ího pitvání nejrùznìj¹ích pohybových kreací, dovolím
+si upozornit na jednu velmi dùle¾itou vìc. Témìø v¹echny pøíkazy <EM>vim</EM>
+lze provádìt opakovanì. Pokud nejprve napí¹ete èíslo <EM>n</EM> a po nìm urèitý
+pøíkaz, bude proveden <EM>n</EM>-krát. Napøíklad pohyb o 20&nbsp;znakù doleva
+by zajistil pøíkaz <CODE CLASS=klavesa>20h</CODE>. Opakovat lze zkuteènì
+prakticky v¹echno, vèetnì vìcí dosti komplikovaných.
+<P>
+
+<BLOCKQUOTE CLASS=priklad>
+<STRONG>Pøíklad:</STRONG><BR>
+<EM>vim</EM> je ideální nástroj pro neposlu¹né ¾áky. Mají-li 100krát napsat
+"Nemám vyru¹ovat pøi vyuèování.", staèí zadat
+
+<BLOCKQUOTE>
+<CODE>100oNemám vyru¹ovat pøi vyuèování.[Esc]</CODE>
+</BLOCKQUOTE>
+
+</BLOCKQUOTE>
+
+
+
+<H2>Pohyby na øádku</H2>
+
+V rámci jednoho øádku máte k dispozici nìkolik pøíkazù, posouvajících kurzor na
+urèené pozice. Nejprve si vezmìme extrémy:
+<P>
+
+<DIV ALIGN=CENTER>
+<TABLE BORDER="0">
+<TR VALIGN=TOP>
+ <TD><CODE CLASS=klavesa><STRONG>0</STRONG></CODE></TD>
+ <TD>na zaèátek øádku (nìkdy i <CODE CLASS=klavesa>[Home]</CODE>)</TD>
+</TR>
+<TR VALIGN=TOP>
+ <TD><CODE CLASS=klavesa><STRONG>^</STRONG></CODE></TD>
+ <TD>na první neprázdný znak øádku</TD>
+</TR>
+<TR VALIGN=TOP>
+ <TD><CODE CLASS=klavesa><STRONG>$</STRONG></CODE></TD>
+ <TD>na konec øádku (nìkdy i <CODE CLASS=klavesa>[End]</CODE></TD>
+</TR>
+</TABLE>
+</DIV>
+<P>
+
+Znaky <CODE>^</CODE> a <CODE>$</CODE> jsou v Unixu standardnì pou¾ívány pro
+oznaèování zaèátku a konce. Jejich výskyt zde by vás proto nemìl pøekvapit.
+Pøíkazy <CODE CLASS=klavesa>0</CODE> (je to nula, nikoli velké "o") a <CODE
+CLASS=klavesa>^</CODE> se od sebe li¹í na øádcích, které zaèínají skupinou
+mezer èi tabulátorù. <CODE CLASS=klavesa>0</CODE> vás pøesune na první znak bez
+ohledu na jeho hodnotu. Naproti tomu <CODE CLASS=klavesa>^</CODE> zpùsobí
+pøesun na první viditelný (rùzný od mezery a tabulátoru) znak.
+<P>
+
+Hodláte-li pøeskoèit na urèitý sloupec, pou¾ijte klávesu <CODE
+CLASS=klavesa>|</CODE> (svislá èára). Pøed ní musíte uvést èíslo po¾adovaného
+sloupce. Bez nìj vás pøesune do sloupce èíslo&nbsp;1. Pøesun do dvanáctého
+sloupce zajistí <CODE CLASS=klavesa>12|</CODE>.
+<P>
+
+Jistou zvlá¹tností je vyhledávání urèitého znaku na øádku. Hledá se v¾dy od
+pozice kurzoru smìrem vpøed èi vzad (podle pøíkazu) a pouze na aktuálním øádku.
+Pøíkaz je v¾dy následován znakem, který má být nalezen. K dispozici máte
+následující:
+<P>
+
+<DIV ALIGN=CENTER>
+<TABLE BORDER="0">
+<TR VALIGN=TOP>
+ <TD><CODE CLASS=klavesa><STRONG>f</STRONG><EM>znak</EM></CODE></TD>
+ <TD>na následující výskyt <EM>znaku</EM></TD>
+</TR>
+<TR VALIGN=TOP>
+ <TD><CODE CLASS=klavesa><STRONG>F</STRONG><EM>znak</EM></CODE></TD>
+ <TD>na pøedchozí výskyt <EM>znaku</EM></TD>
+</TR>
+<TR VALIGN=TOP>
+ <TD><CODE CLASS=klavesa><STRONG>t</STRONG><EM>znak</EM></CODE></TD>
+ <TD>pøed následující výskyt <EM>znaku</EM></TD>
+</TR>
+<TR VALIGN=TOP>
+ <TD><CODE CLASS=klavesa><STRONG>T</STRONG><EM>znak</EM></CODE></TD>
+ <TD>za pøedchozí výskyt <EM>znaku</EM></TD>
+</TR>
+<TR VALIGN=TOP>
+ <TD><CODE CLASS=klavesa><STRONG>;</STRONG></CODE></TD>
+ <TD>opakuje poslední hledání na øádku</TD>
+</TR>
+<TR VALIGN=TOP>
+ <TD><CODE CLASS=klavesa><STRONG>,</STRONG></CODE></TD>
+ <TD>opakuje poslední hledání na øádku, ale v opaèném smìru</TD>
+</TR>
+</TABLE>
+</DIV>
+<P>
+
+Rozdíl mezi <CODE CLASS=klavesa>f</CODE> a <CODE CLASS=klavesa>t</CODE> spoèívá
+v tom, ¾e <CODE CLASS=klavesa>f</CODE> se zastaví a¾ na hledaném znaku, zatímco
+<CODE CLASS=klavesa>t</CODE> o jednu pozici pøed ním. Malá písmena se od
+velkých li¹í smìrem&nbsp;- malá hledají vpøed, velká vzad. Chování bude
+nejlep¹í demonstrovat na pøíkladu:
+
+<BLOCKQUOTE CLASS=priklad>
+<STRONG>Pøíklad:</STRONG><BR>
+Vyjdìme z následujícího textu (pozice kurzoru je vyznaèena ¹ipkou):
+<BLOCKQUOTE><PRE>
+Marie si vyrazila do mìsta.
+    ^ 
+</PRE></BLOCKQUOTE>
+Pøíkaz <CODE CLASS=klavesa>fa</CODE> posune kurzor takto:
+<BLOCKQUOTE><PRE>
+Marie si vyrazila do mìsta.
+            ^
+</PRE></BLOCKQUOTE>
+zatímco <CODE CLASS=klavesa>ta</CODE> jen o jednu pozici ménì:
+<BLOCKQUOTE><PRE>
+Marie si vyrazila do mìsta.
+           ^
+</PRE></BLOCKQUOTE>
+Zopakujeme-li toto poslední hledání klávesou <CODE CLASS=klavesa>;</CODE>,
+dostaneme:
+<BLOCKQUOTE><PRE>
+Marie si vyrazila do mìsta.
+               ^
+</PRE></BLOCKQUOTE>
+A v protismìru z této pozice dá <CODE CLASS=klavesa>Fs</CODE>
+<BLOCKQUOTE><PRE>
+Marie si vyrazila do mìsta.
+      ^
+</PRE></BLOCKQUOTE>
+zatímco <CODE CLASS=klavesa>Ts</CODE> opìt zastaví døíve:
+<BLOCKQUOTE><PRE>
+Marie si vyrazila do mìsta.
+       ^
+</PRE></BLOCKQUOTE>
+</BLOCKQUOTE>
+
+
+<H2>Pohyby mezi øádky</H2>
+
+Ty nejbì¾nìj¹í ji¾ byly øeèeny&nbsp;- kurzorové klávesy nahoru a dolù a pohyby
+o celou obrazovku. Poznamenám jen, ¾e <EM>vim</EM> se sna¾í pøi posunu na
+sousední øádek udr¾ovat kurzor ve stejném sloupci. Je-li nìkterý øádek krat¹í,
+posune kurzor na jeho poslední znak. Pokud se následující øádek opìt prodlou¾í,
+vrátí se do pùvodního sloupce.
+<P>
+
+Klávesy <CODE CLASS=klavesa>+</CODE> a <CODE CLASS=klavesa>-</CODE> vás takté¾
+posunou na následující resp. pøedchozí øádek. Kurzor se v¹ak pøemístí na jeho
+první neprázdný znak.
+<P>
+
+Pro dálkové pøesuny mù¾ete pou¾ít pøíkaz <CODE CLASS=klavesa>G</CODE>. Pøed ním
+zadejte èíslo a <EM>vim</EM> vás pøenese na øádek daného èísla. Napøíklad skok
+na osmáctý øádek souboru obstará <CODE CLASS=klavesa>18G</CODE>. Pokud
+neuvedete èíslo, ocitnete se na konci souboru.
+<P>
+
+Zajímavou mo¾nost ztìlesòuje <CODE CLASS=klavesa>%</CODE>. Udává po¾adovanou
+pozici v procentech z celkové velikosti souboru (pøesnìji øeèeno z poètu jeho
+øádkù). Pokud se tedy chcete pøesunout na prostøední øádek textu, staèí zadat
+<CODE CLASS=klavesa>50%</CODE>.
+
+
+<H2>Logické poskoky</H2>
+
+V¹echny dosavadní pohybové pøíkazy pracovaly s fyzickými jednotkami, jako je
+sloupec, znak, øádek èi obrazovka. <EM>vim</EM> nabízí kromì nich i pøesuny
+podle logických kategorií&nbsp;- o slovo, vìtu èi odstavec.
+<P>
+
+Pro posuny o slovo slou¾í následující skupina pøíkazù:
+<P>
+
+<DIV ALIGN=CENTER>
+<TABLE BORDER="0">
+<TR><TD><CODE CLASS=klavesa><STRONG>w</STRONG></CODE>,
+        <CODE CLASS=klavesa><STRONG>W</STRONG></CODE></TD>
+    <TD>na zaèátek následujícího slova</TD></TR>
+<TR><TD><CODE CLASS=klavesa><STRONG>e</STRONG></CODE>,
+        <CODE CLASS=klavesa><STRONG>E</STRONG></CODE></TD>
+    <TD>na konec tohoto slova</TD></TR>
+<TR><TD><CODE CLASS=klavesa><STRONG>b</STRONG></CODE>,
+        <CODE CLASS=klavesa><STRONG>B</STRONG></CODE></TD>
+    <TD>na nejbli¾¹í pøedchozí zaèátek slova</TD></TR>
+</TABLE>
+</DIV>
+<P>
+
+Rozdíl mezi malými a velkými písmeny pøi jednotlivých pohybech spoèívá v tom,
+jak se interpretuje slovo. Pro malá písmena (<CODE CLASS=klavesa>w</CODE>,
+<CODE CLASS=klavesa>e</CODE>, <CODE CLASS=klavesa>b</CODE>) je za slovo
+pova¾ována souvislá posloupnost písmen, èíslic a podtr¾ítek nebo souvislá
+posloupnost ostatních neprázdných znakù. Proto bude øetìzec
+"<CODE>ahoj.</CODE>" pova¾ován za dvì slova&nbsp;- první je tvoøeno písmeny
+slova "ahoj", druhé teèkou.
+<P>
+
+Pøi pou¾ití velkého písmene (<CODE CLASS=klavesa>W</CODE>, <CODE
+CLASS=klavesa>E</CODE>, <CODE CLASS=klavesa>B</CODE>) je za slovo pova¾ována
+posloupnost neprázdných znakù. V tomto pøípadì by tedy øetìzec "ahoj." byl
+pova¾ován za jedno slovo, proto¾e neobsahuje mezeru.
+<P>
+
+<BLOCKQUOTE CLASS=priklad>
+<STRONG>Pøíklad:</STRONG><BR>
+Vyjdìme z této situace (pozici kurzoru vyznaèuje ¹ipka):
+
+<BLOCKQUOTE><PRE>
+Jede vlak, ale nákladní.
+      ^
+</PRE></BLOCKQUOTE>
+
+Pøíkazem <CODE CLASS=klavesa>w</CODE> se kurzor pøesune na èárku za slovem
+"vlak". Naproti tomu <CODE CLASS=klavesa>W</CODE> jej posune a¾ na první
+písmeno slova "ale".
+<P>
+
+Po provedení <CODE CLASS=klavesa>3e</CODE> se ocitneme na písmeni "e",
+ukonèujícím "ale". První <CODE CLASS=klavesa>e</CODE> toti¾ postrèí kurzor na
+"k", druhé na konec "slova" tvoøeného èárkou a tøetí na konec "ale".
+<P>
+
+Naproti tomu <CODE CLASS=klavesa>2b</CODE> z pùvodní pozice pøemístí kurzor na
+první znak vìty. <CODE CLASS=klavesa>2B</CODE> má stejný význam.
+
+</BLOCKQUOTE>
+<P>
+
+Je¹tì zajímavìj¹í jsou posuny po vìt¹ích celcích. Napøíklad <CODE
+CLASS=klavesa>)</CODE> pøesune kurzor na zaèátek nejbli¾¹í následující vìty.
+Pøitom za konec vìty je poèítán znak ".", "!" nebo "?" následovaný mezerou èi
+koncem øádku. Chcete-li se vrátit na nejbli¾¹í pøedchozí zaèátek vìty, pou¾ijte
+<CODE CLASS=klavesa>(</CODE>.
+<P>
+
+Za konec odstavce je pova¾ován prázdný øádek. Pøíkaz <CODE
+CLASS=klavesa>}</CODE> vás pøemístí za nìjbli¾¹í následující konec odstavce,
+zatímco <CODE CLASS=klavesa>{</CODE> pøed nejbli¾¹í pøedcházející. Smazat tøi
+odstavce (od aktuální pozice kurzoru smìrem dolù) tedy mù¾ete pomocí <CODE
+CLASS=klavesa>3d}</CODE>.
+<P>
+
+Poslední ze základních pohybù je velmi cenný pøi hledání nesrovnalostí v
+závorkování. Pomocí pøíkazu <CODE CLASS=klavesa>%</CODE> se mù¾ete pøesunout na
+odpovídající párovou konstrukci. Za párové jsou pøitom pova¾ovány v¹echny tøi
+typy závorek <CODE>(</CODE>...<CODE>)</CODE>, <CODE>[</CODE>...<CODE>]</CODE>,
+<CODE>{</CODE>...<CODE>}</CODE>, komentáøové dvojznaky podle konvencí jazyka C
+<CODE>/*</CODE>...<CODE>*/</CODE> a instrukce makroprocesoru <CODE>#if</CODE>,
+<CODE>#ifdef</CODE>, <CODE>#else</CODE>, <CODE>#elif</CODE> a
+<CODE>#endif</CODE>. Pøi hledání párového prvku se samozøejmì berou v úvahu
+pøípadné vnoøené konstrukce, tak¾e se najde skuteènì ta závorka (èi jiný
+prvek), která je párová k té pod kurzorem.
+<P>
+
+<BLOCKQUOTE CLASS=priklad>
+<STRONG>Pøíklad:</STRONG><BR>
+Pokud v situaci
+
+<BLOCKQUOTE><PRE>
+(  (  )  (  ()  ()  )  )
+         ^
+</PRE></BLOCKQUOTE>
+
+pou¾ijete <CODE CLASS=klavesa>%</CODE>, ocitnete se zde:
+
+<BLOCKQUOTE><PRE>
+(  (  )  (  ()  ()  )  )
+                    ^
+</PRE></BLOCKQUOTE>
+
+Kdy¾ nyní znovu stisknete <CODE CLASS=klavesa>%</CODE>, vrátí se kurzor na
+pùvodní pozici.
+
+</BLOCKQUOTE>
+
+Pov¹imnìte si dvojakosti pøíkazu <CODE CLASS=klavesa>%</CODE>. Pokud mu
+pøedcházelo èíslo, pøesune vás na øádek, vzdálený o uvedený poèet procent od
+zaèátku textu. Jestli¾e jste pøed ním ¾ádné èíslo nezadali, pøeskoèí na párovou
+závorku. Kdy¾ v tomto okam¾iku nestojí na ¾ádné z vý¹e uvedených párových
+konstrukcí, neudìlá nic.
+<P>
+
+
+<!--/STRANKA-->
+<!--NAVIG-->
+<DIV ALIGN=RIGHT>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0">
+<TR>
+<TD><A HREF="rezimy.htm"><IMG SRC="zpet.gif" ALT="&lt;-- predchozi " BORDER="0"></A></TD>
+<TD><A HREF="index.htm"><IMG SRC="obs.gif" ALT=" [obsah] " BORDER="0"></A></TD>
+<TD><A HREF="edit.htm"><IMG SRC="vpred.gif" ALT=" dalsi --&gt;" BORDER="0"></A></TD>
+</TR>
+</TABLE>
+</DIV>
+<!--/NAVIG-->
+
+<SMALL>&copy; 1997, 1998 Pavel Satrapa</SMALL>
+
+ </TD>
+</TR>
+</TABLE>
+
+</BODY>
+</HTML>

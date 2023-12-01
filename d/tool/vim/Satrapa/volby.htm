@@ -1,0 +1,127 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<HTML>
+<HEAD>
+<TITLE>vim - nastavovani voleb</TITLE>
+<LINK REL=StyleSheet HREF="vim.css" TYPE="text/css">
+</HEAD>
+<BODY BACKGROUND="papir.gif" BGCOLOR="#FFFFFF" TEXT="#000000" LINK="#FF0000"
+      VLINK="#990000" ALINK="#00FF00">
+
+<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="0">
+<TR>
+ <TD><IMG SRC="nic.gif" WIDTH="150" HEIGHT="1"></TD>
+ <TD>
+<!--STRANKA-->
+
+<H1>Nastavování voleb</H1>
+
+Chování <EM>vim</EM> lze ovlivnit celou øadou voleb. Editor jich nabízí
+nìkolik set, co¾ je mo¾ná a¾ pøíli¹ mnoho. Ty nejdùle¾itìj¹í jsem se
+sna¾il popsat v textu&nbsp;- v¾dy v tìch èástech, jejich¾ èinnost ovlivòovaly.
+Struèný pøehled v¹ech dostupných voleb získáte pøíkazem <CODE
+CLASS="prikaz">:help&nbsp;option-list</CODE>. Zde shrnu jen obecné informace o
+jejich nastavování a práci s nimi, èili pou¾ití pøíkazu <CODE
+CLASS="prikaz">:set</CODE>.
+<P>
+
+
+<H2>Druhy voleb</H2>
+
+Existují tøi základní druhy voleb: øetìzcové, èíselné a pravdivostní, kterým
+dále budu øíkat "vypínaèe".
+<P>
+
+Hodnotou øetìzcové volby mù¾e být libovolný øetìzec znakù. Pou¾ívají se
+napøíklad pro jména souborù.
+<P>
+
+Èíselná volba, jak název naznaèuje, obsahuje celé èíslo. Jejich prostøednictvím
+bývají zadávána poèetní omezení&nbsp;- napøíklad maximální poèet pøíkazù, které
+lze odvolat.
+<P>
+
+Volba-vypínaè je dvoustavová. Buï je zapnuta nebo vypnuta a podle toho se mìní
+urèitý rys v chování editoru. Napøíklad pøi zapnuté volbì <CODE
+CLASS="prikaz">ignorecase</CODE> nebudou pøi hledání rozli¹ována malá písmena
+od velkých.
+
+
+<H2>Zobrazení stavu</H2>
+
+Základem práce s volbami je být informován o momentálním nastavení jednotlivých
+voleb. Asi neju¾iteènìj¹ím pøíkazem pro tento úèel je samotný <CODE
+CLASS="prikaz">:set</CODE> bez parametrù. Ten vypí¹e hodnoty v¹ech voleb, které
+se li¹í od implicitních. Podává tedy informaci typu "toto je tøeba nastavit,
+aby se <EM>vim</EM> choval stejnì, jako teï".
+<P>
+
+Pokud chcete kompletní informaci, pou¾ijte <CODE
+CLASS="prikaz">:set&nbsp;all</CODE>. Ten vypí¹e kompletní hodnoty v¹ech
+existujících voleb, co¾ je v mém pøípadì ¹est hustì popsaných obrazovek.
+<P>
+
+Zajímá-li vás hodnota urèité konkrétní volby, nasaïte <CODE
+CLASS="prikaz">:set&nbsp;&lt;volba&gt;?</CODE>&nbsp;- napøíklad <CODE
+CLASS="prikaz">:set&nbsp;ignorecase?</CODE>.
+
+
+<H2>Nastavení</H2>
+
+Také o nastavování voleb se stará pøíkaz <CODE CLASS="prikaz">:set</CODE>.
+Nejjednodu¹¹í je u voleb øetìzcových a èíselných. Zde prostì pou¾ijete <CODE
+CLASS="prikaz">:set&nbsp;&lt;volba&gt;=&lt;hodnota&gt;</CODE>.
+
+<BLOCKQUOTE CLASS="priklad">
+<STRONG>Pøíklad:</STRONG><BR>
+Kapacitu historie pøíkazového øádku nastavíte na 30&nbsp;pøíkazù pomocí
+<P>
+<BLOCKQUOTE>
+<CODE CLASS="prikaz">:set history=30</CODE>
+</BLOCKQUOTE>
+</BLOCKQUOTE>
+
+U voleb vypínaèových je sortiment tvarù ponìkud pestøej¹í. Chcete-li dotyèný
+vypínaè zapnout, pou¾ijte <CODE CLASS="prikaz">:set&nbsp;&lt;volba&gt;</CODE>.
+O vypnutí se postará <CODE CLASS="prikaz">:set&nbsp;no&lt;volba&gt;</CODE>.
+Pokud chcete vypínaè pøepnout do opaèné polohy, ne¾ ve které se právì nachází,
+poslou¾í vám pøíkaz <CODE CLASS="prikaz">:set&nbsp;inv&lt;volba&gt;</CODE>.
+<P>
+
+<BLOCKQUOTE CLASS="priklad">
+<STRONG>Pøíklad:</STRONG><BR>
+Zapneme volbu <CODE CLASS="prikaz">ignorecase</CODE>, vypneme <CODE
+CLASS="prikaz">compatible</CODE> a <CODE CLASS="prikaz">autowrite</CODE>
+pøeklopíme do opaèné polohy:
+<P>
+<BLOCKQUOTE>
+<CODE CLASS="prikaz">:set ignorecase</CODE><BR>
+<CODE CLASS="prikaz">:set nocompatible</CODE><BR>
+<CODE CLASS="prikaz">:set invautowrite</CODE>
+</BLOCKQUOTE>
+</BLOCKQUOTE>
+
+Optimálním místem pro nastavování voleb jsou pochopitelnì
+<A HREF="konfig.htm">konfiguraèní soubory</A>. Díky nim mù¾ete zajistit, ¾e
+<EM>vim</EM> nastartuje v¾dy v té podobì, ve které jej máte nejradìji.
+
+<!--/STRANKA-->
+<!--NAVIG-->
+<DIV ALIGN=RIGHT>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0">
+<TR>
+<TD><A HREF="diff.htm"><IMG SRC="zpet.gif" ALT="&lt;-- predchozi " BORDER="0"></A></TD>
+<TD><A HREF="index.htm"><IMG SRC="obs.gif" ALT=" [obsah] " BORDER="0"></A></TD>
+<TD><A HREF="konfig.htm"><IMG SRC="vpred.gif" ALT=" dalsi --&gt;" BORDER="0"></A></TD>
+</TR>
+</TABLE>
+</DIV>
+<!--/NAVIG-->
+
+<SMALL>&copy; 1997, 1998 Pavel Satrapa</SMALL>
+
+ </TD>
+</TR>
+</TABLE>
+
+</BODY>
+</HTML>

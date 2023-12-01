@@ -1,0 +1,198 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<HTML>
+<HEAD>
+<TITLE>vim - okna</TITLE>
+<LINK REL=StyleSheet HREF="vim.css" TYPE="text/css">
+</HEAD>
+<BODY BACKGROUND="papir.gif" BGCOLOR="#FFFFFF" TEXT="#000000" LINK="#FF0000"
+      VLINK="#990000" ALINK="#00FF00">
+
+<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="0">
+<TR>
+ <TD><IMG SRC="nic.gif" WIDTH="150" HEIGHT="1"></TD>
+ <TD>
+<!--STRANKA-->
+
+<H1>Okna</H1>
+
+Okna jsou jednou z velmi pøíjemných vymo¾eností <EM>vim</EM>. Umo¾òují vám
+vidìt zároveò nìkolik souborù (nebo tøeba nìkolik pohledù do jednoho a toho
+samého souboru), libovolnì je støídat a pøená¹et èásti textu z jednoho do
+druhého. Na obrázku vidíte <EM>vim</EM> se dvìma otevøenými okny.
+<P>
+
+<DIV ALIGN=CENTER>
+<IMG SRC="okna.gif" ALT="[Obrázek]" WIDTH="400" HEIGHT="242">
+</DIV>
+
+
+<H2>Otevírání a zavírání oken</H2>
+
+Nejzákladnìj¹ím zpùsobem, jak spustit <EM>vim</EM> s nìkolika okny je zadat mu
+na pøíkazovém øádku volbu&nbsp;<CODE>-o</CODE>. V takovém pøípadì otevøe okno
+pro ka¾dý soubor, který má editovat.
+<P>
+
+<BLOCKQUOTE CLASS="priklad">
+<STRONG>Pøíklad:</STRONG><BR>
+Pøíkazem
+
+<BLOCKQUOTE>
+<CODE>vim -o histor.htm okna.htm</CODE>
+</BLOCKQUOTE>
+
+jsem spustil <EM>vim</EM>, jeho¾ obrazovka bude rozdìlena na dvì okna. Jedno
+bude obsahovat soubor <CODE>histor.htm</CODE> a druhé <CODE>okna.htm</CODE>.
+Výsledek vidíte vý¹e.
+</BLOCKQUOTE>
+
+Èasto si v¹ak a¾ bìhem editace vzpomenete, ¾e byste rádi na chvíli nahlédli i
+do jiného souboru a tøeba z nìj kousek pøevzali do toho aktuálního. V takovém
+pøípadì poslou¾í pøíkaz <CODE
+CLASS="prikaz">:split&nbsp;<EM>&lt;soubor&gt;</EM></CODE>, kde
+&lt;<EM>soubor</EM>&gt; je jméno souboru, který se má v oknì objevit.
+Samozøejmì je nemusíte zadávat&nbsp;- pak se objeví prázdné okno.
+<P>
+
+Zavírání okna se nijak neli¹í od uzavøení souboru&nbsp;- pou¾ijte prostì <CODE
+CLASS="prikaz">:q</CODE> (pøípadnì <CODE CLASS="prikaz">:q!</CODE>, <CODE
+CLASS="prikaz">:wq</CODE> èi <CODE CLASS="klavesa">ZZ</CODE>&nbsp;- podle toho,
+zda jste obsah okna zmìnili a zda jej chcete ulo¾it).
+<P>
+
+Pøi práci s okny se pøíkaz <CODE CLASS="prikaz">:q</CODE> chová ponìkud
+odli¹nì, ne¾ bez nich. Jestli¾e toti¾ máte otevøeno dal¹í okno se stejným
+souborem, nezavírá se soubor, ale jen okno. Proto se editor nestará o pøípadné
+neulo¾ené zmìny. Teprve pøi zavírání posledního okna do souboru pou¾ije
+klasické chování.
+<P>
+
+Jestli¾e se zároveò jedná o poslední okno editoru, bude souèasnì s oknem
+ukonèen i <EM>vim</EM>. Bì¾ný "neokenní" re¾im práce je vlastnì re¾im "okenní"
+s jediným otevøeným oknem.
+
+
+<H2>Pou¾ívání</H2>
+
+Ka¾dé okno jest chápati jako okénko, kterým nahlí¾íte do obsahu souboru. Mù¾ete
+si jich otevøít mnoho, ale v praxi nejèastìji pracujete se dvìma okny&nbsp;- v
+jenom je "hlavní" editovaý soubor a ve druhém soubor, do kterého momentálnì
+chcete nahlédnout èi z nìj nìco zkopírovat.
+<P>
+
+V¹echny okenní operace se vyvolávají dvojicí znakù, z nich¾ první je <CODE
+CLASS="klavesa">Ctrl-W</CODE> (W jako window). Základem pou¾ití oken je
+pochopitelnì poskakování z jednoho do druhého. Asi nejèastìji pou¾ívaný je
+pøíkaz <CODE CLASS="klavesa">Ctrl-W&nbsp;Ctrl-W</CODE>. Pøesune kurzor do okna
+pod aktuálním. Jste-li v nejni¾¹ím oknì obrazovky, pøetoèí se zpìt nahoru.
+<EM>vim</EM> si pamatuje pozici, ze které jste dotyèné okno opustili a pøi
+návratu vás posadí pøímo na ni.
+<P>
+
+<STRONG>Pozor!</STRONG> Pøíkazy pro práci s okny je tøeba provádìt v normálním
+re¾imu. Ve vkládacím toti¾ <CODE CLASS="klavesa">Ctrl-W</CODE> vyma¾e slovo
+pøed kurzorem.
+<P>
+
+Pomìrnì intuitivní je i dal¹í zpùsob pøepínání oken: po <CODE
+CLASS="klavesa">Ctrl-W</CODE> stisknìte nìkterý z pøíkazù pro pohyb nahoru èi
+dolù a kurzor pøejde do sousedního okna v uvedeném smìru. Tak¾e <CODE
+CLASS="klavesa">Ctrl-W&nbsp;[¹ipka&nbsp;nahoru]</CODE> nebo <CODE
+CLASS="klavesa">Ctrl-W k</CODE> posouvají kurzor do vy¹¹ího okna, zatímco pøi
+<CODE CLASS="klavesa">Ctrl-W&nbsp;[¹ipka&nbsp;dolù]</CODE> èi <CODE
+CLASS="klavesa">Ctrl-W j</CODE> naopak klesáte.
+<P>
+
+Pokud va¹e verze <EM>vim</EM> podporuje my¹, mù¾ete støídat okna prostým
+klepnutím my¹i. Kurzor se toti¾ pøesune na pozici klepnutí, a» je kdekoli.
+Tak¾e pøípadnì zmìní aktuální okno. Klepnete-li na stavový øádek okna,
+pøestìhuje se kurzor do nìj na pozici, ze které jste je naposledy opustili.
+
+
+<H2>Zmìny uspoøádání</H2>
+
+Èlovìku je vìt¹inou jedno, v jakém poøadí se okna na obrazovce vyskytují. Pokud
+by to náhodou nebyla pravda, pøíkaz <CODE CLASS="klavesa">Ctrl-W r</CODE>
+rotuje okna smìrem dolù, <CODE CLASS="klavesa">Ctrl-W R</CODE> rotuje okna
+nahoru a <CODE CLASS="klavesa">Ctrl-W x</CODE> vymìní aktuální okno s oknem pod
+ním.
+<P>
+
+Naopak pomìrnì èastou potøebou je zmìna velikosti oken. Implicitnì je
+<EM>vim</EM> nastaven tak, ¾e pøi vytvoøení nového okna zmìní velikosti v¹ech
+stávajících tak, aby v¹echna okna byla stejnì vysoká. Toto chování øídí volba
+<CODE CLASS="prikaz">equalalways</CODE>. Pokud ji vypnete (<CODE
+CLASS="prikaz">:set&nbsp;noequalalways</CODE>), rozdìlí se pøi vytváøení nového
+okna to stávající na dvì poloviny a vý¹ky ostatních oken zùstanou zachovány.
+<P>
+
+Kdy¾ vám stávající velikost okna nevyhovuje, mù¾ete ji upravit. Pøíkaz <CODE
+CLASS="klavesa">Ctrl-W&nbsp;+</CODE> ji zvìt¹uje a <CODE
+CLASS="klavesa">Ctrl-W&nbsp;-</CODE> zmen¹uje. Uvedete-li pøed nimi èíslo,
+zvìt¹í/zmen¹í se o daný poèet øádkù. Implicitní hodnotou je&nbsp;1. Pomocí
+<CODE CLASS="klavesa">Ctrl-W&nbsp;_</CODE> nastavíte vý¹ku okna pøesnì na
+èíslo, které jste uvedli pøed pøíkazem. Implicitnì pou¾ije maximální vý¹ku okna
+(v¹em ostatním ponechá jediný øádek).
+<P>
+
+Zmìnu velikosti lze zajistit i automaticky. Volba <CODE
+CLASS="prikaz">winheight</CODE> toti¾ udává minimální po¾adovanou vý¹ku
+aktuálního okna. Nastavíte-li tøeba <CODE
+CLASS="prikaz">:set&nbsp;winheight=10</CODE> a pøejdete s kurzorem do malinkého
+okénka, roztáhne se na vý¹ku deseti øádkù. Kdy¾ do <CODE
+CLASS="prikaz">winheight</CODE> ulo¾íte velkou hodnotu (tøeba&nbsp;100), bude
+aktuální okno v¾dy rozta¾eno na maximální plochu a v¹echna ostatní degradována
+na jediný øádek. Nìkomu takové chování vyhovuje, nìkdo dává pøednost stabilnímu
+uspoøádání oken. Volba je na vás.
+<P>
+
+
+<H2>Vertikální okna</H2>
+
+S verzí&nbsp;6 se objevila mo¾nost rozdìlovat obrazovku také svisle. Slou¾í k
+tomu pøíkaz <CODE CLASS="prikaz">:vsplit</CODE>, který se chová podobnì jako
+vý¹e zmiòovaný <CODE CLASS="prikaz">:split</CODE>. Jediný rozdíl je v tom, ¾e
+obrazovku rozdìlí svisle.
+<P>
+
+Nìkolikerým pou¾itím <CODE CLASS="prikaz">:split</CODE> a <CODE
+CLASS="prikaz">:vsplit</CODE> mù¾ete na obrazovce vytvoøit celkem divoký
+propletenec svislých a vodorovných oken.
+<P>
+
+Také ostatní pøíkazy pro práci s okny zùstávají analogické. Mezi svislými okny
+se pøechází sekvencí <CODE CLASS="klavesa">Ctrl-W</CODE> a pohybu do strany
+(<CODE CLASS="klavesa">h</CODE>, <CODE CLASS="klavesa">l</CODE> nebo kurzor
+doleva èi doprava). ©íøka okna se mìní pomocí <CODE
+CLASS="klavesa">Ctrl-W&nbsp;&lt;</CODE> a <CODE
+CLASS="klavesa">Ctrl-W&nbsp;&gt;</CODE>. Expanzi na co nejvìt¹í ¹íøku zajistí
+<CODE CLASS="klavesa">Ctrl-W&nbsp;|</CODE>. Analogií volby <CODE
+CLASS="prikaz">winheight</CODE> je zde <CODE CLASS="prikaz">winwidth</CODE>.
+<P>
+
+Upøímnì øeèeno svislá okna zrovna nemiluji. Znamenají krátké øádky a s krátkými
+øádky je v¾dycky potí¾. Nicménì obèas se svislé okno docela hodí&nbsp;-
+napøíklad pøi porovnávání souborù.
+<P>
+
+<!--/STRANKA-->
+<!--NAVIG-->
+<DIV ALIGN=RIGHT>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0">
+<TR>
+<TD><A HREF="dopln.htm"><IMG SRC="zpet.gif" ALT="&lt;-- predchozi " BORDER="0"></A></TD>
+<TD><A HREF="index.htm"><IMG SRC="obs.gif" ALT=" [obsah] " BORDER="0"></A></TD>
+<TD><A HREF="syntax.htm"><IMG SRC="vpred.gif" ALT=" dalsi --&gt;" BORDER="0"></A></TD>
+</TR>
+</TABLE>
+</DIV>
+<!--/NAVIG-->
+
+<SMALL>&copy; 1997, 1998 Pavel Satrapa</SMALL>
+
+ </TD>
+</TR>
+</TABLE>
+
+</BODY>
+</HTML>

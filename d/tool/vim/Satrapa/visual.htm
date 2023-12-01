@@ -1,0 +1,171 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<HTML>
+<HEAD>
+<TITLE>vim - vizualni rezim</TITLE>
+<LINK REL=StyleSheet HREF="vim.css" TYPE="text/css">
+</HEAD>
+<BODY BACKGROUND="papir.gif" BGCOLOR="#FFFFFF" TEXT="#000000" LINK="#FF0000"
+      VLINK="#990000" ALINK="#00FF00">
+
+<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="0">
+<TR>
+ <TD><IMG SRC="nic.gif" WIDTH="150" HEIGHT="1"></TD>
+ <TD>
+<!--STRANKA-->
+
+<H1>Vizuální re¾im</H1>
+
+Práce s bloky, kterou jsem popsal v èásti o <A HREF="edit.htm">editaci
+textu</A>, je dosti neobvyklá. Kombinace editaèního pøíkazu (napø. zkopírování)
+s pohybem je v øadì pøípadù geniální a nìkolikanásobnì zrychlí va¹i práci.
+Nicménì nelze popírat, ¾e pøístup bì¾ných editorù, kdy se nejprve kurzorem
+vyznaèí blok textu a na nìj pak provede ký¾ená operace, také není k zahození.
+Pokud editovaný blok není jasnì vymezen urèitou ucelenou èástí textu (napø.
+odstavec èi øádek), bývá interaktivní zpùsob zadávání bloku výhodnìj¹í. Proto
+jej <EM>vim</EM> zaøadil do svého repretoáru.
+
+
+<H2>Vyznaèení bloku</H2>
+
+Vizuální re¾im ztìlesòuje klasický zpùsob práce s bloky. Nejprve kurzorem
+vymezíte, odkud kam bude sahat editaèní zásah a pak jej provedete. Bìhem
+vyznaèování bloku se <EM>vim</EM> nachází ve speciálním&nbsp;- vizuálním&nbsp;-
+re¾imu.
+<P>
+
+Jeho nejklasiètìj¹ím zahájením je klávesa <CODE CLASS=klavesa>v</CODE>. Kdy¾ po
+jejím stisknutí zaènete pohybovat kurzorem, bude za sebou zanechávat stopu v
+podobì znakù zobrazených inverznì. V¹echny takto zvýraznìné znaky patøí do
+vybraného bloku. Pro pohyb kurzoru mù¾ete pou¾ívat v¹echny pohybové pøíkazy
+vèetnì hledání a dal¹ích specialit.
+<P>
+
+<DIV ALIGN=CENTER>
+<IMG SRC="visual.gif" ALT="[Obrázek]" WIDTH="400" HEIGHT="105">
+<P>
+</DIV>
+
+Kromì popsaného klasického vizuálního re¾imu existují je¹tì jeho dvì speciální
+odrùdy. Pokud jej zahájíte klávesou <CODE CLASS=klavesa>V</CODE> (tedy <CODE
+CLASS=klavesa>Shift-V</CODE>), bude text oznaèován po celých øádcích.
+Naproti tomu <CODE CLASS=klavesa>Ctrl-V</CODE> vytvoøí efekt, známý pod
+pojmem sloupcové bloky. Vyznaèen bude pouze obdélník mezi výchozí a aktuální
+pozicí kurzoru.
+<P>
+
+Zajímavou mo¾nost ve vizuálním re¾imu pøedstavuje klávesa <CODE
+CLASS=klavesa>o</CODE>. Ta pøesune kurzor na druhý konec vyznaèeného bloku,
+tak¾e mù¾ete upravovat pro zmìnu druhou stranu. Vrátíte-li se zpìt do
+normálního re¾imu, lze pomocí kláves <CODE CLASS=klavesa>gv</CODE> obnovit
+vyznaèení posledního vizuálního bloku.
+<P>
+
+Pokud máte <EM>vim</EM> pøelo¾ený s podporou my¹i, mù¾ete ji zapojit. Klasicky
+stisknutím levého tlaèítka a táhnutím my¹i oznaèíte text mezi výchozí a
+koncovou polohou kurzoru. Kdy¾ v dokumentu klepnete pravým tlaèítkem my¹i, bude
+oznaèen ve¹kerý text mezi pozicí kurzoru a pozicí my¹i.
+
+
+<H2>Akce</H2>
+
+Jakmile je blok oznaèen, mù¾ete s ním nìco provést. Pøíkaz se jako obvykle
+zadává patøiènou klávesou. Pokud si to rozmyslíte, mù¾ete pou¾ít <CODE
+CLASS=klavesa>[Esc]</CODE>, který vás vrátí do pøíkazového re¾imu, ani¾ by se
+text jakkoli zmìnil. Pøíkazy, které lze pou¾ít na vizuálnì vybraný blok, jsou
+následující:
+<P>
+
+<DIV ALIGN=CENTER>
+<TABLE BORDER="0">
+<TR>
+ <TH COLSPAN="2" ALIGN=LEFT>Základní trojice</TH>
+</TR>
+<TR VALIGN=TOP>
+ <TD><CODE CLASS=klavesa>d</CODE></TD>
+ <TD>vymazat a ulo¾it do vyrovnávací pamìti (delete)</TD>
+</TR>
+<TR VALIGN=TOP>
+ <TD><CODE CLASS=klavesa>c</CODE></TD>
+ <TD>zmìnit (change)</TD>
+</TR>
+<TR VALIGN=TOP>
+ <TD><CODE CLASS=klavesa>y</CODE></TD>
+ <TD>zkopírovat do vyrovnávací pamìti (yank)<BR>&nbsp;</TD>
+</TR>
+
+<TR>
+ <TH COLSPAN="2" ALIGN=LEFT>Velká/malá písmena</TH>
+</TR>
+<TR VALIGN=TOP>
+ <TD><CODE CLASS=klavesa>~</CODE></TD>
+ <TD>malá písmena nahradit velkými a naopak</TD>
+</TR>
+<TR VALIGN=TOP>
+ <TD><CODE CLASS=klavesa>U</CODE></TD>
+ <TD>pøevést na velká písmena</TD>
+</TR>
+<TR VALIGN=TOP>
+ <TD><CODE CLASS=klavesa>u</CODE></TD>
+ <TD>pøevést na malá písmena<BR>&nbsp;</TD>
+</TR>
+
+<TR>
+ <TH COLSPAN="2" ALIGN=LEFT>Formátování</TH>
+</TR>
+<TR VALIGN=TOP>
+ <TD><CODE CLASS=klavesa>Q</CODE></TD>
+ <TD>pøeformátovat vyznaèený text</TD>
+</TR>
+<TR VALIGN=TOP>
+ <TD><CODE CLASS=klavesa>J</CODE></TD>
+ <TD>spojit do jednoho øádku</TD>
+</TR>
+<TR VALIGN=TOP>
+ <TD><CODE CLASS=klavesa>&gt;</CODE></TD>
+ <TD>posunout doprava</TD>
+</TR>
+<TR VALIGN=TOP>
+ <TD><CODE CLASS=klavesa>&lt;</CODE></TD>
+ <TD>posunout doleva<BR>&nbsp;</TD>
+</TR>
+
+<TR>
+ <TH COLSPAN="2" ALIGN=LEFT>Speciální</TH>
+</TR>
+<TR VALIGN=TOP>
+ <TD><CODE CLASS=klavesa>:</CODE></TD>
+ <TD>pøejít do re¾imu pøíkazového øádku</TD>
+</TR>
+</TABLE>
+</DIV>
+<P>
+
+Pøi pou¾ití dvojteèky se ocitnete v re¾imu pøíkazového øádku. <EM>vim</EM> na
+jeho zaèátek automaticky doplní rozsah øádkù, který pokrývá v¹echny øádky,
+obsa¾ené ve vyznaèeném bloku. Chcete-li napøíklad nahradit jeden øetìzec
+jiným v èásti textu, staèí ji vizuálnì vyznaèit a pou¾ít <CODE
+CLASS=prikaz>:s</CODE> (viz èást o <A HREF="nahrad.htm">nahrazování textu</A>).
+<P>
+
+
+<!--/STRANKA-->
+<!--NAVIG-->
+<DIV ALIGN=RIGHT>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0">
+<TR>
+<TD><A HREF="histor.htm"><IMG SRC="zpet.gif" ALT="&lt;-- predchozi " BORDER="0"></A></TD>
+<TD><A HREF="index.htm"><IMG SRC="obs.gif" ALT=" [obsah] " BORDER="0"></A></TD>
+<TD><A HREF="format.htm"><IMG SRC="vpred.gif" ALT=" dalsi --&gt;" BORDER="0"></A></TD>
+</TR>
+</TABLE>
+</DIV>
+<!--/NAVIG-->
+
+<SMALL>&copy; 1997, 1998 Pavel Satrapa</SMALL>
+
+ </TD>
+</TR>
+</TABLE>
+
+</BODY>
+</HTML>

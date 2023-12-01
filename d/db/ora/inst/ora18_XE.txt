@@ -1,0 +1,61 @@
+-- ora18_XE.txt
+
+-- profile: set PASSWORD_LIFE_TIME UNLIMITED
+select USERNAME, PROFILE from DBA_USERS where USERNAME like 'SYS%'
+/
+select * from DBA_PROFILES s where s.PROFILE='DEFAULT'
+/
+alter profile DEFAULT limit PASSWORD_LIFE_TIME UNLIMITED
+/
+
+-- Connecting to Oracle Database XE
+-- https://docs.oracle.com/en/database/oracle/oracle-database/18/xeinw/connecting-oracle-database-xe.html
+-- Multitenant container database: host[:port] 
+-- Pluggable database: host[:port]/service_name
+
+-- cd <oracle_home>\bin
+-- sqlplus / as sysdba
+SHUTDOWN IMMEDIATE
+STARTUP
+ALTER PLUGGABLE DATABASE ALL OPEN ;
+ALTER PLUGGABLE DATABASE ALL SAVE STATE ;
+
+select NAME, OPEN_MODE, to_char(OPEN_TIME,'DD.MM.YYYY HH24:MI:SS') as OPEN_TIME from v$PDBS
+/
+
+create pfile from spfile ;
+-- %ORACLE_HOME%\database\initXE.ora
+-- *.local_listener=''  -- prev.value: 'LISTENER_XE'
+
+-- trace:
+-- %ORACLE_BASE%\product\18.0.0\diag\rdbms\xe\xe\trace\alert_xe.log
+
+-- %ORACLE_HOME%\network\admin
+-- tnsnames.ora
+--   LISTENER_XE -> LISTENER
+
+LISTENER =
+  (ADDRESS = (PROTOCOL = TCP)(HOST = L34000963852.ness.com)(PORT = 1521))
+
+XE.local =
+  (DESCRIPTION =
+    (ADDRESS = (PROTOCOL = TCP)(HOST = L34000963852.ness.com)(PORT = 1521))
+    (CONNECT_DATA =
+      (SERVER = DEDICATED)
+      (SERVICE_NAME = XE)
+    )
+  )
+
+-- added:
+XEPDB1.local =
+  (DESCRIPTION =
+    (ADDRESS = (PROTOCOL = TCP)(HOST = L34000963852.ness.com)(PORT = 1521))
+    (CONNECT_DATA =
+      (SERVER = DEDICATED)
+      (SERVICE_NAME = XEPDB1)
+    )
+  )
+
+-- unlock
+alter user HR identified by hr account unlock
+/

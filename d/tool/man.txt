@@ -1,0 +1,478 @@
+@vi
+------------------ Editor vi --------------------------------
+From:	SCO UNIX System V/386 OS, User's Guide
+
+Entering vi:
+
+	vi file		 	Starts at line 1
+	vi +n file		Starts at line n
+	vi + file		Start at last line
+	vi +/pattern file	Stars at pattern
+	vi -r file		Recovers file after a system crash
+	vi -R file, view file   Open file in read-only mode
+
+Cursor Movement:
+
+	h 		Moves 1 space left
+	l,<Space>	Moves 1 space right
+	
+	w,W		Moves 1 word (char,alphanumeric) right
+	b,B		Moves 1 word (char,alphanumeric) left
+	e,E		Moves to the last char. of current
+			(char,alph.) word
+	k		Moves 1 line up
+	j,<Return>	Moves 1 line down
+	+,-		Moves cursor to first not blank character on
+			(folowed, preceded) line 
+	
+	<CTRL>w		Moves to first character of insertion
+	
+	<CTRL>u		Scrolls up 1/2 screen
+	<CTRL>d		Scrolls down 1/2 screen
+	<CTRL>f		Scrolls down one screen
+	<CTRL>b		Scrolls up one screen
+	
+	H, M, L		Moves the cursor to the top, middle, bottom 
+			line of the screen
+	z <Return>	Plases the current line to the top of the screen
+	<n>G		Moves the cursor to line <n>
+	
+	f,F <char>	Moves the cursor ( forward, backward )
+			to sp. <char>
+	t,T <char>	As f,F, but place the cursor - before <char>
+
+Inserting Text:
+
+	i	Before the cursor
+	I	Before first character on the line
+	a	After the cursor
+	A	After last character on the line
+	o	On next line down
+	O	On next line above
+
+Change Commands:
+
+	r	Replaces one character only
+	R	Replaces until <ESC>
+	
+	<n>s	Replaces and substitutes <n> characters
+	<n>S	Replaces and substitutes <n> lines
+	
+	cw	Changes 1 word
+	cc	Changes current line
+	
+Delete Commands:
+
+	x,X	Deletes a (current,previous) character
+	dw	Deletes a word
+	d0	Deletes to beginning of line
+	d$,D	Deletes to end of line
+	dd	Deletes the current line
+	
+Search Commands:
+
+	/and	Finds the next occurrence of and 
+	?and	Finds the previous occurence of and 
+	/^The	Finds next line that starts with The
+	/[bB]ox 
+
+Search and Replace Commands:
+
+	:s/word1/word2/g	On the current line : word1 -> word2
+	:1,$s/file/directory	Replaces file with directory from
+                        	line 1 to the end
+	:g/one/s//1/g		Replaces every occurence of one with 1
+
+Pattern Matching - Special Characters:
+
+	^	Beginning of a line
+	$	End of a line
+	.	Any single character
+	[]	A range of characters
+
+Leaving vi:
+
+	:x		Writes out the file, quits vi
+	:q!		Quit vi without saving changes
+	:!command	Executes command  
+	:!sh		Forks a new shell
+	!!command	Executes command and places output 
+			on current line
+
+Editing a Series of Files:
+
+	vi file1 file2 file3 file4	start
+	vi file*
+	vi [3-5]*.s
+
+	:n		next file
+	:args		appears list of files on the status line
+	:e file2	
+	:rew		starts again from the beginning of the list
+	:rew!		-..-, and discard the changes
+	
+	:e file		Edits next file
+			(save current file with :w first)
+	:e! file        -..-
+	:e#		Return to previous file
+
+Buffers:
+
+	unnamed buffer  0	contain the last deleted text ( " )
+	delete  buffers 1..9    contains last deleted texts ("1 .. "9)
+	named   buffers a..z	for using as a stack of text ("a .. "z)
+				a..z - copy  text into buffer
+				A..Z - append text into buffer
+
+	yy		Copy current line into unnamed buffer
+	yw		Copy one word into unnamed buffer
+	p,P		Print unnamed buffer 
+	"ay$		Copy the rest of current line into buffer "a
+	"a2dd		Move 2 lines into buffer "a
+	"Ayy   		Append the current line into buffer "a
+	"ap		Print buffer "a
+
+Next Commands:
+
+	:r filename	Inserting text from file filename
+	:1,20w filename	Write lines 1,20 into file filename
+	
+	n1,n2 co n3	Copy lines n1 .. n2 and put them behind line n3
+	n1,n2 mo n3  	Move ........
+	n1,n2d          Delete lines n1 .. n2
+
+	u,U		Undo command
+	
+	Q		Performing a series of line-oriented commands
+	vi		Return to normal vi mode
+	
+	<CTRL>l		Refresh screen
+	
+	:f, <CTRL>G	displayeds information
+
+
+Customizing Environment - The $HOME/.exrc File:
+
+	Example :  set number
+	   	   set autoindent
+	   	   set showmode
+	   	   map ^C :w^M:!cc -c %^M
+	   	   abbr #d #define
+	
+	 map :  ^P .. <CTRL>P 
+    	         .. <Esc>      /* write ... <CTRL>v,Esc */
+    	         .. <Return>   /* -..-              Enter */
+     	         % .. current file
+
+
+
+@mail
+----------------------- MAIL -------------------------------
+From:	SCO UNIX System V/386 OS, User's Guide
+
+mail ... works in compose mode and command mode
+
+1.) mail user ... starts in compose mode
+
+	~?          ... help
+	~r filename ... includes file into message
+	~p		viev composing message
+	<CTRL>d		end and sent message
+
+2.) mail      ... aut. starts in command mode
+
+	?	... help
+	h	... print message headers
+
+
+@awk
+------------------------- AWK ---------------------------------
+From:	SCO UNIX System V/386 OS, User's Guide
+
+Name:
+	awk - pattern scanning and processing language
+
+Command line:
+	awk  program  filenames
+	awk  -f program_file  filenames
+	awk  -Fs sets field separator to string s; -Ft sets separator to tab
+
+Program Structure:
+
+	pattern { action }
+  	pattern { action }  
+	..................	
+
+	Example:	$1 == "address"   { print $2, $4 }
+
+	- Executed for every line (record) except patterns BEGIN, END.
+
+	The fields are denoted $1, $2, ..;
+	$0 refers to the entire line (also called record).
+
+Patterns:
+
+	BEGIN  		     END
+	/regular expresion/  relational_expresion
+	pattern || pattern   pattern && pattern
+	(pattern)	     !pattern
+	pattern, pattern
+
+Control Flow Statements:
+
+	if( <expr> ) <statenent> [ else <statement> ]
+	if( <subscript> in <array> ) <statement> [ else <statement> ]
+	while( <expr> ) <statement> 
+	for( <expr>; <expr>; <expr> ) <statement>
+	for( <var> in <array> ) <statement>
+	do <statement> while( <expr> )
+	break
+	continue
+	next
+	exit [<expr>]
+	return [<expr>]
+
+	# this is a comment
+
+Functions:
+
+	func name( parameter_list ) { statement }
+	function name( parameter_list ) { statement }
+
+Input-Output:
+
+	close( filename )	close file
+	getline			set $0 from next input record;
+				set NF, NR, FNR
+	getline <file		set $0 from next record of file;
+				set NF
+	getline var		set var from next input record;
+				set NR, FNR
+	getline var <file	set var from next record of file
+
+        All forms of getline return 1 for successful  input,  0  for
+        end of file, and -1 for an error.
+
+	print			print current record (also print $0)
+	print expr-list		print expresions
+	print expr-list >file	print expresions on file
+	printf fmt,expr-list	format and print
+	printf fmt,e-list >file	format and print on file
+	system( cmd-file )	execute cmd_line, return status
+
+	In print and printf ... >>file appends to the file and
+	| ... writes on pipe. ( | getline ... pipes into getline )
+
+String Functions:
+
+	gsub(r,s)     substitues s for r globally in current record
+		      returns number of substitutions 
+		      example : gsub(/USA/,"United States") 
+	gsub(r,s,t)   -..-    -..-        ... in string t	
+        index(s, t)   returns position of string t in s, 0 if not 
+		      present
+        length(s)     returns the length of s
+        match(s, re)  returns the position in s where r occurs, 0 if
+		      not present ; RSTART  is  set  to  the starting 
+		      position  (which  is the same as the returned 
+		      value), and RLENGTH  is  set  to  the length
+		      of the matched string.
+        split(s, a, fs)
+                      splits the string s into array elements  a[1],
+                      a[2],  a[n], and returns n.  The separation is
+                      done with the regular expression  fs  or  with
+                      the field separator FS if fs is not given.
+        sprintf(fmt, expr, expr,...)  according to the printf(S)
+	sub(r,s)      substitutes s for first r in current record,
+		      returns number of substitutions
+	sub(r,s,t)    subst. s for first r in t, returns number of 
+		      substitutions
+	substr(s,p)   returns suffix of s starting at position p
+	substr(s,p,n) returns substring of s of length n starting at
+		      position p
+
+Arithmetic Functions:
+
+	atan2(y,x)	arctangent of y/x in radians
+	cos( expr )	cosine (angle in radians)
+	exp( expr )	exponential
+	int( expr )	truncate to integer
+	log( expr )	natural logarithm
+	rand()		random number between 0 and 1
+	sin( expr )	sine (angle in radians)
+	sqrt( expr )	square root
+	srand( expr )	new seed for random number generator;
+			use time of day if no expr
+
+Operators (Increasing Precedence):
+
+	= += -= *= /= %= ^=	assignment
+	?:			conditional expression
+	||			logical OR
+	&&			logical AND
+	~ !~			regular expression match, negated match
+	< <= > >= != ==		relationalas
+	blank			string concatenation
+	+ -			add, subtract
+	* / %			multiply, divide, mod
+	+ - !			unary plus, unary minus, logical negation
+	^			exponentiation ( ** is a synonym)
+	++ --			increment, decrement (prefix, posfix)
+	$			field
+
+Regular Expressions (Increasing Precedence):
+
+	c	matches any non-metacharacter c
+	\c	matches character c literally
+ 	^	matches beginning of string
+	$	matches end of line or string
+	.	matches any character but newline (?)
+	[ab..]	character class matches any of ab..
+	[^ab..]	negated class matches any but not ab.. and newline
+	r*	matches zero or more r's
+	r+	matches one or more r's
+	r?	matches zero or one r
+	(r)	grouping; matches r
+	r1r2	concatenation: matches r1, then r2
+	r1|r2	matches either r1 or r2
+
+Built-in Variables:
+
+        ARGC     command line argument count
+        ARGV     command line argument array
+        FILENAME name of the current input file
+        FNR      input record number in current file
+        FS       input field separator regular expression
+	         (default blank&tab)
+        NF       number of fields in the current record
+        NR       ordinal number of the current record
+        OFMT     output format for numbers (default %.6g)
+        OFS      output field separator (default blank)
+        ORS      output record separator (default new-line)
+        RS       input record separator (default new-line)
+        RSTART   index of first char. matched by match(); 0 if no match
+        RLENGTH  length of string matched by match(); -1 if no match
+        SUBSEP   subscript separator (default "\034")
+
+Arrays:
+
+	awk provides one-dimensional arrays
+
+	for( i in array)  statement  - executes statement with the
+		variable i set in turn to each value of i for which 
+		array[i] has been defined
+
+		     { x[NR] = $0       }
+		END  { ...processing... }
+
+	Array elements may also be named by nonnumeric values.
+
+		/Asia/  { pop["Asia"] += $3 }
+		END     { print "Sum Asia :", pop["Asia"] }
+
+		BEGIN    { FS = "\t" }
+			 { area[$4] += $2 }
+		END	 { for (name in area)
+				print name, area[name] }
+			   
+			if( "Africa" in area) ...
+			if( area["Africa"] != "" ) ... that is the same
+
+	Delete arrayname[ subscript ]  - delete an array element
+
+
+Examples:
+
+	[a-zA-Z]	any single letter
+	[^a-zA-Z]	complements ... any single non-letter
+	[0-9+]		one or more digits
+	/(apple|mouse) (pie|tart)/ ... matches any of the four
+			substrings "apple pie", "apple tart",
+			"mouse pie" or "mouse tart"
+	/^.$/       ... matches all records that contain
+			exactly one char.
+	/^[0-9]+$/  ... string of one or more digits
+
+	 /Asia/         { print }     /* print record contains "Asia" */
+	 $4 !~ /Asia/   { print $1 }  
+
+	Output into Files:
+		$3 > 100	{ print $1, $3 >"file" }
+		$4 ~ /Europe/   { print $1 > ("tmp" FILENAME) }
+			# concatenation tmp and FILENAME (?)
+ 	Output into Pipes:
+		print | "command-line"
+
+        Print lines longer than 72 characters:      length > 72
+
+        Print first two fields in opposite order:   { print $2, $1 }
+
+        Same, with input fields separated by comma and/or blanks and
+        tabs:
+
+        	BEGIN   { FS = ",[ \t]*[ \t]+" }
+                        { print $2, $1 }
+
+	Add up the first column, print sum and average:
+
+                        { s += $1 }
+		END     { print "sum is",  s, " average is", s/NR }
+
+	Print fields in reverse order:
+
+		{ for (i = NF; i > 0; --i) print $i }
+
+	Print all lines between start/stop pairs:
+
+		/start/, /stop/
+
+	Print all lines whose first field is different from previous one:
+
+		$1 != prev { print; prev = $1 }
+
+	Simulate echo(C):
+
+		BEGIN   { for (i = 1; i < ARGC; i++)
+                                       printf "%s", ARGV[i]
+                          printf "\n" ; exit ; }
+
+	Print file, filling in page numbers starting at 5:
+
+		/Page/  { $2 = n++; }
+                        { print }
+		command line:  awk  -f program n=5 input
+
+	Print .h files from source text:
+
+	'$1 == "#include" { gsub(/[<>"]/, "", $2); system("cat " $2) }
+
+        Control Flow statements:
+
+	{ if( maxpop < $3 ) {
+     		maxpop = $3 ; country = $1 ;
+           }
+       	}
+
+ 	{ i = 1
+   	  while (i <= NF)  { print $i ; ++i ; }
+        }
+
+  	{ for( i = 1 ; i <= NF ; ++i )  printf "%s ", $i  }
+
+	 /start/ {
+	          do {
+		       getline x
+                     } while (x !~ /stop/)
+                 }
+		 { print }
+
+	User-Defined Functions:
+
+		function fact( n ) {
+			if (n <= 1)
+				return 1
+ 			else
+				return n * fact(n-1)
+		}
+		{ print $1 "! is " fact($1) }
+

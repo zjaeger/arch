@@ -1,0 +1,147 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<HTML>
+<HEAD>
+<TITLE>vim - prikazy ex</TITLE>
+<LINK REL=StyleSheet HREF="vim.css" TYPE="text/css">
+</HEAD>
+<BODY BACKGROUND="papir.gif" BGCOLOR="#FFFFFF" TEXT="#000000" LINK="#FF0000"
+      VLINK="#990000" ALINK="#00FF00">
+
+<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="0">
+<TR>
+ <TD><IMG SRC="nic.gif" WIDTH="150" HEIGHT="1"></TD>
+ <TD>
+<!--STRANKA-->
+
+<H1><EM>vim</EM> na <EM>ex</EM></H1>
+
+Editor <EM>vi</EM>, pøedek <EM>vim</EM>, vznikl jako druhá tváø editoru
+<EM>ex</EM>. Jednalo se o jeden program, kterı mìl dvì jména a jim pøíslu¹ející
+dva druhy chování. Spustil-li se jako <EM>vi</EM>, pracoval v
+celoobrazovkovém re¾imu. Pokud jste jej zavolali pod jménem <EM>ex</EM>,
+pracoval jako editor øádkovı.
+<P>
+
+I v souèasném <EM>vim</EM> zùstala zachována mo¾nost pou¾ívat pøíkazy pùvodního
+<EM>ex</EM>. Budou vám pravdìpodobnì pøipadat zvlá¹tní, proto¾e øádkové editory
+ji¾ ukonèily svou pou» poèítaèovım svìtem a tento pojem dnes málokomu nìco
+øíká. Jednalo se o interaktivní editory, v nich¾ jste se ale nepohybovali pøímo
+v textu. Místo toho jste editaèní operace øídili z jakéhosi ovládacího panelu.
+Zadávali jste pøitom pøíkazy typu "pøesuò se na øádek&nbsp;10", "sma¾
+3&nbsp;øádky", "nahraï na aktuálním øádku slovo Ivánek slovem Ivan", "zobraz
+5&nbsp;øádkù" a podobnì.
+<P>
+
+Do kategorie <EM>ex</EM>-pøíkazù patøí rùzné nastavování parametrù, definice
+maker, práce se soubory a podobnì. Jistì si vzpomínáte, ¾e jejich zadávání
+aktivujete z normálního re¾imu dvojteèkou a ukonèujete buï klávesou <CODE
+CLASS=klavesa>[Enter]</CODE> nebo <CODE CLASS=klavesa>[Esc]</CODE> (pokud se
+rozhodnete akci odvolat).
+<P>
+
+
+<H2>Editaèní pøíkazy <EM>ex</EM></H2>
+
+Malou skupinu <EM>ex</EM>-pøíkazù tvoøí té¾ pøíkazy editaèní. Z nich je masivnì
+pou¾íván jedinı: pøíkaz <CODE CLASS=prikaz>s</CODE> (substitute), slou¾ící pro
+vyhledávání a nahrazování øetìzcù. V této kapitole budu pou¾ívat jinı&nbsp;-
+pøíkaz <CODE CLASS=prikaz>d</CODE> (delete), kterı likviduje øádky. Je toti¾
+mnohem jednodu¹¹í.
+<P>
+
+Editaèní <EM>ex</EM>-pøíkazy mají jednotnı tvar:
+
+<BLOCKQUOTE>
+&lt;<EM>øádky</EM>&gt;&lt;<EM>pøíkaz</EM>&gt;&lt;<EM>parametry</EM>&gt;
+</BLOCKQUOTE>
+
+<EM>Øádky</EM> stanoví, kterıch øádkù textu se bude tıkat. Následuje urèení
+<EM>pøíkazu</EM>, jen¾ má bıt proveden. Ten mù¾e ke své èinnosti vy¾adovat èi
+se nechá ovlivnit jistımi <EM>parametry</EM>. V této kapitole se budu
+podrobnìji vìnovat pouze definici <EM>øádkù</EM>.
+<P>
+
+
+<H2>Specifikace øádkù</H2>
+
+V nejjednodu¹¹ím pøípadì mù¾e zcela chybìt. Pak se pøíkaz tıká pouze aktuálního
+øádku. Zadáním <CODE CLASS=prikaz>:d[Enter]</CODE> tedy sma¾ete øádek, na nìm¾
+se právì nachází kurzor.
+<P>
+
+Druhou jednoduchou mo¾ností je zadat poøadové èíslo daného øádku. Napøíklad o
+odstranìní devatenáctého øádku se postará <CODE CLASS=prikaz>:19d</CODE> (abych
+zkrátil pøíkazy, budu s dovolením vynechávat závìreènou klávesu <CODE
+CLASS=klavesa>[Enter]</CODE>). Speciální "èíslo" pøedstavuje znak <CODE
+CLASS=prikaz>$</CODE>, kterı oznaèuje poslední øádek textu. Druhou specialitou
+je teèka (<CODE CLASS=prikaz>.</CODE>), která ztìlesòuje aktuální øádek.
+<P>
+
+Jak zji¹»ovat èísla øádkù? Pokud nepracujete z pomalého terminálu, nejlep¹í je
+nechat si trvale zobrazovat pozici kurzoru pomocí <CODE
+CLASS="prikaz">:set&nbsp;ruler</CODE>. V pravé èásti posledního øádku obrazovky
+se objeví dvojice èísel, z nich¾ první je èíslo øádku, na nìm¾ se právì nachází
+kurzor. Pokud toto zobrazování z nìjakého dùvodu nechcete zapnout, pou¾ívejte
+ke zji¹»ování èísel <CODE CLASS="klavesa">CTRL-G</CODE>.
+<P>
+
+Pomìrnì èasto potøebujete provést pøíkaz pro urèitou skupinu øádkù. V takovém
+pøípadì je zadejte prostøednictvím intervalu, jeho¾ dolní a horní mez oddìlte
+navzájem èárkou. Tak¾e ke smazání pátého a¾ osmého øádku poslou¾í <CODE
+CLASS=prikaz>:5,8d</CODE>. Mù¾ete samozøejmì vyu¾ít i speciální "èísla", tak¾e
+vymazání textu od aktuálního øádku a¾ do konce souboru zajistí <CODE
+CLASS=prikaz>:.,$d</CODE>. V¹imnìte si, ¾e mezi jednotlivımi znaky se nedìlají
+mezery.
+<P>
+
+V øadì pøípadù (zejména pøi hledání a nahrazování) chcete pøíkaz provést pro
+celı soubor. Pak sáhnìte po speciálním znaku <CODE CLASS=prikaz>%</CODE>, kterı
+na místì definice øádkù slou¾í jako zkratka za <CODE CLASS=prikaz>1,$</CODE>.
+Pøíkaz tudí¾ zasáhne celı text.
+<P>
+
+Nejlahùdkovìj¹í konstrukcí je zadat èíslo øádku prostøednictvím vyhledávání.
+Místo prostého èísla mù¾ete toti¾ uvést <CODE
+CLASS=prikaz>/<EM>øetìzec</EM>/</CODE> a pøíkaz se bude tıkat nejbli¾¹ího
+následujícího øádku, obsahujícího uvedenı <EM>øetìzec</EM>. Obdobnì <CODE
+CLASS=prikaz>?<EM>øetìzec</EM>?</CODE> vyhledává smìrem k zaèátku souboru.
+Chcete-li tedy smat nejbli¾¹í následující komentáø v jazyce&nbsp;C, pou¾ijte
+<CODE CLASS=prikaz>:/\/*/,/*\//d</CODE>.
+<P>
+
+V¹imnìte si, ¾e lomítko zde má funkci speciálního znaku (ukonèuje hledanı
+vıraz). Pokud se má vyskytnout uvnitø hledaného textu, je tøeba pøed ním uvést
+zpìtné lomítko, aby se tento speciální vıznam potlaèil. Proto se zaèátek
+komentáøe <CODE>/*</CODE> zapisuje ve tvaru <CODE>\/*</CODE> a konec
+analogicky.
+<P>
+
+A na závìr nìco pro líné. Nejpohodlnìj¹ím (a èasto i nejrychlej¹ím) zpùsobem k
+zadávání rozmezí øádkù, jich¾ se má pøíkaz dotknout, je
+<A HREF="visual.htm">vizuální re¾im</A>. Prostì si vyberte dotyènı text a
+stisknìte <CODE CLASS="klavesa">:</CODE>. Ve spodním øádku se objeví rozsah
+øádkù <CODE CLASS="prikaz">'&lt;'&gt;</CODE>, co¾ znamená "od prvního do
+posledního vybraného øádku".
+<P>
+
+<!--/STRANKA-->
+<!--NAVIG-->
+<DIV ALIGN=RIGHT>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0">
+<TR>
+<TD><A HREF="help.htm"><IMG SRC="zpet.gif" ALT="&lt;-- predchozi " BORDER="0"></A></TD>
+<TD><A HREF="index.htm"><IMG SRC="obs.gif" ALT=" [obsah] " BORDER="0"></A></TD>
+<TD><A HREF="nahrad.htm"><IMG SRC="vpred.gif" ALT=" dalsi --&gt;" BORDER="0"></A></TD>
+</TR>
+</TABLE>
+</DIV>
+<!--/NAVIG-->
+
+<SMALL>&copy; 1997, 1998 Pavel Satrapa</SMALL>
+
+ </TD>
+</TR>
+</TABLE>
+
+</BODY>
+</HTML>

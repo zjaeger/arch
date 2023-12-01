@@ -1,0 +1,21 @@
+
+Resolver
+
+  host.conf
+    order bind,hosts
+    multi off  # on: host in /etc/hosts is allowed to have several IP addr.
+    nospoof on # check: if IP address is in fact associated with the obtained hostname
+    alert on # any spoof attempts -> syslog
+    trim  gsw.cz. # trim local domain (not really necessary)
+
+  resolver environment variables
+    RESOLV_HOST_CONF=/etc/host.conf2
+    RESOLV_SERV_ORDER=<order>
+    RESOLV_SPOOF_CHECK={off;warn;warn off;*}
+    RESOLV_MULTI
+    RESOLV_OVERRIDE_TRIM_DOMAINS
+    RESOLV_ADD_TRIM_DOMAINS
+
+  nsswitch.conf
+    hosts:	dns [!UNAVAIL=return] files
+    networks:	files

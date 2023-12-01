@@ -1,0 +1,89 @@
+Oracle from Outside
+- Win NT: cacls command
+
+Modifying control files
+
+  ALTER DATABASE BACKUP CONTROLFILE TO TRACE ;
+  ALTER DATABASE BACKUP CONTROLFILE TO '$ORACLE_HOME/tmp/ct.sql' ;
+
+  editing ... change any MAX.. parameter (primary purpose)
+
+How Oracle uses control files
+  
+  if RMAN (Recovery Manager) facility IS ENABLED then
+    control files grows (backup history - also in Recovery Catalog)
+  end if
+
+CREATE SCHEMA
+  creating all user objects in single statement (it allows only three
+  operations: CREATE TABLE, CREATE VIEW, GRANT)
+
+Using Views for security
+  CREATE OR REPLACE VIEW emp_sal AS
+  SELECT ...
+  ... WHERE login_name = USER ...
+  WITH CHECK OPTION ;
+
+Stored programs
+  packages: overloading (one program name can be used more than once
+  as long as the formal argument parameter list is different)
+  PL/SQL Wrapper: wrapNN iname=readable_fname [oname=encrypted_fname]
+  DBMS_OUTPUT.PUT_LINE('e_no is '||e_no); -- automatic "TO_CHAR"
+  rdbms/admin/DBMS_<name>.sql ... for example: DBMS_UTIL.sql
+
+Synonyms (public, private)
+  if an underlying object is deleted from the database, the synonym
+  that was created for it will not be deleted automatically.
+
+Privileges
+  CREATE SESSION (without this - nothing is possible), user with this
+  can access own objects and public objects
+  PUBLIC user - special entry in the data dictionary
+  System Privileges: complete list: SYSTEM_PRIVILEGE_MAP
+  Object Prilileges: complete list: TABLE_PRIVILEGE_MAP
+    ALTER, AUDIT, COMMENT, DELETE, GRANT, INDEX, INSERT, LOCK,
+    RENAME, SELECT, UPDATE, REFERENCES, EXECUTE, CREATE, READ, WRITE
+  (GRANT all TO ... ; --- means all above privileges)
+  (INDEX: allows the user to create indexes on a specific table owned
+   by another user)
+
+Roles (named collection of privileges)
+  if the role's privileges are changed -> will be in effect on next
+  logon
+  Determining Privileges Granted to a User:
+    SELECT * FROM dba_role_privs WHERE grantee = 'MARY' ;
+  Determining Privileges Granted to a Role:
+    SELECT * FROM dba_sys_privs WHERE grantee = 'CONNECT' ;
+  Oracle-Supplied Roles
+    CONNECT
+    RESOURCE (adds cluster, procedure and trigger privs.)
+    DBA
+    SYSOPER (abilily to startup and shut down the database)
+    SYSDBA (DBA+ability to create, start up, shut down and recover DB)
+  For application users: standard logon role, should have only the
+  CREATE SESSION sys.priv.
+
+Profiles
+  product profiles
+  system resource profiles
+  (Oracle6: PRODUCT_USER_PROFILE,
+  Oracle7: PRODUCT_PROFILE, USER_PROFILE)
+
+Data Dictionary
+  CATALOG.SQL ... data dict. views (USER_%, ...)
+  SQL.BSQ ... source code for the data dictionary (owned by SYS),
+  called once on "CREATE DATABASE"
+  tab$, fet$ (free extent table), uet$ (used extent table),
+  user$ (USERS and ROLES)
+  Check DB objects after "CREATE DATABASE ..."
+    SELECT type, COUNT(*) FROM obj$ GROUP BY type ;
+  obj$.type { 0..6 } -> { reference rec. for next object number,
+    indexes, tables, clusters, synonyms, sequences }
+  DBA_PROFILES
+    profile, resource_name, limit, resource_type {KERNEL, PASSWORD}
+  
+84
+
+utlrp.sql ... prevadi PACKAGE ve stavu INVALID -> VALID (cyklicky pokracuje, dokud
+pribyvaji "VALID")
+

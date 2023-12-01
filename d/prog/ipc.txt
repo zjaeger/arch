@@ -1,0 +1,49 @@
+# --- IPC : mesage queues ---
+
+struct msgbuf
+  {
+   long int  mtype ;
+   chat      mtext[] ;
+  } ;
+
+/* get mess.queue ID */
+
+int msgget( key_t  key,
+            int    msgflg,  /* IPC_CREAT, IPC_EXCL */
+          ) ;
+rc: msgid, -1 (errno)
+
+/* send message */
+
+int msgsnd( int         msgid,  /* mess.queue ID */
+            const void *msgp,   /* msgbuf pointer */
+            size_t      msgsz,  /* length( msgbuf->mtext ) */
+            int         msgflg  /* IPC_NOWAIT */
+          ) ;
+rc: 0, -1 (errno)
+
+/* receive message */
+
+int msgrcv( int         msgid,  /* mess.queue ID */
+            const void *msgp,   /* msgbuf pointer */
+            size_t      msgsz,  /* length( msgbuf->mtext ) */
+            long        msgtyp, /* 0, >0, >0 */
+            int         msgflg  /* IPC_NOWAIT, MSG_NOERROR */
+          ) ;
+rc: N > 0 (length( msgbuf-<mtext )), -1 (errno)
+
+/* message queue controll
+ *
+ * (struct msgid_ds)->msg_perm.uid
+ *                            .gid
+ *                            .mode
+ * (struct msgid_ds)->msg_qbytes  ... max size [byte]
+ * (struct msgid_ds)->msg_ctime   ... last "hint"
+ */
+
+int msgctl( int              msgid,  /* mess.queue ID */
+            int              cmd,    /* IPC_STAT, IPC_SET, IPC_RMID */
+            struct msgid_ds *buf
+          ) ;
+rc: 0, -1 (errno)
+

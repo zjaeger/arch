@@ -1,0 +1,60 @@
+
+int OCILogon ( string username, string password [, string db])
+int OCIPLogon ( string username, string password [, string db])  --- persistent
+
+  returns 'connection'
+
+int OCILogOff ( int connection)
+
+int OCIParse ( int connection, string query)
+
+  returns 'stmt'
+
+int OCIBindByName ( int stmt, string ph_name, mixed & variable, int length [, int type])
+
+  $update = OCIParse($conn,"update emp set sal = :sal where ROWID = :rid");
+  $rowid = OCINewDescriptor($conn,OCI_D_ROWID);
+  OCIBindByName($update,":rid",&$rowid,-1,OCI_B_ROWID);
+  OCIBindByName($update,":sal",&$sal,32);
+  OCIExecute($update);
+  $rowid->free();
+  OCIFreeStatement($update);
+
+  possible types (length = -1 ):
+    OCI_B_FILE (Binary-File), OCI_B_CFILE (Character-File), OCI_B_CLOB (Character-LOB),     OCI_B_BLOB (Binary-LOB) and OCI_B_ROWID (ROWID). 
+
+int OCIDefineByName ( int stmt, string Column-Name, mixed variable [, int type])
+
+  $stmt = OCIParse($conn,"select empno, ename from emp");
+  OCIDefineByName($stmt,"EMPNO",$empno);
+  OCIDefineByName($stmt,"ENAME",$ename);
+  OCIExecute($stmt);
+  while (OCIFetch($stmt)) { echo "empno:".$empno."\n"; echo "ename:".$ename."\n"; }
+
+int OCIExecute ( int statement [, int mode])
+
+  mode: (default is OCI_COMMIT_ON_SUCCESS), OCI_DEFAULT
+  Use option: OCI_DEFAULT for execute command to delay execution
+
+int OCIFetchInto ( int stmt, array & result [, int mode])
+
+  mode (example: OCI_ASSOC+OCI_RETURN_NULLS)
+  OCI_ASSOC Return an associative array.  
+  OCI_NUM Return an numbered array starting with zero. (DEFAULT)  
+  OCI_RETURN_NULLS Return empty columns.  
+  OCI_RETURN_LOBS Return the value of a LOB instead of the descriptor.
+
+int OCIFetchStatement ( int stmt, array & variable)
+
+  returns the number of rows fetched. 
+  result = array( 'col1' => array( val1.1, val1.2, ... ),
+                  'col2' => array( val2.1, v1l2.2, ... ),
+                  .........
+                ) ;
+
+int OCICommit ( int connection)
+
+array OCIError ( [int stmt|conn|global])
+
+  returns array('ora_code1' => 'message1','ora_code2' => 'message2', ... )
+          FALSE if no error

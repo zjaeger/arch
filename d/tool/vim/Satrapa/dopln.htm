@@ -1,0 +1,130 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<HTML>
+<HEAD>
+<TITLE>vim - automatické doplòování textu</TITLE>
+<LINK REL=StyleSheet HREF="vim.css" TYPE="text/css">
+</HEAD>
+<BODY BACKGROUND="papir.gif" BGCOLOR="#FFFFFF" TEXT="#000000" LINK="#FF0000"
+      VLINK="#990000" ALINK="#00FF00">
+
+<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="0">
+<TR>
+ <TD><IMG SRC="nic.gif" WIDTH="150" HEIGHT="1"></TD>
+ <TD>
+<!--STRANKA-->
+
+<H1>Automatické doplòování textu</H1>
+
+Tuhle schopnost oceníte pøedev¹ím pøi psaní programù èi pøíruèek. V takových
+textech se to hem¾í dlouhými identifikátory, v nich¾ není záhodno se pøepsat.
+<EM>vim</EM> je dovede dokonèovat za vás.
+
+<BLOCKQUOTE CLASS="priklad">
+<STRONG>Pøíklad:</STRONG><BR>
+Chtìl bych naspat následující úsek kódu:
+
+<BLOCKQUOTE>
+<PRE>
+procedure VypisSeznam ( Ktery: UkUzel );
+...
+  VypisSeznam ( Levy );
+  Writeln ( Cislo:8, Pocet:6 );
+  VypisSeznam ( Pravy );
+</PRE>
+</BLOCKQUOTE>
+
+Identifikátor <CODE>VypisSeznam</CODE> je pomìrnì dlouhý a chtìl bych jej
+opisovat v¾dy zcela pøesnì. S <EM>vim</EM> napí¹i v¾dy jen <CODE
+CLASS="klavesa">Vyp</CODE> a stisknu <CODE CLASS="klavesa">Ctrl-N</CODE>.
+Editor doplní zbytek.
+</BLOCKQUOTE>
+
+Klávesy <CODE CLASS="klavesa">Ctrl-N</CODE> a <CODE
+CLASS="klavesa">Ctrl-P</CODE> pøedstavují nejzákladnìj¹í zpùsob doplòování.
+Li¹í se pouze smìrem, kterým hledají. <CODE CLASS="klavesa">Ctrl-N</CODE> se
+vydá od aktuální pozice kurzoru smìrem vpøed (ke konci souboru), zatímco <CODE
+CLASS="klavesa">Ctrl-P</CODE> se vrací od aktuální pozice smìrem k zaèátku
+textu. Jakmile narazí na slovo, které zaèíná øetìzcem znakù, který se
+momentálnì nachází pøed kurzorem, doplní je. Opakováním a støídáním <CODE
+CLASS="klavesa">Ctrl-N</CODE> a <CODE CLASS="klavesa">Ctrl-P</CODE> mù¾ete
+procházet mo¾nými variantami doplnìní.
+<P>
+
+Co v¹echno se bude prohledávat, urèuje volba <CODE
+CLASS="prikaz">complete</CODE>. Pøi implicitním nastavení se nejprve prohledá
+aktuální text (celý, pokud hledání dorazí na zaèátek èi konec, pøetoèí se na
+opaèný konec textu). Kdy¾ se vyèerpají v¹echny mo¾nosti z nìj, pokraèuje
+hledáním v ostatních naètených souborech (tedy ve vedlej¹ích oknech).
+
+
+<H2>Doplòovací re¾im</H2>
+
+Ve vìt¹inì pøípadù vystaèíte s vý¹e uvedeným základním doplòováním. Nabízejí se
+v¹ak i pokroèilej¹í alternativy. Ty se odehrávají v doplòovacím re¾imu, do nìj¾
+vstoupíte pøíkazem&nbsp;<CODE CLASS="klavesa">Ctrl-X</CODE>. Na následující
+klávese pak zále¾í, co se bude doplòovat. Ve v¹ech pøípadech slou¾í <CODE
+CLASS="klavesa">Ctrl-N</CODE> (dal¹í, Next) a <CODE
+CLASS="klavesa">Ctrl-P</CODE> (pøedchozí, Previous) k listování mezi
+jednotlivými variantami.
+<P>
+
+<CODE CLASS="klavesa">Ctrl-X&nbsp;Ctrl-L</CODE> doplní øádek, který zaèíná
+stejnì jako øádek s kurzorem. Mnemotechnika: Line.
+<P>
+
+<CODE CLASS="klavesa">Ctrl-X&nbsp;Ctrl-N</CODE> a
+<CODE CLASS="klavesa">Ctrl-X&nbsp;Ctrl-P</CODE> se chovají stejnì jako bez
+úvodního <CODE CLASS="klavesa">Ctrl-X</CODE>. Tedy doplní slovo.
+<P>
+
+<CODE CLASS="klavesa">Ctrl-X&nbsp;Ctrl-K</CODE> také doplòuje slovo, hledá je
+v¹ak ve slovnících, jejich¾ jména obsahuje volba <CODE
+CLASS="prikaz">dictionary</CODE>. Mnemotechnika: Keyword.
+<P>
+
+<CODE CLASS="klavesa">Ctrl-X&nbsp;Ctrl-I</CODE> se také chová podobnì. Slovo k
+doplnìní hledá v aktuálním textu a souborech, které se do nìj vkládají.
+Mnemotechnika: Included files.
+<P>
+
+<CODE CLASS="klavesa">Ctrl-X&nbsp;Ctrl-]</CODE> doplní první heslo, které
+zaèíná slovem pøed kurzorem. Soubory se seznamy hesel urèuje volba <CODE
+CLASS="prikaz">tags</CODE>. Mnemotechnika: Tag.
+<P>
+
+<CODE CLASS="klavesa">Ctrl-X&nbsp;Ctrl-F</CODE> doplní jméno souboru, které
+zaèíná slovem pøed kurzorem. Mnemotechnika: File.
+<P>
+
+<CODE CLASS="klavesa">Ctrl-X&nbsp;Ctrl-D</CODE> doplní jméno makra definovaného
+v aktuálním nebo do nìj vlo¾eném souboru. Mnemotechnika: Definition.
+<P>
+
+V¹imnìte si, ¾e po stisknutí <CODE CLASS="klavesa">Ctrl-X</CODE> se ve stavovém
+øádku objeví struèná nápovìda, jak mù¾ete pokraèovat. Stejnì tak pøi procházení
+jednotlivých mo¾ností. Jakmile stisknete jinou ne¾ zde uvedenou klávesu,
+<EM>vim</EM> ukonèí doplòovací re¾im, pou¾ije momentálnì vybrané doplnìní a
+pokraèuje ve standardním vkládacím re¾imu.
+<P>
+
+<!--/STRANKA-->
+<!--NAVIG-->
+<DIV ALIGN=RIGHT>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0">
+<TR>
+<TD><A HREF="znacky.htm"><IMG SRC="zpet.gif" ALT="&lt;-- predchozi " BORDER="0"></A></TD>
+<TD><A HREF="index.htm"><IMG SRC="obs.gif" ALT=" [obsah] " BORDER="0"></A></TD>
+<TD><A HREF="okna.htm"><IMG SRC="vpred.gif" ALT=" dalsi --&gt;" BORDER="0"></A></TD>
+</TR>
+</TABLE>
+</DIV>
+<!--/NAVIG-->
+
+<SMALL>&copy; 1997, 1998 Pavel Satrapa</SMALL>
+
+ </TD>
+</TR>
+</TABLE>
+
+</BODY>
+</HTML>

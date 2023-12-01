@@ -1,0 +1,135 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<HTML>
+<HEAD>
+<TITLE>vim - instalace</TITLE>
+<LINK REL=StyleSheet HREF="vim.css" TYPE="text/css">
+</HEAD>
+<BODY BACKGROUND="papir.gif" BGCOLOR="#FFFFFF" TEXT="#000000" LINK="#FF0000"
+      VLINK="#990000" ALINK="#00FF00">
+
+<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="0">
+<TR>
+ <TD><IMG SRC="nic.gif" WIDTH="150" HEIGHT="1"></TD>
+ <TD>
+<!--STRANKA-->
+
+<H1>Instalace</H1>
+
+Editor <EM>vim</EM> je distribuován jako tzv. charityware. Mù¾ete jej pou¾ívat,
+co hrdlo ráèí. Autor v¹ak prosí, abyste podpoøili svým darem péèi o sirotky v
+Ugandì. Podrobnosti se doètete, zadáte-li pøíkaz <CODE
+CLASS="prikaz">:help&nbsp;uganda</CODE>.
+
+Základní domácí stránkou editoru je
+<A HREF="http://www.vim.org/">www.vim.org</A>. Na ní se doètete o aktuální
+verzi, najdete zde ukázky obrazovek a konfiguraèních souborù, doplòky k
+dokumentaci a samozøejmì odkazy na distribuci.
+<P>
+
+
+<H2>Distribuèní soubory</H2>
+
+Distribuce programu prodìlává jistý vývoj. Ve verzi&nbsp;5 do¹lo k jejímu
+rozdìlení do dvou souborù: vlastní program (zdrojový kód nebo binární verze) a
+runtime (nápovìda, syntaktické definice a podobnì). Runtime byl shodný pro
+v¹echny verze.
+<P>
+
+Uvedené rozdìlení mo¾ná ¹etøilo práci a místo autorùm, ale pro u¾ivatele nebylo
+dvakrát pohodlné. Proto se verze&nbsp;6 vrátila opìt k jedinému souboru.
+Pøesnìji øeèeno existuje v obou variantách, ale pro instalaci je pohodlnìj¹í
+mít v¹e v jednom.
+<P>
+
+
+<H2>Unix</H2>
+
+Pro Unix se Vim distribuuje pouze v podobì zdrojových souborù. Binární verze
+sice existují, ale nestará se o nì vývojový tým editoru. Tak¾e hledáte-li
+binární balík pro svou distribuci Linuxu, obra»te se na obvyklé zdroje, nikoli
+na mateøský server Vim.
+<P>
+
+Budete-li pøekládat ze zdrojového textu, opatøte si
+<CODE>vim-6.0.tar.bz2</CODE> (resp. jeho aktuální verzi), ulo¾te do vhodného
+adresáøe a rozbalte:
+
+<BLOCKQUOTE><PRE>
+bunzip2 vim-6.0.tar.bz2
+tar xvf vim-6.0.tar
+</PRE></BLOCKQUOTE>
+
+nebo jedním pøíkazem:
+
+<BLOCKQUOTE><PRE>
+tar xjvf vim-6.0.tar.bz2
+</PRE></BLOCKQUOTE>
+
+Tím se v aktuálním adresáøi vytvoøí podadresáø <CODE>vim60</CODE>. Pøejdìte
+do nìj a pokraèujte dnes ji¾ témìø standardním zpùsobem pøekladu:
+
+<BLOCKQUOTE><PRE>
+./configure
+make
+make test
+</PRE></BLOCKQUOTE>
+
+A pokud v¹e dobøe dopadne, následuje u¾ jen
+
+<BLOCKQUOTE><PRE>
+make install
+</PRE></BLOCKQUOTE>
+
+který ov¹em musíte provádìt jako správce systému (<CODE>root</CODE>).
+<EM>vim</EM> se standardnì instaluje do adresáøù <CODE>/usr/local/bin</CODE>
+(programy) a <CODE>/usr/local/share/vim</CODE> (podpùrné soubory).
+<P>
+
+Cílový adresáø lze zmìnit volbou <CODE>--prefix=<EM>adresáø</EM></CODE>, kterou
+zadáte programu <CODE>configure</CODE>. Druhou významnou volbou je sortiment
+vlastností, které má editor umìt. Má tvar
+<CODE>--with-features=<EM>sada</EM></CODE>, kde pøípustnou hodnotou pro sadu
+vlastností je <CODE>tiny</CODE> (minimální), <CODE>small</CODE>,
+<CODE>normal</CODE> (implicitní hodnota), <CODE>big</CODE> a <CODE>huge</CODE>
+(maximální, má oblíbená). Lze pochopitelnì také ruènì zapínat a vypínat
+jednotlivé konkrétní vlastnosti a upravit tak slo¾ení sady.
+
+
+<H2>Microsoft Windows</H2>
+
+Distribuèní soubory pro operaèní systémy firmy Microsoft hledejte na serveru v
+podadresáøi <CODE>pc</CODE>. Pøi instalaci do MS&nbsp;Windows je nejvýhodnìj¹í
+sáhnout po samoèinném instalátoru <CODE>gvim60.exe</CODE> (jedná se o grafickou
+verzi, proto gvim; èíslo verze se pochopitelnì mù¾e mìnit).
+<P>
+
+O nic se nestarejte, prostì ji spus»te a pomocí obvyklé sady dialogù
+nainstalujte jako vìt¹inu bì¾ných programù pro Windows.
+<P>
+
+Existuje i textová verze, a to dokonce i v ¹estnáctibitové verzi pro MS-DOS.
+Ov¹em v dne¹ní dobì ji pova¾uji za takový archaismus, ¾e nemá valného smyslu se
+o ní podrobnìji zmiòovat.
+<P>
+
+<!--/STRANKA-->
+<!--NAVIG-->
+<DIV ALIGN=RIGHT>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0">
+<TR>
+<TD><A HREF="typo.htm"><IMG SRC="zpet.gif" ALT="&lt;-- predchozi " BORDER="0"></A></TD>
+<TD><A HREF="index.htm"><IMG SRC="obs.gif" ALT=" [obsah] " BORDER="0"></A></TD>
+<TD><A HREF="proc.htm"><IMG SRC="vpred.gif" ALT=" dalsi --&gt;" BORDER="0"></A></TD>
+</TR>
+</TABLE>
+</DIV>
+<!--/NAVIG-->
+
+<SMALL>&copy; 1997, 1998 Pavel Satrapa</SMALL>
+
+ </TD>
+</TR>
+</TABLE>
+
+</BODY>
+</HTML>

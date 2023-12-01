@@ -1,0 +1,73 @@
+Precompiler
+----------------------------------------------------------------
+$ORACLE_HOME/precomp/admin/pcscfg.cfg ... conf. file
+$ORACLE_HOME/precomp/doc/proc2/readme.doc
+
+For Tru64 Systems Only
+----------------------------------------------------------------
+You might receive the following error message when starting an executable: 
+
+$ sample1
+/sbin/loader: Fatal Error: Cannot map libclntsh.so
+Killed
+
+If you receive this error message, set the LD_LIBRARY_PATH environment variable as follows: 
+
+$ LD_LIBRARY_PATH=$ORACLE_HOME/lib:${LD_LIBRARY_PATH}
+$ export LD_LIBRARY_PATH
+
+The client shared library is created automatically during installation. If you must recreate the client shared library: 
+
+Exit all client applications using the client shared library, including all Oracle client applications such as SQL*Plus and Recovery Manager. 
+
+Log in as the oracle user and enter: 
+$ genclntsh
+
+
+Pro*C/C++ Demonstration Programs
+-------------------------------------------------------------------
+
+$ORACLE_HOME/sqlplus/demo/demobld.sql   (as SCOTT/TIGER)
+
+$ORACLE_HOME/precomp/demo/proc/demo_proc.mk
+
+
+$ make -f demo_proc.mk target OBJS="objfile1 objfile2 ..." EXE=exename
+
+$ make -f demo_proc.mk build OBJS=myprog.o EXE=myprog
+
+$ make -f demo_proc.mk build_static OBJS=myprog.o EXE=myprog
+
+
+
+$ symfind sqlcex	# unresolved symbol search
+
+
+Handling Errors
+-------------------------------------------------------------------
+#include <sqlca.h>
+
+struct   sqlca
+         {
+         /* ub1 */ char    sqlcaid[8];
+         /* b4  */ long    sqlabc;
+         /* b4  */ long    sqlcode;
+         struct
+           {
+           /* ub2 */ unsigned short sqlerrml;
+           /* ub1 */ char           sqlerrmc[70];
+           } sqlerrm;
+         /* ub1 */ char    sqlerrp[8];
+         /* b4  */ long    sqlerrd[6];
+         /* ub1 */ char    sqlwarn[8];
+         /* ub1 */ char    sqlext[8];
+         };
+
+
+sqlca.sqlcode
+
+sqlca.sqlerrd[2] ... rows proc. count
+
+
+
+ 

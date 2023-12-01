@@ -1,0 +1,114 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<HTML>
+<HEAD>
+<TITLE>vim - start a konec</TITLE>
+<LINK REL=StyleSheet HREF="vim.css" TYPE="text/css">
+</HEAD>
+<BODY BACKGROUND="papir.gif" BGCOLOR="#FFFFFF" TEXT="#000000" LINK="#FF0000"
+      VLINK="#990000" ALINK="#00FF00">
+
+<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="0">
+<TR>
+ <TD><IMG SRC="nic.gif" WIDTH="150" HEIGHT="1"></TD>
+ <TD>
+<!--STRANKA-->
+
+<H1>Spu¹tìní a ukonèení programu</H1>
+
+Zaènu problematikou ryze praktickou: jak se do <EM>vim</EM> pustit a jak se ho
+pozdìji zbavit.
+
+
+<H2>Start programu</H2>
+
+Na spu¹tìní <EM>vim</EM> nenajdete ¾ádné neobvyklosti. Startuje se pøíkazem
+<CODE>vim</CODE>, kterému jako parametr pøedáte jméno editovaného souboru.
+Pokud existuje, otevøe se a vy uvidíte jeho obsah na obrazovce. Jestli¾e soubor
+neexistuje, zahájí editor svou èinnost s prázdným textem. Kdy¾ nìjaký vytvoøíte
+a dáte pøíkaz k jeho ulo¾ení, dotyèný soubor bude zalo¾en.
+<P>
+
+Vzhled prázdného textu vás mo¾ná ponìkud zarazí. <EM>vim</EM> toti¾ rozli¹uje
+prázdný øádek (neobsahuje ¾ádné znaky nebo jen mezery a tabelátory) od
+neexistujícího øádku (v souboru není a na obrazovce se vyskytl jen proto, ¾e
+soubor ji¾ skonèil, ale obrazovka je¹tì ne). Prázdné øádky zobrazuje skuteènì
+jako prázdné øádky. Naproti tomu øádky dosud neexistující vyznaèuje znakem
+"vlnka" (<CODE>~</CODE>) v prvním sloupci. Nový soubor (neobsahující ¾ádný
+text) proto ve <EM>vim</EM> vytvoøí obrazovku, její¾ první sloupec obsahuje
+samé vlnky.
+
+
+<H2>Konec programu</H2>
+
+Jednou z roztomilých vlastností <EM>vim</EM> je, ¾e neznalý u¾ivatel v podstatì
+nemá ¹anci jej korektnì ukonèit. ®ádné z oblíbených fint typu <CODE
+CLASS=klavesa>Esc</CODE>, <CODE CLASS=klavesa>Alt-X</CODE>, <CODE
+CLASS=klavesa>F10</CODE> a podobnì zde nefungují.
+<P>
+
+Základním pøíkazem pro ukonèení je <CODE CLASS=prikaz>:q</CODE>. Zatím jsem
+nemluvil o <A HREF="rezimy.htm">re¾imech práce</A> editoru, tak¾e berte jako
+dogma, ¾e z normálního re¾imu (to je ten, v nìm¾ se ocitnete po spu¹tìní
+programu) musíte stisknout dvojteèku (tím se ocitnete na spodním øádku a
+dvojteèka se objeví jako jeho první znak) následovanou znakem <CODE
+CLASS=klavesa>q</CODE>. Pøíkaz ode¹lete klávesou <CODE
+CLASS=klavesa>[Enter]</CODE>.
+<P>
+
+Ov¹em takové ukonèení vám projde pouze v pøípadì, ¾e jste v textu neprovedli
+¾ádné zmìny. Jinak skonèíte s chybovým hlá¹ením
+
+<BLOCKQUOTE>
+<CODE>No write since last change (use ! to override)</CODE>
+</BLOCKQUOTE>
+
+Øíká, ¾e poslední zmìny v souboru nemáte ulo¾eny. Vás dal¹í postup závisí na
+tom, zda je chcete ulo¾it nebo ne.
+
+<DL>
+<DT><STRONG>Ukonèení s ulo¾ením zmìn</STRONG>
+ <DD> Klasický postup velí nejprve ulo¾it zmìny pøíkazem <CODE
+ CLASS=prikaz>:w</CODE> a poté ukonèit editor pomocí <CODE
+ CLASS=prikaz>:q</CODE>. Oba pøíkazy mù¾ete slouèit do jednoho spoleèného <CODE
+ CLASS=prikaz>:wq</CODE>.
+ <P>
+
+ Jeliko¾ je tato varianta pomìrnì èastá, byla pro ni vytvoøena je¹tì jedna
+ zkratka. Pokud v normálním re¾imu zadáte <CODE CLASS=klavesa>ZZ</CODE> (dvì
+ velká "Z"), provede se "inteligentní ukonèení". Pokud byl soubor zmìnìn, ulo¾í
+ se. Poté editor ukonèí svou èinnost. Ve vìt¹inì pøípadù ukonèuji editor právì
+ tímto zpùsobem.
+ <P>
+
+<DT><STRONG>Ukonèení bez ukládání zmìn</STRONG>
+ <DD> Jestli¾e zmìny nechcete ulo¾it na vìky vìkùv, pou¾ijte pøíkaz <CODE
+ CLASS=prikaz>:q!</CODE>. Ostatnì hned v chybovém hlá¹ení vám <EM>vim</EM>
+ napovídá, ¾e kdy¾ si na nìj dupnete pøipojením vykøièníku za pøíkaz, pøestane
+ protestovat a akci vykoná.
+ <P>
+
+ Obdobnì lze vykøièníkem pøehlu¹it protesty i v nìkolika dal¹ích situacích.
+</DL>
+<P>
+
+<!--/STRANKA-->
+<!--NAVIG-->
+<DIV ALIGN=RIGHT>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0">
+<TR>
+<TD><A HREF="index.htm"><IMG SRC="zpet.gif" ALT="&lt;-- predchozi " BORDER="0"></A></TD>
+<TD><A HREF="index.htm"><IMG SRC="obs.gif" ALT=" [obsah] " BORDER="0"></A></TD>
+<TD><A HREF="vzhled.htm"><IMG SRC="vpred.gif" ALT=" dalsi --&gt;" BORDER="0"></A></TD>
+</TR>
+</TABLE>
+</DIV>
+<!--/NAVIG-->
+
+<SMALL>&copy; 1997, 1998 Pavel Satrapa</SMALL>
+
+ </TD>
+</TR>
+</TABLE>
+
+</BODY>
+</HTML>

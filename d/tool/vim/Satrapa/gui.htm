@@ -1,0 +1,186 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<HTML>
+<HEAD>
+<TITLE>vim - grafická verze</TITLE>
+<LINK REL=StyleSheet HREF="vim.css" TYPE="text/css">
+</HEAD>
+<BODY BACKGROUND="papir.gif" BGCOLOR="#FFFFFF" TEXT="#000000" LINK="#FF0000"
+      VLINK="#990000" ALINK="#00FF00">
+
+<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="0">
+<TR>
+ <TD><IMG SRC="nic.gif" WIDTH="150" HEIGHT="1"></TD>
+ <TD>
+<!--STRANKA-->
+
+<H1>Grafická verze <EM>vim</EM></H1>
+
+V operaèních systémech s grafickým u¾ivatelským rozhraním (dále jen GUI) je k
+dispozici i grafická verze editoru. Vypadá docela pohlednì&nbsp;- posuïte sami:
+<P>
+
+<DIV ALIGN=CENTER>
+<A HREF="gui-big.gif"><IMG SRC="gui.gif" ALT="[Obrázek]"
+    WIDTH="400" HEIGHT="272" BORDER="0"></A>
+</DIV>
+
+
+
+<H2>Proè</H2>
+
+Proè pou¾ívat GUI verzi? Asi nejvýznamnìj¹í výhodou je plná podpora my¹i,
+kterou mù¾ete pøesouvat kurzor, vybírat text a provozovat pøípadné dal¹í
+èinnosti. Kromì toho pøibývají nìkteré pøíjemnosti v ovládání, jako jsou
+posuvníky, menu a podobnì. Máte také podstatnì ¹ir¹í výbìr mo¾ností pro
+zvýrazòování syntaxe.
+
+
+<H2>My¹</H2>
+
+Podpora my¹i je jednou z nejvìt¹ích výhod grafické verze <EM>vim</EM>.
+Nejzákladnìj¹í pou¾ití jsou dvì: Klepnutím levého tlaèítka pøesunete kurzor na
+dotyèné místo (je-li v jiném oknì, zmìní se aktivní okno). Ta¾ením my¹i se
+stisknutým levým tlaèítkem vyberete vizuální oblast.
+<P>
+
+Pøehmatávání mezi klávesnicí a my¹í samozøejmì zpomaluje, tak¾e pou¾ití my¹i
+nemusí bezpodmíneènì v ka¾dém pøípadì znamenat pøínos. Ov¹em pokud provádíte
+sadu stejných editaèních operací napø. ve sloupci èísel, mù¾ete jednou rukou
+ovládat my¹ a pøesouvat kurzor, zatímco druhou v¾dy v pravou chvíli stisknete
+teèku pro zopakování pøedchozí operace. Ubezpeèuji vás, ¾e je to rychlé jako
+blesk.
+<P>
+
+Chování my¹i lze ovlivòovat øadou voleb. Tou nejzákladnìj¹í je <CODE
+CLASS="prikaz">mouse</CODE>, která øíká, v jakých re¾imech má být podporována.
+Implicitní hodnotu je <CODE CLASS="prikaz">:set&nbsp;mouse=a</CODE>, co¾ zapne
+podporu my¹i ve v¹ech re¾imech.
+<P>
+
+Dal¹ími volbami jsou <CODE CLASS="prikaz">mousefocus</CODE> (zda má klepnutí
+aktivovat okno), <CODE CLASS="prikaz">mousemodel</CODE> (øídí èinnost pravého
+tlaèítka), <CODE CLASS="prikaz">mousehide</CODE> (zda pøi psaní skrýt kurzor
+my¹i) a <CODE CLASS="prikaz">selectmode</CODE> (kdy zahájit vizuální a kdy
+výbìrový re¾im).
+<P>
+
+V¹echny tyto volby lze nastavit souèasnì pøíkazem <CODE
+CLASS="prikaz">:behave</CODE>, který komplexnì urèuje chování my¹i. Pøi <CODE
+CLASS="prikaz">:behave&nbsp;mswin</CODE> bude pøipomínat MS&nbsp;Windows,
+zatímco pøi <CODE CLASS="prikaz">:behave&nbsp;xterm</CODE> Unixovský xterm.
+Podrobnosti popisující èinnost my¹i v GUI vám poskytne pøíkaz <CODE
+CLASS="prikaz">:help&nbsp;gui-mouse</CODE>.
+
+
+<H2>Ovládací prvky</H2>
+
+Èinnost posuvníkù vám jistì nemusím sáhodlouze vykládat. Najdete je zpravidla
+na pravé stranì (øídí volba <CODE CLASS="prikaz">guioptions</CODE>), pøípadnì
+dole a chovají se zcela obvykle.
+<P>
+
+Na ovládání menu není nic neobvyklého. Ov¹em výsledek vás nìkdy mù¾e zaskoèit.
+Ka¾dá polo¾ka menu je toti¾ spojena s urèitou sekvencí klasických pøíkazù
+<EM>vim</EM>. Kdy¾ ji zvolíte, dotyèné pøíkazy se provedou. Já osobnì jsem
+smíchy málem spadl ze ¾idle, kdy¾ jsem v grafické verzi <EM>vim</EM>&nbsp;5.0
+pro MS&nbsp;Windows zadal "File -&gt; Read" a místo klasického dialogu pro
+výbìr souboru se na pøíkazovém øádku objevilo <CODE CLASS="prikaz">:e </CODE> a
+pøátelsky na mne pomrkával kurzor.
+<P>
+
+V souèasné dobì ji¾ editor není tak spartánský. V GUI verzi mù¾ete pøed
+libovolný pøíkaz, který vy¾aduje jako parametr jméno souboru, pøedøadit <CODE
+CLASS="prikaz">:browse</CODE>. Otevøe se tak standardní dialog pro výbìr
+souboru a ten, který si vyberete, bude pøedán jako parametr pøíkazu.
+<P>
+
+<BLOCKQUOTE CLASS="priklad">
+<STRONG>Pøíklad:</STRONG><BR>
+
+Pøíkaz
+<P>
+
+<BLOCKQUOTE>
+<CODE CLASS="prikaz">:browse split</CODE>
+</BLOCKQUOTE>
+
+vás nechá vybrat soubor a následnì otevøe nové okno, do kterého jej naète.
+</BLOCKQUOTE>
+
+Pøíjemnou vlastností menu je, ¾e si jeho polo¾ky mù¾ete sami definovat. Slou¾í
+k tomu pøíkaz <CODE CLASS="prikaz">:menu</CODE> a implicitní sestavu menu
+urèuje soubor <CODE>menu.vim</CODE> v hlavním adresáøi <EM>vim</EM>.
+Podrobnosti najdete pomocí <CODE CLASS="prikaz">:help&nbsp;gui-menu</CODE>.
+
+
+<H2>Spu¹tìní a inicializace</H2>
+
+Najèastìji se grafická verze editoru spou¹tí tak, ¾e pou¾ijete jméno programu
+<CODE>gvim</CODE>. Zbývající parametry a volby zùstávají stejné, tak¾e
+napøíklad editaci souboru <CODE>index.html</CODE> v grafickém re¾imu zajistí
+pøíkaz
+
+<BLOCKQUOTE>
+gvim index.html
+</BLOCKQUOTE>
+
+Pokud <EM>vim</EM> spustíte normálnì a terpve pozdìji si vzpomenete, ¾e byste
+chtìli radìji jeho grafickou podobu, mù¾ete do ní pøejít pøíkazem editoru <CODE
+CLASS="prikaz">:gui</CODE>.
+<P>
+
+Ve vìt¹inì systémù samozøejmì pøipadají v úvahu i dal¹í zpùsoby. Napøíklad si
+na pracovní plochu posadíte ikonu <CODE>gvim</CODE> a pøetáhnete na ni soubor,
+který má být editován. Nebo si <CODE>gvim</CODE> zapracujete do menu nabízených
+programù.
+<P>
+
+Inicializace grafického prostøedí probíhá <EM>po</EM> 
+<A HREF="konfig.htm">standardní inicializaci</A> editoru. Chová se dosti
+podobnì a postupuje v následujících krocích:.
+<P>
+
+Nejprve se naète definice hlavního menu. Standardnì je obsa¾ena v souboru
+<CODE>$VIM/menu.vim</CODE>. Konkrétní umístìní vám prozradí pøíkaz <CODE
+CLASS="prikaz">:version</CODE>. V Unixu pak následuje globální definice
+vlastností grafického re¾imu podle souboru <CODE>$VIM/gvimrc</CODE>.
+<P>
+
+Dal¹ím krokem je hledání u¾ivatelské konfigurace grafického re¾imu. Hledá se na
+tìchto ètyøech místech:
+
+<UL>
+<LI> v promìnné prostøedí <CODE>GVIMINIT</CODE>
+<LI> v souboru <CODE>$HOME/.gvimrc</CODE>
+<LI> není-li v MS&nbsp;Windows nastavena promìnná prostøedí <CODE>HOME</CODE>,
+     zkusí <CODE>$VIM\_gvimrc</CODE>
+<LI> nenajde-li <CODE>_gvimrc</CODE>, zkusí <CODE>.gvimrc</CODE> a naopak
+</UL>
+První nalezený pou¾ije, ostatní ignoruje.
+<P>
+
+Je-li zapnuta volba <CODE CLASS="prikaz">exrc</CODE>, podívá se je¹tì po
+souboru <CODE>.gvimrc</CODE> v aktuálním adresáøi.
+<P>
+
+<!--/STRANKA-->
+<!--NAVIG-->
+<DIV ALIGN=RIGHT>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0">
+<TR>
+<TD><A HREF="syntax.htm"><IMG SRC="zpet.gif" ALT="&lt;-- predchozi " BORDER="0"></A></TD>
+<TD><A HREF="index.htm"><IMG SRC="obs.gif" ALT=" [obsah] " BORDER="0"></A></TD>
+<TD><A HREF="diff.htm"><IMG SRC="vpred.gif" ALT=" dalsi --&gt;" BORDER="0"></A></TD>
+</TR>
+</TABLE>
+</DIV>
+<!--/NAVIG-->
+
+<SMALL>&copy; 1997, 1998 Pavel Satrapa</SMALL>
+
+ </TD>
+</TR>
+</TABLE>
+
+</BODY>
+</HTML>

@@ -1,0 +1,449 @@
+
+POUZITA SYMBOLIKA
+  "..."                            ... anglicky termin pro zapamatovani
+  ... / ...                        ... mozne varianty
+  [...]                            ... nepovinna cast prikazu
+  ---                              ... vkladany, vyhledavany, prepisovany
+                                       material (retezec znaku, radek, radky) 
+  {...}                            ... seznam objektu, s kterymi dokaze
+                                       prikaz pracovat
+  {o}                              ... prikaz dokaze pracovat s objekty, ktere
+                                       jsou nasledne vyjmenovane
+REZIMY PRACE
+  1. prikazovy/zobrazovaci         ... zakladni rezim
+  2. vkladaci/prepisovaci          ... Esc vraci do rezimu 1
+  3. rozsireny prikazovy (ex-mod)  ... nasazuje : v rezimu 1
+SPUSTENI
+  vi -R filename                   ... pouhe prohlizeni filename
+  vi -r filename                   ... editace posledni verze filename
+                                       po padu systemu ci editoru
+  vi -wn filename                  ... editace filename v okne n-radek
+  vi +n filename                   ... editace filename od radku n
+  vi +/---/                        ... editace filename od prvniho radku,
+                                       ktery obsahuje ---
+  view filename                    ... pro pouhe prohlizeni, stejne jako
+                                       vi -R filename
+PRACE S VICE SOUBORY
+  vi file1 file2 ...               ... do fronty pro editaci natahne soubory
+                                       v uvedenem poradi
+  :e file   "Edit"                 ... prepne na soubor file, pokud je jiz
+                                       editorem natazen, nebo soubor otevre;
+                                       testuje se ulozeni posledni verze prave
+                                       editovaneho souboru
+  :e! file                         ... jako :e;
+                                       netestuje se ulozeni posledni verze prave
+                                       editovaneho souboru
+  :n   "Next"                      ... nabidne dalsi z fronty natazenych souboru
+                                       testuje se ulozeni posledni verze prave
+                                       editovaneho souboru
+  :n!                              ... jako :n;
+                                       netestuje se ulozeni posledni verze prave
+                                       editovaneho souboru
+  Ctrl-^                           ... prepinac mezi dvema poslednimi soubory
+                                       v aktualni fronte natazenych souboru;
+                                       testuje se ulozeni posledni verze prave
+                                       editovaneho souboru
+  :rew   "Rewind"                  ... nabidne k editovani 1. soubor z fronty 
+  :args   "Arguments"              ... vypis seznamu souboru, s kterymi byl
+                                       editor vyvolan  
+PRACE S BUFFERY 
+- editor pracuje s nasledujicimi buffery
+  unnamed buffer 0      - obsahuje naposledy zruseny text
+                          oznacuje se "
+  delete buffers 1 az 9 - obsahuji radu naposledy rusenych textu
+                          oznacuji se "1 az "9
+  named buffers a az z  - s kterymi lze pracovat jako se zasobniky textu
+                          oznacuji se "a az "z;
+                          pomoci techto bufferu lze prenaset text
+                          mezi vice soubory v ramci jednoho editoru
+                          POZOR - plnime-li tyto buffery prikazy typu
+                                  DELETE, neplni se prislusne delete buffers
+                A az Z  - pouzivame, chceme-li do prislusnych bufferu
+                          appendovat        
+  potom napr.
+  "3p                              ... provede prikaz p s textem, ktery
+                                       byl zrusen jako treti zpetne od
+                                       posledniho ruseni
+  "anyy                            ... n-radek pocinaje aktualnim se
+                                       zkopiruje do bufferu "a, ktery se
+                                       timto prepise
+  "Andd                            ... n-radek pocinaje aktualnim se zrusi
+                                       a appenduje do bufferu "a
+  "aY                              ... aktualni radek je appendovan
+                                       do bufferu "a                                      
+OPUSTENI EDITORU
+  :q                               ... konec, pokud byl editovany soubor
+                                       po posledni uprave nahran
+  :q!                              ... konec bez testovani ulozeni
+                                       posledni verze souboru
+  :wq [filename]                   ... provede to co prikazy w a q
+  :wq! [filename]                  ... provede to co prikazy w a q!
+  ZZ                               ... prepis editovaneho souboru, pokud byla
+                                       v nem provedena alespon jedna zmena,
+                                       jinak pouze ukonceni editoru
+  :x [filename]                    ... ulozeni editovaneho souboru, pokud byla
+                                       v nem provedena alespon jedna zmena,
+                                       jinak pouze ukonceni editoru
+ZMENA VELIKOSTI ZOBRAZOVACIHO OKENKA
+  zn.                              ... editace v okne o n radcich
+OPRAVY OPRAV
+  u                                ... navrat pred posledni zmenu
+  U                                ... obnova puvodniho stavu 
+                                       aktualni radky
+UKLADANI DO SOUBORU
+  :w   "Write"                     ... ulozeni editovaneho souboru
+  :w filename                      ... ulozeni editovaneho souboru do filename
+                                       existuje-li neprepise se
+  :w! filename                     ... ulozeni editovaneho souboru do filename
+                                       existuje-li prepise se
+  :n1,n2 w filename                ... radky n1 az n2 se ulozi do filename
+  :n1,n2 w>>filename               ... radky n1 az n2 se pripoji k filename
+OZNACOVANI MIST V TEXTU A JEJICH VYHLEDAVANI
+  m-                               ... okamzita pozice kurzoru je oznacena
+                                       malym pismenem - (a az z)
+  '-                               ... najede na 1.viditelny znak radku,
+                                       ktery obsahuje misto oznacene pismenem -
+  `-                               ... najede presne na misto oznacene
+                                       pismenem -
+- lze pouzit v rade prikazu napr.
+  d`-                              ... zrusi vse od pozice kurzoru vcetne
+                                       az po misto oznacene pismenem -
+  d'-                              ... zrusi vsechny radky pocinaje aktualnim
+                                       az do radku (vcetne), ktery obsahuje
+                                       misto oznacene pismenem -
+  :'a,'bm'c                        ... radek s mistem oznacenym pomoci ma
+                                       az radek s mistem oznacenym pomoci mb
+                                       se presunou za radek s mistem
+                                       oznacenym pomoci mc
+  :'a,'bt'c                        ... viz vyse pro transcribe
+  :'a,'bd                          ... zrusi radky s oznacenim ma az mb
+POHYB V RAMCI RADKU
+  h / sipka doleva / backspace     ... o jeden znak vlevo
+    / Ctrl-h /
+  l / sipka doprava / spacebar     ... o jeden znak vpravo
+  0 / |                            ... na 1. znak radku
+  ^                                ... na 1. viditelny znak radku
+  $                                ... na posledni znak radku
+  n|                               ... na n-ty znak radku
+  t-                               ... pred prvni znak - vpravo od kurzoru
+  T-                               ... za prvni znak - vlevo od kurzoru
+  ;                                ... opakuje posledni prikaz t ci T
+  ,                                ... opakuje posledni prikaz t ci T
+                                       v opacnem smeru
+POHYB PO SLOVECH
+- a-slovo = posloupnost alfanumerickych znaku vcetne _
+- v-slovo = posloupnost libovolnych viditelnych znaku
+            a-slova resp. v-slova jsou oddelena od sebe 
+            alespon jednim neviditelnym znakem
+  w   "Word forwards"              ... na 1. znak dalsiho a-slova
+  b   "Back word"                  ... na 1. znak predchazejiciho a-slova
+  e   "End word"                   ... na posledni znak nasledujiciho a-slova
+  nw nb ne                         ... pohyb viz vyse o n slov
+  [n]W [n]B [n]E                   ... pohyb viz wbe po v-slovech
+POHYB PO RADCICH 
+  -                                ... na 1. viditelny znak predchoziho radku
+  + / enter                        ... na 1. viditelny znak nasledujiciho radku
+  k / Ctrl-p / sipka nahoru        ... na stejnou pozici o radek vyse
+  j / Ctrl-j / Ctrl-n / sipka dolu ... na stejnou pozici o radek nize
+  G                                ... na 1. viditelny znak posledniho radku
+  nG                               ... na 1. viditelny znak n-teho radku
+  1G                               ... na 1. viditelny znak 1. radku
+POHYB V RAMCI OBRAZOVKY
+  H   "Home"                       ... na 1. viditelny znak 1. radku obrazovky
+  nH                               ... na 1. viditelny znak n-teho radku
+                                       obrazovky (pocitano shora dolu
+  M   "Middle line"                ... na 1. znak prostredniho radku obrazovky
+  L   "Last line"                  ... na 1. viditelny znak posledniho radku  
+                                       obrazovky
+  nL                               ... na 1. viditelny znak n-teho radku
+                                       obrazovky (pocitano zdola nahoru)
+  z.                               ... pohyb v souboru tak, ze aktualni
+                                       radek se dostane do stredu obrazovky
+STRANKOVANI
+  Ctrl-e                           ... o jeden radek ke konci souboru
+  Ctrl-y                           ... o jeden radek k zacatku souboru 
+  Ctrl-d   "Down"                  ... polovinou obrazovky 
+                                       na nasledujici stranku
+  nCtrl-d                          ... o n-radek ke konci souboru
+                                       (n plati az do odvolani pro nasledujici
+                                       Ctrl-u a Ctrl-d)
+  Ctrl-u   "Up"                    ... polovinou obrazovky
+                                       na predchozi stranku 
+  nCtrl-u                          ... o n-radek k zacatku souboru
+  Ctrl-f / PageDown   "Forwards"   ... na nasledujici stranku
+  Ctrl-b / PageUp   "Backwards"    ... na predchozi stranku
+POHYB PO SENTENCICH
+- sentence = posloupnost znaku koncici . nebo ? nebo ! za kterymi nasleduji
+             minimalne 2 mezery nebo newline
+  (                                ... zacatek sentence
+  )                                ... konec sentence
+POHYB PO PARAGRAFECH
+- paragraf = posloupnost znaku koncici minimalne jednim prazdnym radkem
+  {                                ... zacatek paragrafu
+  }                                ... konec paragrafu
+POHYB PO SEKCICH
+- sekce    = posloupnost znaku zacinajici Ctrl-L (formfeed) nebo
+             radkem s prvnim znakem {
+  [[                               ... zacatek sekce
+  ]]                               ... konec sekce
+VKLADANI TEXTU ---
+  a---Esc    "Append"              ... za pozici kurzoru
+  A---Esc                          ... za konec radky
+  i---Esc    "Insert"              ... pred pozici kurzoru
+  I---Esc                          ... pred zacatek radky
+  o---Esc    "Open"                ... vklada novou radku za aktualni
+  O---Esc                          ... vklada novou radku pred aktualni
+PREPISOVANI TEXTU
+  r-   "Replace"                   ... prepise jeden znak na pozici kurzoru
+                                       znakem -
+  R---Esc                          ... prepis znaku od pozice kurzoru
+                                       materialem ---
+  s---Esc   "Substitute"           ... prepise znak na pozici kurzoru
+                                       materialem ---
+  S---Esc                          ... prepise aktualni radek materialem ---
+  c{w b e W B E}---Esc   "Change"  ... nahradi cast textu urcenou pozici kurzoru
+                                       a zvolenym objektem posloupnosti ---
+  C---Esc                          ... nahradi zbytek aktualniho radku pocinaje
+                                       pozici kurzoru posloupnosti ---
+  ~                                ... zmena UPPER case <---> LOWER case
+                                       znaku na pozici kurzoru
+MAZANI TEXTU
+  Ctrl-h / backspace (pri vkladani)... maze predchozi znak
+  x                                ... maze znak na pozici kurzoru
+  nx                               ... maze n znaku od pozice kurzoru
+  X                                ... maze znak pred pozici kurzoru
+  nX                               ... maze n znaku pred pozici kurzoru
+  D   "Delete"                     ... maze od pozice kurzoru do konce radky
+  d{w b e W B E}                   ... maze cast textu urcenou pozici kurzoru 
+                                       a zvolenym objektem                     
+  d-misto-                         ... rusi od okamzite pozice kurzoru
+                                       az po zvolene -misto-
+  dd                               ... maze aktualni radek
+  ndd                              ... maze n radek pocinaje aktualnim
+  :n1,n2d                          ... maze radky n1 az n2
+VYHLEDAVANI NA JEDNOM RADKU
+  f-   "Find"                      ... na 1. znak - vpravo od kurzoru
+  F-                               ... na 1. znak - vlevo  od kurzoru
+  ;                                ... opakuje posledni prikaz f ci F
+  ,                                ... opakuje posledni prikaz f ci F
+                                       v opacnem smeru
+VYHLEDAVANI V SOUBORU
+misto Esc lze ukoncovat pomoci Enter
+  /---Esc / /---/Esc               ... 1. vyskyt posloupnosti znaku ---  
+                                       (prohledava se od pozice kurzoru ke konci
+                                       souboru resp. cyklicky opet od zacatku)
+  ?---Esc / ?---?Esc               ... 1. vyskyt posloupnosti znaku ---  
+                                       (prohledava se v souboru pozpatku)
+  n                                ... opakuje posledni vyhledavaci prikaz
+  N                                ... opakuje posledni vyhledavaci prikaz
+                                       v opacnem smeru
+NAHRAZOVANI RETEZCU   "Substitute"
+- :[rozsah]s/-co-/-cim-/[parametry]
+  misto delimiteru / lze pouzit libovolny jiny vhodny napr. : ; apod.
+  rozsah     ... v jakem rozsahu se ma prikaz s provest, napr.
+                 n1,n2        ... v ramci radku n1 az n2
+                 n            ... na radku n
+                 /-1-/,n      ... od radku, ktery obsahuje retezec -1-
+                                  az po radek n
+                 neuvedeno znaci provedeni pouze v ramci aktualniho radku
+  -co-       ... retezec, ktery chceme menit
+                 specialitky :
+                   .              ... libovolny jeden znak 
+                   *              ... zadny ci vice vyskytu predchoziho znaku
+                   [vycet znaku]  ... libovolny z uvedeho vyctu znaku
+                   [^vycet znaku] ... libovolny znak krome uvedeho vyctu
+                   [od-do]        ... libovolny znak v uvedenem rozsahu
+                                      napr. d-k 4-7 E-Z apod.
+                   [^od-do]       ... libovolny znak krome uvedeho rozsahu
+                   ^              ... vztahuje se k zacatku radky
+                   $              ... vztahuje se ke konci radku
+                   \              ... metaznak
+  -cim-      ... retezec, kterym chceme -co- nahradit
+                 specialitky :
+                   &              ... retezec znaku zvoleny v -co- 
+  parametry  ... g globalni zmeny
+                 c zmeny nutno potvrdit
+                   y     = ano
+                   Enter = ne
+                 p tisk zmenenych radek
+                 neuvedeno znaci provedeni pouze prvni zmeny v poradi
+- priklady
+  s/x.y/(&)/g                      ... na aktualnim radku uzavorkuje
+                                       vsechny retezce x+y x.y xdy apod.
+  s/(x.y)/x.y/g                    ... inverzni oprava k predchozi
+  3,$s/a.*b/(a az b)/g             ... na vsech radcich pocinaje tretim
+                                       nahradi vsechny retezce ab a...b
+                                       (kde ... znaci libovolnou posloupnost 
+                                       znaku) retezcem (a az b) 
+  1,$s/[0-9]*$//                   ... v celem souboru smaze vsechny cislice
+                                       na koncich radku
+  s/,e\.g\..*/./                   ... na aktualnim radku prepis vse pocinaje
+                                       posloupnosti ,e.g. do konce radku teckou
+  1,$s/r1/r2/gc                    ... v celem souboru nahrazuje r1 retezcem r2
+                                       kazdou nahradu nutno schvalovat
+GLOBALNI ZMENY
+- g/-radky-/prikaz                 ... prikaz se provede na vsech zvolenych
+                                       radcich
+  -radky-    ... urcuje radky, pro ktere se ma provest zvoleny prikaz
+                 specialitky :
+                 .                 ... aktualni radek souboru
+                 n                 ... n-ty radek souborua
+                 +n                ... na radek n-ty za aktualnim
+                 -n                ... na radek n-ty pred aktualnim 
+                 $                 ... posledni radek souboru
+                 %                 ... jako 1,$ tj. cely soubor
+                 /-co-/            ... viz -co-
+  g!/-radky-/prikaz                ... prikaz se provede na vsech radcich
+                                       krome -radky-
+  v/-radky-/prikaz                 ... totez co g!
+- priklady
+  g/^UNIX$/s//Unix/                ... na vsech radcich, ktere obsahuji
+                                       pouze retezec UNIX zmeni tento retezec
+                                       na Unix
+  g/^$/d                           ... zrusi vsechny prazdne radky
+PRACE S VYROVNAVACI PAMETI
+  yy / Y   "Yank = copy"           ... aktualni radek do pameti          
+  nyy / nY                         ... n-radek pocinaje aktualnim do pameti
+  p   "Put"                        ... umisti obsah pameti od pozice kurzoru
+  P                                ... umisti obsah pameti pred pozici kurzoru
+PRESUNY TEXTU
+- kombinaci prikazu, ktere mazou casti textu a prikazu p resp. P
+  plati zasada, co se zrusilo, to se vlozi, tj. bud posloupnosti znaku, nebo
+  cely radek resp. radky napr.
+  xp                               ... vymeni znak, na kterem stoji kurzor
+                                       s nasledujicim znakem
+  Xp                               ... vymeni znak, na kterem stoji kurzor
+                                       s predchazejicim znakem
+  xP                               ... text ani pozice kurzoru se nezmeni
+  XP                               ... text se nezmeni, 
+                                       kurzor se posune o 1 znak vlevo
+- pomoci ed prikazu m "Move" napr.
+  :.,+3mn                          ... aktualni radek a 3 nasledujici
+                                       se presunou za radek n
+  :nm0                             ... radek n se presune pred prvni radek
+  :n1mn2                           ... radek n1 se presune za radek n2
+  :n1,n2mn3                        ... radky n1 az n2 se presunou za radek n3
+  :/---1/,/---2/m/---3/            ... radek obsahujici ---1 az radek s ---2
+                                       se presunou za radek obsahujici ---3
+                                       (pricemz se vyhledava ---1 i ---2
+                                       soucasne)
+  :/---1/;/---2/mn                 ... radek obsahujici ---1 az radek s ---2
+                                       se presunou za radek n              
+                                       (pricemz se ---2 vyhledava
+                                       az po nalezeni ---1)
+KOPIROVANI TEXTU
+- kombinaci prikazu, ktere kopiruji text a prikazu yy resp. Y
+  plati zasada, co se zkopirovalo, to se vlozi, tj. bud posloupnosti znaku, nebo
+  cely radek resp. radky napr.
+  Yp                               ... aktualni radek zkopiruje za sebe,  
+                                       kurzor se presune na zacatek 
+                                       zkopirovaneho radku
+  YP                               ... aktualni radek zkopiruje pred sebe,  
+                                       kurzor se presune na zacatek 
+                                       zkopirovaneho radku
+- pomoci ed prikazu t "Transcribe" napr.
+  :.,+3tn                          ... aktualni radek a 3 nasledujici
+                                       se zkopiruji za radek n
+  :nt0                             ... radek n se zkopiruje pred prvni radek
+  :n1tn2                           ... radek n1 se zkopiruje za radek n2
+  :n1,n2tn3                        ... radky n1 az n2 se zkopiruji za radek n3
+  :/---1/,/---2/t/---3/            ... radek obsahujici ---1 az radek s ---2
+                                       se zkopiruji za radek obsahujici ---3
+                                       (pricemz se vyhledava ---1 i ---2
+                                       soucasne)
+  :/---1/;/---2/tn                 ... radek obsahujici ---1 az radek s ---2
+                                       se zkopiruji za radek n              
+                                       (pricemz se ---2 vyhledava
+                                       az po nalezeni ---1)
+VSTUP TEXTU ODJINUD   "Read" 
+  :r filename                      ... umisti obsah souboru filename
+                                       za aktualni radek
+  :nr filename                     ... umisti obsah souboru filename
+                                       za n-ty radek opravovaneho souboru
+  :[n]r!prikaz OS                  ... za aktualni radek resp. n-ty radek
+                                       umisti vystup ze zvoleneho prikazu OS
+DELENI RADEK
+  enter   (v INSERT MODU)          ... vklada novou radku se zbytkem
+                                       aktualni radky od pozice kurzoru
+SPOJOVANI RADEK
+  J   [Join]                       ... za aktualni radek se vlozi mezera
+                                       a obsah nasledujiciho radku
+  nJ                               ... za aktualni radek se vlozi mezera
+                                       a obsah nasledujicich n-1 radku
+                                       oddelenych mezerami
+ZJISTOVANI STAVU
+  :.=                              ... cislo aktualniho radku
+  :=                               ... celkovy pocet radku v souboru
+  Ctrl-g                           ... jmeno opravovaneho souboru
+                                       [stav souboru]
+                                         Modified 
+                                         Read only
+                                       cislo aktualniho radku
+                                       celkovy pocet radku v souboru
+                                       pozice kurzoru v %
+VOLANI PRIKAZU OPERACNIHO SYSTEMU
+  :!prikaz OS                      ... vola prikaz OS
+PREPINACE URCUJICI PROSTREDI EDITORU
+  ai   autoindent   - automaticke udrzovani leveho kraje odstavce
+                      pri prechodu na dalsi radek
+  aw   autowrite    - automaticky zapis do editovaneho souboru
+                      kdyz ho opoustime
+       edcompatible - kompatibilita s ed editorem
+  ic   ignorecase   - ignorovani velkych/malych pismen pri vyhledavani
+       list         - zobrazovani specielnich znaku tabs ... ^I
+                                                    EOL  ... $
+  nu   number       - zobrazovani cisel radek
+  ro   readonly     - nastaveni pristupoveho atributu ReadOnly na soubor
+       redraw       - simulace "smart" terminalu
+  sm   showmatch    - po natypovani ) resp. } najede editor automaticky
+                      na odpovidajici ( resp. { a opet se vrati
+       showmode     - zobrazovani aktualniho modu (REPLACE, INSERT atd.)
+PROMENNE URCUJICI PROSTREDI EDITORU
+  dir  directory    - adresar, do ktereho vi umistuje pracovni buffer
+  para paragraphs   - jmena maker nroff, ktera omezuji paragrafy
+                      odpovidajici prikazum { a }
+  sect sections     - jmena maker nroff, ktera omezuji sekce   
+                      odpovidajici prikazum [[ a ]]
+  ts   tabstop      - pocet znaku pro posun tabelatoru			
+       term         - typ terminalu
+  wi   window       - pocet radek okna, ve kterem chceme editovat
+  wm   wrapmargin   - pocet znaku od praveho okraje obrazovky, za kterym
+                      chceme automaticky prechazet na novy radek
+                      (wm = 0 zadne nastaveni)
+UPRAVA PROSTREDI EDITORU
+- prepinace a promenne lze nastavit do systemove promenne EXINIT, napr.
+  EXINIT='set noai aw term=ansi'
+- nebo primo behem editace
+  ip ... identifikator prepinace nebo promenne urcujici prostredi editoru
+         (zkratka nebo cele jmeno)
+  potom
+  :set all                         ... vypis vsech voleb
+  :set ip                          ... ON  prepinace
+  :set noip                        ... OFF prepinace
+  :set ip=hodnota                  ... nasazeni pozadovane hodnoty
+DEFINOVANI VLASTNICH PRIKAZU
+- nasledujicim znakum lze priradit provedeni vlastnich prikazu
+  K V g q v , ; _ * =
+  napr.
+    :map , ea---^[Enter            ... , vlozi na konec aktualniho a-slova
+                                       posloupnost znaku --- 
+                                       ^[ vytvorime escape sekvenci klaves
+                                          Ctrl-Shift-v
+                                          Esc
+                                          pak ^[ reprezentuje Esc,
+                                                 ktery ukoncuje posl. ---
+                                       Enter  ukoncuje prikaz :map
+    :map ; bi---^[Enter            ... ; vlozi pred zacatek aktualniho
+                                       slova posloupnost znaku ---
+    :map = :.=^[Enter              ... = vypise cislo aktualniho radku
+
+  :unmap                           ... zrusi vsechny nastavene maps
+- pokud nevystacime s vyse uvedenymi znaky, lze prirazovat vlastni
+  prikazy kombinaci Ctrl-znak
+  napr.
+    :map ^H :r filename^[Enter     ... Ctrl-h za aktualni radek nacte    
+                                       obsah souboru filename
+                                       ^H vytvorime escape sekvenci klaves
+                                          Ctrl-Shift-v
+                                          Ctrl-h
+ ******************************************************************************

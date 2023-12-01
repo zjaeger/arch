@@ -1,0 +1,191 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<HTML>
+<HEAD>
+<TITLE>vim - spoluprace se soubory a programy</TITLE>
+<LINK REL=StyleSheet HREF="vim.css" TYPE="text/css">
+</HEAD>
+<BODY BACKGROUND="papir.gif" BGCOLOR="#FFFFFF" TEXT="#000000" LINK="#FF0000"
+      VLINK="#990000" ALINK="#00FF00">
+
+<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="0">
+<TR>
+ <TD><IMG SRC="nic.gif" WIDTH="150" HEIGHT="1"></TD>
+ <TD>
+<!--STRANKA-->
+
+<H1>Spolupráce se soubory a programy</H1>
+
+Nejzákladnìj¹í základy práce se soubory jsem ji¾ prozradil. Chcete-li nìkterý
+naèíst do editoru, zadáte jej jako parametr pøi spu¹tìní <EM>vim</EM>. Jestli¾e
+snad soubor uvedeného jména dosud neexistuje, bude pøi ulo¾ení vytvoøen.
+<P>
+
+Pokud se ukládání týèe, poslou¾í k nìmu pøíkaz <CODE CLASS=prikaz>:w</CODE>.
+Chcete-li zároveò ukonèit editor, pou¾ijte pøíkaz <CODE
+CLASS="prikaz">:wq</CODE> nebo rychlej¹í klávesovou kombinaci <CODE
+CLASS=klavesa>ZZ</CODE>.
+
+
+<H2>Jemnosti naèítání souborù</H2>
+
+Pokud bìhem práce na jednom souboru zatou¾íte po editaci jiného, nemusíte
+<EM>vim</EM> ukonèovat a znovu startovat. Staèí ulo¾it aktuální stav
+zpracovávaného souboru a poté zadat <CODE
+CLASS=prikaz>:edit&nbsp;<EM>jméno_souboru</EM></CODE>. Pøíkaz lze zkrátit i na
+pouhé <CODE CLASS=prikaz>:e</CODE>.
+<P>
+
+Lze dokonce pracovat se skupinou textù. Pokud pøi startu programu zadáte v
+parametrech více ne¾ jedno jméno, <EM>vim</EM> otevøe první z uvedených
+souborù, ale ostatní si pamatuje. Kdy¾ se pak chcete posunout na následující
+soubor, pou¾ijte pøíkaz <CODE CLASS=prikaz>:n</CODE>. Naproti tomu <CODE
+CLASS=prikaz>:N</CODE> vás vrací k pøedchozímu.
+<P>
+
+<BLOCKQUOTE CLASS=priklad>
+<STRONG>Pøíklad:</STRONG><BR>
+Øeknìme, ¾e v aktuálním adresáøi máte skupinu zdrojových textù v jazyku&nbsp;C
+a chcete v nich nahradit identifikátor <CODE>kuku</CODE> identifikátorem
+<CODE>koko</CODE>. Pokud se k danému úèelu rozhodnete pou¾ít <EM>vim</EM>
+(vhodnìj¹í by asi byl sed nebo Perl), mù¾ete postupovat následovnì:
+<P>
+
+Spustíte <EM>vim</EM> pro v¹echny zdrojové texty
+
+<BLOCKQUOTE>
+<CODE>vim&nbsp;*.c</CODE>
+</BLOCKQUOTE>
+
+První z nich uvidíte na obrazovce. Provedete zámìnu identifikátorù pøíkazem
+<CODE CLASS=prikaz>:%s/kuku/koko/g</CODE>, text ulo¾íte (<CODE
+CLASS=prikaz>:w</CODE>) a pøejdete na dal¹í (<CODE CLASS=prikaz>:n</CODE>). A
+tak dále poøád dokola. Pøi opakování pøíkazù samozøejmì s výhodou vyu¾ijete
+historii pøíkazového øádku, tak¾e budete maèkat pouze dvojteèku a ¹ipku nahoru.
+</BLOCKQUOTE>
+<P>
+
+Nevýhodou tìchto pøíkazù je, ¾e pøi posunu na následující èi pøedchozí soubor
+se editor ocitne v¾dy znovu ve výchozí pozici. Kurzor tedy pøesune na zaèátek
+textu. V øadì situací by se v¹ak více hodilo, aby se editor vracel do souboru
+na pozici, z ní¾ jste jej opustili. Takové chování nabízí rozdìlení obrazovky
+na <A HREF="okna.htm">okna</A> a paralelní editace nìkolika textù. Ta ale patøí
+a¾ do èásti pro pokroèilé.
+<P>
+
+Pokud neuvedete absolutní cestu k souboru, bude naèten z aktuálního adresáøe.
+Jeho jméno vám sdìlí pøíkaz <CODE CLASS=prikaz>:pwd</CODE> (Print Working
+Directory, znalcùm Unixu jistì bude povìdomý). Chcete-li jej zmìnit, pou¾ijte
+<CODE CLASS=prikaz>:cd <EM>adresáø</EM></CODE>.
+<P>
+
+Zajímavou mo¾ností je klávesová kombinace <CODE CLASS=klavesa>gf</CODE>. Po
+jejím pou¾ití pøejde <EM>vim</EM> k editaci souboru, jeho¾ jméno se nachází pod
+kurzorem (kurzor nemusí stát na zaèátku jména). Díky této schopnosti mù¾ete
+snadno a rychle pøejít k editaci vkládaného souboru èi WWW stránky, na ni¾ vede
+odkaz ze stránky právì editované.
+
+
+<H2>Vkládání do textu</H2>
+
+Doposud jsem se zabýval pouze mo¾ností zmìnit editovaný soubor. Obèas v¹ak
+potøebujete do zpracovávaného textu vlo¾it obsah urèitého souboru. To zaøídí
+pøíkaz <CODE CLASS=prikaz>:r&nbsp;<EM>jméno_souboru</EM></CODE>. Vlo¾í se
+pod øádek s kurzorem.
+<P>
+
+Pøíkaz <CODE CLASS=prikaz>:r</CODE> v¹ak mù¾e poslou¾it i ke spu¹tìní programu.
+Jeho výstup pak bude vlo¾en do editovaného textu stejnì, jako vý¹e zmiòovaný
+obsah souboru. Skuteènost, ¾e po¾adujete spu¹tìní programu, nikoli naètení
+souboru, vyznaèíte vykøièníkem. Pøíkaz pak má tvar
+<CODE CLASS=prikaz>:r&nbsp;!<EM>pøíkaz</EM></CODE>.
+
+<BLOCKQUOTE CLASS=priklad>
+<STRONG>Pøíklad:</STRONG><BR>
+Obsah aktuálního adresáøe vlo¾íte do textu pøíkazem
+<BLOCKQUOTE><PRE>
+:r !ls
+</PRE></BLOCKQUOTE>
+respektive (v operaèních systémech firmy Microsoft)
+<BLOCKQUOTE><PRE>
+:r !dir
+</PRE></BLOCKQUOTE>
+</BLOCKQUOTE>
+
+
+<H2>Ukládání na disk</H2>
+
+Základním pøíkazem pro zápis je samozøejmì <CODE CLASS=prikaz>:w</CODE>, který
+ulo¾í obsah editovaného souboru. Mù¾ete jej zapsat i pod novým jménem, pokud
+pou¾ijete <CODE CLASS=prikaz>:w&nbsp;<EM>jméno_souboru</EM></CODE>. Kdy¾ se
+vyskytnou problémy (soubor je chránìn proti zápisu nebo "vytváøený" soubor ji¾
+existuje), editor odmítne akci provést. Ov¹em zároveò vás upozorní na mo¾nost
+pøipojit k pøíkazu vykøièník, kterým si mù¾ete jeho provedení vynutit.
+Napøíklad <CODE CLASS=prikaz>:w!</CODE> zapí¹e aktuální obsah i do souboru,
+který je urèen pouze pro ètení. To samozøejmì bude fungovat pouze v pøípadì, ¾e
+máte oprávnìní k tomu pøíslu¹nou ochranu vypnout.
+<P>
+
+Posledním re¾imem zápisu je
+<CODE CLASS=prikaz>:w&nbsp;&gt;&gt;<EM>jméno_souboru</EM></CODE>. Zde se
+editovaný text pøipojí na konec uvedeného souboru.
+<P>
+
+Speciálním pøípadem "ulo¾ení" textu je, kdy¾ jej pøedáte ke zpracování jinému
+programu. Také k tomuto úèelu slou¾í pøíkaz <CODE CLASS=prikaz>:w</CODE>,
+tentokrát ve tvaru <CODE CLASS=prikaz>:w&nbsp;!<EM>program</EM></CODE>. Editor
+spustí uvedený program a prostøednictvím roury po¹le editovaný text do jeho
+standardního vstupu. Výsledek pak uvidíte na obrazovce.
+
+<BLOCKQUOTE CLASS=priklad>
+<STRONG>Pøíklad:</STRONG><BR>
+Chcete-li si nechat pøíkazem <CODE>wc</CODE> spoèítat písmena, slova a øádky v
+editovaném textu, pou¾ijte
+<BLOCKQUOTE><PRE>
+:w !wc
+</PRE></BLOCKQUOTE>
+</BLOCKQUOTE>
+
+V¹imnìte si dvojí úlohy vykøièníku. Pokud se vyskytne na konci názvu pøíkazu,
+oznaèuje jeho dùraznìj¹í variantu. Napøíklad <CODE
+CLASS=prikaz>:w!&nbsp;pokus</CODE> ulo¾í editovaný text do souboru
+<CODE>pokus</CODE>, pøesto¾e existuje. Jestli¾e v¹ak vykøièník pou¾ijete na
+zaèátku slova, signalizuje spu¹tìní programu. Proto <CODE
+CLASS=prikaz>:w&nbsp;!pokus</CODE> pøedá editovaný text do standardního vstupu
+programu <CODE>pokus</CODE>.
+
+
+<H2>Jiné pøíkazy</H2>
+
+Kromì vý¹e zmiòovaných zpùsobù spolupráce s programy, kdy vkládáte do textu
+jejich výstup nebo naopak uèiníte text jejich vstupem, lze té¾ odskoèit z
+editace k jinému programu. To lze provést jednoúèelovì pøíkazem <CODE
+CLASS=prikaz>:!<EM>pøíkaz</EM></CODE>. Opìt se objevuje vykøièník na zaèátku
+slova - tedy jedná se o spu¹tìní programu. <EM>vim</EM> jej provede, zobrazí
+výsledek a vrátí se k editaci textu. <P>
+
+Chcete-li si udìlat del¹í výlet, pou¾ijte <CODE CLASS=prikaz>:sh</CODE>. Vyvolá
+interpret pøíkazù, v nìm¾ mù¾ete dìlat, co se vám zlíbí. Kdy¾ jej pozdìji
+ukonèíte (na vìt¹inu interpretù zabírá pøíkaz <CODE>exit</CODE>), vrátíte se
+zpìt do <EM>vim</EM>.
+
+<!--/STRANKA-->
+<!--NAVIG-->
+<DIV ALIGN=RIGHT>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0">
+<TR>
+<TD><A HREF="regvyr.htm"><IMG SRC="zpet.gif" ALT="&lt;-- predchozi " BORDER="0"></A></TD>
+<TD><A HREF="index.htm"><IMG SRC="obs.gif" ALT=" [obsah] " BORDER="0"></A></TD>
+<TD><A HREF="help.htm"><IMG SRC="vpred.gif" ALT=" dalsi --&gt;" BORDER="0"></A></TD>
+</TR>
+</TABLE>
+</DIV>
+<!--/NAVIG-->
+
+<SMALL>&copy; 1997, 1998 Pavel Satrapa</SMALL>
+
+ </TD>
+</TR>
+</TABLE>
+
+</BODY>
+</HTML>

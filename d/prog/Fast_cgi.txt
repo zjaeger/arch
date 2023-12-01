@@ -1,0 +1,73 @@
+2004/04/08
+
+
+http://www.fastcgi.com/
+http://www.citycat.ru/doc/FastCGI/fcdk/examples/
+
+
+1. Build Apache2 (httpd-2.0.49)
+
+LOCAL=$IAP_HOME/iapcgi/local/apache
+./configure \
+--with-layout=Apache \
+--enable-mods-shared=most \
+--disable-include \
+--disable-userdir \
+--disable-speling \
+--disable-vhost_alias \
+--disable-autoindex \
+--disable-auth \
+--enable-ssl \
+--prefix=$LOCAL
+
+edit httpd.conf:
+---------------------------------------------------------------------------------
+Listen 172.20.54.25:8081
+
+<IfModule prefork.c>
+StartServers         1
+MinSpareServers      1
+MaxSpareServers      4
+MaxClients          20
+MaxRequestsPerChild  0
+</IfModule>
+
+PassEnv TIP2_HOME
+PassEnv IAP_HOME
+PassEnv ORACLE_HOME
+PassEnv LD_LIBRARY_PATH
+---------------------------------------------------------------------------------
+
+2. Build mod_fastcgi (mod_fastcgi-2.4.2)
+
+$ cp Makefile.AP2 Makefile
+edit Makefile (set absolut. paths):
+  top_dir = $LOCAL
+  builddir = $PWD     # . - don't work (?)
+
+$ grep "HEADER" *.[ch]
+rename HEADER -> HEADER1 (field on enum type in conflicts with any
+tru64-h-file)
+
+$ make
+$ make install
+
+edit httpd.conf:
+---------------------------------------------------------------------------------
+LoadModule fastcgi_module modules/mod_fastcgi.so
+
+ScriptAlias /fcgi-bin/ "/usr/users/fiesta/projects/iapcgi/local/apache/fcgi-bin/"
+
+# upraveno ze specifikace pro "cgi-bin": pridan pouze SetHandler
+<Directory "/usr/users/fiesta/projects/iapcgi/local/apache/fcgi-bin">
+    AllowOverride None
+    Options None
+    Order allow,deny
+    Allow from all
+    SetHandler fastcgi-script
+</Directory>
+
+FastCgiServer fcgi-bin/fcgi -flush -initial-env LD_LIBRARY_PATH -init-start-delay 5
+---------------------------------------------------------------------------------
+
+REM: problem with shared-libs - probably solution: row with FastCgiServer

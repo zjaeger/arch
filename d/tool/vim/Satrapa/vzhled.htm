@@ -1,0 +1,152 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<HTML>
+<HEAD>
+<TITLE>vim - jak vypada</TITLE>
+<LINK REL=StyleSheet HREF="vim.css" TYPE="text/css">
+</HEAD>
+<BODY BACKGROUND="papir.gif" BGCOLOR="#FFFFFF" TEXT="#000000" LINK="#FF0000"
+      VLINK="#990000" ALINK="#00FF00">
+
+<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="0">
+<TR>
+ <TD><IMG SRC="nic.gif" WIDTH="150" HEIGHT="1"></TD>
+ <TD>
+<!--STRANKA-->
+
+<H1>Jak vypadá <EM>vim</EM></H1>
+
+Vzhled <EM>vim</EM> není nijak neobvyklı ani oslòující. Jeho obrazovka je
+rozdìlena na obvyklé dvì èásti: editaèní pole, zabírající její drtivou vìt¹inu,
+a stavovı øádek, pro nìj¾ je vyhrazen poslední øádek obrazovky.
+<P>
+
+<DIV ALIGN=CENTER>
+<IMG SRC="vzhled.gif" ALT="Obrazovka programu vim">
+</DIV>
+<P>
+
+V dal¹ím textu budu malinko pøedbíhat dìní a prozradím, jak lze ovlivòovat
+vzhled <EM>vim</EM>. Budu také operovat s pojmy, které jsem dosud nevysvìtlil
+(napøíklad <A HREF="rezimy.htm">re¾imy èinnosti</A>). Nenechte se tím vyvést z
+rovnováhy a pozdìji se k této stránce pøípadnì vra»te.
+
+
+<H2>Zobrazení textu</H2>
+
+Text je zobrazen celkem pøirozenì po jednotlivıch øádcích. Ji¾ v pøedchozí
+kapitole jsem naznaèil, ¾e neexistující øádky (pokud obsah souboru nedoká¾e
+naplnit celou obrazovku) jsou znázornìny prázdnım øádkem, zahájenım znakem
+vlnka (<CODE>~</CODE>).
+<P>
+
+Problém vyvolávají øádky, jejich¾ délka pøesahuje kapacitu obrazovky.
+<EM>vim</EM> je obvykle rozdìlí do nìkolika po sobì jdoucích øádkù. Takové
+chování lze zapnout pøíkazem <CODE CLASS=prikaz>:set&nbsp;wrap</CODE>. Jestli¾e
+se takto rozdìlenı øádek ocitne ve spodní èásti obrazovky, mù¾e se stát, ¾e
+jeho konec (ulo¾enı na následujících øádcích) se ji¾ na obrazovku nevejde. V
+takovém pøípadì je poslední øádek nahrazen prázdnım øádkem, zahájenım znakem
+zavináè (<CODE>@</CODE>). Signalizuje cosi jako "pokraèování pøí¹tì". Kdy¾
+posunete obsah obrazovky vzhùru, postupnì se objeví dal¹í pokraèující øádky.
+<P>
+
+Zcela fatální situace nastane, kdy¾ se objeví extrasuperveledlouhı øádek, kterı
+musí bıt rozlo¾en do více øádkù, ne¾ je vı¹ka obrazovky. Jeho konec pak za
+¾ádnıch okolností neuvidíte. <EM>vim</EM> zobrazí, co se do nìj vejde. Pokud
+øádek zaèíná na prvním øádku obrazovky, celou ji zaplní a je¹tì by bylo potøeba
+pokraèovat, poslední øádek editor naplní samımi znaky <CODE>@</CODE>. Tím
+naznaèuje, ¾e konec øádku je nezobrazitelnı. Pokud se text posune o jeden øádek
+vzhùru, vyjede zaèátek øádku z obrazovky a tudí¾ celı zmizí.
+<P>
+
+Rozdìlení v re¾imu <CODE CLASS=prikaz>wrap</CODE> standardnì probíhá bez ohledu
+na obsah øádku. <EM>vim</EM> smìle rozdìlí øádek uprostøed slova. Pokud v¹ak
+zapnete <CODE CLASS=prikaz>:set&nbsp;linebreak</CODE>, má povoleno rozdìlování
+jen mezi slovy, tedy v místì vıskytu mezery nebo tabulátoru. Dlu¾no pøiznat, ¾e
+v tomto re¾imu jen obtí¾nì poznáte, kterı øádek je rozdìlen automaticky pro
+potøeby zobrazení a kdy se jedná o dva øádky editovaného textu. Zpìt k
+pùvodnímu "tvrdému" re¾imu rozdìlování se mù¾ete vrátit pomocí <CODE
+CLASS=prikaz>:set&nbsp;nolinebreak</CODE>.
+<P>
+
+Jestli¾e vám toto automatické rozkládání øádkù nevyhovuje, mù¾ete jej vypnout
+pøíkazem <CODE CLASS=prikaz>:set&nbsp;nowrap</CODE>. <EM>vim</EM> pak ponechá
+ka¾dı øádek na jediném øádku a pokud pøesahuje ¹íøku obrazovky, zbytek prostì
+zmizí za jejím okrajem. Samozøejmì na nìj lze pøesunout kurzor a tak si jej
+prohlédnout. To je jediné øe¹ení vı¹e popsaného problému se superøádkem.
+<P>
+
+V nìkterıch pøípadech (napøíklad pøi editaci zdrojového textu programu) se mù¾e
+hodit nechat si zobrazit èísla jednotlivıch øádkù. To zajistí <CODE
+CLASS=prikaz>:set&nbsp;number</CODE>. V takovém pøípadì by v¹ak øádky mìly bıt
+o nìco krat¹í (pro èíslo je vyhrazeno 8&nbsp;znakù na zaèátku). Pokud tu a tam
+nìkterı délku pøekroèí, doporuèuji kombinovat tento re¾im se <CODE
+CLASS=prikaz>:set&nbsp;nowrap</CODE>. Pokraèovací øádky toti¾ zaèínají od
+prvního sloupce obrazovky a nemile se míchají s èísly. O likvidaci èísel øádkù
+se postará <CODE CLASS=prikaz>:set&nbsp;nonumber</CODE>.
+
+
+<H2>Stavovı øádek</H2>
+
+Jak bıvá zvykem, obsahuje informace o va¹í momentální èinnosti. Zobrazuje tøi
+informace:
+
+<DL>
+<DT><IMG SRC="st-1.gif" ALT="" WIDTH="400" HEIGHT="15"><BR>
+<STRONG>re¾im èinnosti</STRONG>
+ <DD> Pokud je levá èást stavového øádku prázdná, nacházíte se v normálním
+ re¾imu (nebo je zobrazování re¾imu vypnuto :-). V klasickém vkládacím re¾imu
+ zde najdete øetìzec <CODE>--&nbsp;INSERT&nbsp;--</CODE>, v jeho pøepisovací
+ variantì <CODE>--&nbsp;REPLACE&nbsp;--</CODE>. Zobrazování zapnete/vypnete
+ pøíkazy <CODE CLASS=prikaz>:set&nbsp;showmode</CODE> a
+ <CODE CLASS=prikaz>:set&nbsp;noshowmode</CODE>.
+ <P>
+
+<DT><IMG SRC="st-2.gif" ALT="" WIDTH="401" HEIGHT="15"><BR>
+<STRONG>zaèátek pøíkazu</STRONG>
+ <DD> Øada pøíkazù <EM>vim</EM> se zadává posloupností znakù. Napøíklad
+ chcete-li smazat v¹e a¾ do konce odstavce, pou¾ijete kombinaci <CODE
+ CLASS=klavesa>d}</CODE>. Máte-li zapnutou tuto volbu, zhruba v pravé tøetinì
+ obrazovky se postupnì objevují znaky, tvoøící zadávanı pøíkaz. Máte tedy
+ vizuální kontrolu, zda zadávání postupuje podle va¹ich pøedstav. Zapíná a
+ vypíná se pøíkazy <CODE CLASS=prikaz>:set&nbsp;showcmd</CODE> a
+ <CODE CLASS=prikaz>:set&nbsp;noshowcmd</CODE>.
+ <P>
+
+<DT><IMG SRC="st-3.gif" ALT="" WIDTH="401" HEIGHT="15"><BR>
+<STRONG>pozici kurzoru</STRONG>
+ <DD> Poloha kurzoru je zobrazena v pravé èásti stavového øádku. Skládá se ze
+ dvou èísel, oddìlenıch èárkou. První udává èíslo øádku a druhé èíslo sloupce
+ znaku, na nìm¾ se momentálnì nachází kurzor. Zapnout a vypnout tuto
+ signalizaci mù¾ete pøíkazy <CODE CLASS=prikaz>:set&nbsp;ruler</CODE> a
+ <CODE CLASS=prikaz>:set&nbsp;noruler</CODE>.
+ <P>
+
+</DL>
+
+V okam¾iku, kdy v normálním re¾imu napí¹ete dvojteèku, zmìní se stavovı øádek
+na øádek pøíkazovı. Kurzor se pøestìhuje sem a umo¾ní vám napsat odpovídající
+pøíkaz. Napøíklad vı¹e zmiòované instrukce pro ovlivnìní vzhledu <EM>vim</EM>
+patøí do této skupiny.
+<P>
+
+<!--/STRANKA-->
+<!--NAVIG-->
+<DIV ALIGN=RIGHT>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0">
+<TR>
+<TD><A HREF="start.htm"><IMG SRC="zpet.gif" ALT="&lt;-- predchozi " BORDER="0"></A></TD>
+<TD><A HREF="index.htm"><IMG SRC="obs.gif" ALT=" [obsah] " BORDER="0"></A></TD>
+<TD><A HREF="rezimy.htm"><IMG SRC="vpred.gif" ALT=" dalsi --&gt;" BORDER="0"></A></TD>
+</TR>
+</TABLE>
+</DIV>
+<!--/NAVIG-->
+
+<SMALL>&copy; 1997, 1998 Pavel Satrapa</SMALL>
+
+ </TD>
+</TR>
+</TABLE>
+
+</BODY>
+</HTML>

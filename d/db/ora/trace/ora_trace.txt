@@ -1,0 +1,35 @@
+Ora_trace
+--------------------------------------------------------
+14.7.2005
+
+1.1. Enable 'EXPLAIN PLAN'
+
+  SQL> CREATE USER utils IDENTIFIED BY utils
+       DEFAULT TABLESPASE tools
+       TEMPORARY TABLESPACE temp ;
+  SQL> GRANT CREATE SESSION to utils ;
+  SQL> GRANT CREATE TABLE to utils ;
+
+  $ cd $ORACLE_HOME/rdbms/admin
+  $ vi utlxplan.sql
+
+       CREATE GLOBAL TEMPORARY TABLE plan_table (
+       ...
+       ON COMMIT PRESERVE ROWS ;
+
+  SQL> @utlxplan.sql
+  SQL> connect system/...
+  SQL> CREATE PUBLIC SYNONYM plan_table FOR utils.plan_table ;
+  SQL> GRANT ALL on utils.plan_table TO public ;
+
+1.2. Use 'EXPLAIN PLAN'
+
+  SQL> EXPLAIN PLAN FOR <sql_text>
+  SQL> @utlxpls.sql            -- $ORACLE_HOME/rdbms/admin
+
+2.1. Enable 'autotrace'
+
+  $ cd $ORACLE_HOME/sqlplus/admin
+  SQL> connect / as sysdba
+  SQL> @plustrce
+  SQL> GRANT PLUSTRACE TO PUBLIC ;

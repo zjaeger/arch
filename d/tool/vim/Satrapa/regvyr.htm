@@ -1,0 +1,221 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<HTML>
+<HEAD>
+<TITLE>vim - regularni vyrazy</TITLE>
+<LINK REL=StyleSheet HREF="vim.css" TYPE="text/css">
+</HEAD>
+<BODY BACKGROUND="papir.gif" BGCOLOR="#FFFFFF" TEXT="#000000" LINK="#FF0000"
+      VLINK="#990000" ALINK="#00FF00">
+
+<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="0">
+<TR>
+ <TD><IMG SRC="nic.gif" WIDTH="150" HEIGHT="1"></TD>
+ <TD>
+<!--STRANKA-->
+
+<H1>Regulární výrazy</H1>
+
+Je naèase opìt se trochu odli¹it od prùmìru. Vyhledávaný objekt toti¾ nemusí
+být jen pouhý øetìzec znakù. Ve skuteènosti se jedná o tak zvaný regulární
+výraz. Jeho prostøednictvím lze zadávat i znaènì komplikované po¾adavky,
+které má vyhledávaný (a pøípadnì nahrazovaný, jak uvidíte v èásti o
+<A HREF="nahrad.htm">nahrazování textu</A>) text splòovat.
+<P>
+
+Regulární výraz jest chápati jako jakousi ¹ablonu, kterou <EM>vim</EM> pøikládá
+na text a zkoumá, zda vyhovuje. V okam¾iku, kdy text odpovídá ¹ablonì, zajásá a
+pøemístí na nìj kurzor.
+<P>
+
+
+<H2>Základní prvky</H2>
+
+Nejjednodu¹¹ím typem regulárního výrazu je prostý znak&nbsp;- písmeno, èíslice
+a podobnì. Jemu vyhoví stejný znak v textu. Tak¾e napøíklad <CODE
+CLASS=prikaz>/a</CODE> hledá písmeno "a", pøípadnì (pokud máte zapnuto <CODE
+CLASS=prikaz>:set&nbsp;ignorecase</CODE>) i "A". Pokud za sebou zøetìzíte
+nìkolik regulárních výrazù, hledá <EM>vim</EM> v textu zøetìzení prvkù, které
+vyhovují jednotlivým výrazùm v tom poøadí, v nìm¾ jsou uvedeny. Dùsledkem je
+klasické hledání øetìzce. <CODE CLASS=prikaz>/ahoj</CODE> obsahuje regulární
+výraz, který vznikl zøetìzením ètyø elementárních, obsahujících jednotlivá
+písmena. Výsledkem je pøirozené chování&nbsp;- hledá se øetìzec "ahoj".
+<P>
+
+
+<H2>Zobecòující výrazy</H2>
+
+Nìkdy vám na jistém znaku nezále¾í. To v regulárním výrazu vyznaèíte teèkou
+(<CODE CLASS=prikaz>.</CODE>). Napøíklad výrazu <CODE CLASS=prikaz>/n.c</CODE>
+vyhoví "nic", "noc" i jakýkoli jiný øetìzec tøí znakù, který zaèíná písmenem
+"n" a konèí "c".
+<P>
+
+Obèas chcete, aby urèitý znak mìl jistou volnost, ale pouze v rámci
+vámi daných mo¾ností. V takovém pøípadì uzavøete do hranatých závorek (<CODE
+CLASS=prikaz>[...]</CODE>) seznam pøípustných znakù. Hodláte-li napøíklad mezi
+vý¹e zmínìnými písmeny "n" a "c" strpìt pouze samohlásku, nechte vyhledat <CODE
+CLASS=prikaz>/n[aeiouy]c</CODE>. Uvnitø hranatých závorek jsou vyjmenovány
+pøípustné varianty pro jeden znak. Celkovì tedy tomuto regulárnímu výrazu
+vyhoví pouze tøíznakový øetìzec.
+<P>
+
+Pokud by vyjmenovávaných variant bylo pøíli¹, mù¾ete si vypomoci pomlèkou. Dva
+znaky oddìlené uvnitø hranatých závorek navzájem pomlèkou znázoròují interval.
+Vyhoví mu libovolný znak, jeho¾ ASCII kód le¾í mezi uvedenými dvìma. Napøíklad
+èíslice lze vyjádøit pomocí <CODE CLASS=prikaz>[0-9]</CODE>. Hledáte-li tedy v
+textu jména souborù "xxx0" a¾ "xxx9", poslou¾í vám regulární výraz <CODE
+CLASS=prikaz>/xxx[0-9]</CODE>.
+<P>
+
+Kdy¾ je prvním znakem uvnitø hranatých závorek støí¹ka (^), neguje jejich
+obsah. To znamená, ¾e vyhoví libovolný znak s výjimkou tìch, které jsou uvedeny
+v hranatých závorkách. Pokud chcete vyjádøit, ¾e na jistém místì nesmí být
+písmeno, mù¾ete pou¾ít <CODE CLASS=prikaz>[^a-zA-Z]</CODE>. Jestli¾e máte
+vypnuto rozli¹ování velkých písmen od malých, staèí <CODE
+CLASS=prikaz>[^a-z]</CODE>.
+<P>
+
+
+<H2>Hranice</H2>
+
+Dal¹í dva regulární výrazy vyznaèují zaèátek (znak <CODE CLASS=prikaz>^</CODE>)
+a konec (znak <CODE CLASS=prikaz>$</CODE>) øádku. Hledáte-li øádek, zaèínající
+slovem "From", pou¾ijte <CODE CLASS=prikaz>/^From</CODE>. Specialitou je
+hledání prázdného øádku, které obstará <CODE CLASS=prikaz>/^$</CODE> (za
+zaèátkem má ihned následovat konec).
+<P>
+
+Pøíbuznými znakù pro zaèátek a konec øádku jsou symboly <CODE
+CLASS=prikaz>\&lt;</CODE> a <CODE CLASS=prikaz>\&gt;</CODE>. První oznaèuje
+zaèátek slova a druhé jeho konec. Kdybyste napøíklad hledali zvratnou èástici
+"se", nebylo by pøíli¹ ¹»astné pou¾ít <CODE CLASS=prikaz>/se</CODE>. V tomto
+pøípadì by toti¾ <EM>vim</EM> hledal øetìzec "se" i uvnitø slov, jako je
+sekera, konsekvence èi recese. Pøi pou¾ití <CODE
+CLASS=prikaz>/\&lt;se\&gt;</CODE> jsou podobné nadbyteèné výskyty vylouèeny.
+<P>
+
+
+<H2>Opakování</H2>
+
+Velmi dùle¾itým prvkem regulárních výrazù je opakování. Pokud se pøedchozí
+reagulární výraz mù¾e opakovat, pøidejte za nìj hvìzdièku (<CODE
+CLASS=prikaz>*</CODE>). Ov¹em pozor! Hvìzdièka mù¾e znamenat i nulový poèet
+opakování. Hledáte-li øádky, slo¾ené ze samých pomlèek, mù¾ete pou¾ít <CODE
+CLASS=prikaz>/^-*$</CODE>. Takovému výrazu v¹ak vyhoví i øádky prázdné. Pokud
+chcete, aby <EM>vim</EM> vyhledal jen øádky s alespoò jednou pomlèkou, nasaïte
+<CODE CLASS=prikaz>/^--*$</CODE>. Zde je po¾adováno, aby za zaèátkem øádku
+následovala pomlèka a po ní pak libovolný poèet dal¹ích.
+<P>
+
+Jeliko¾ po¾adavek na alespoò jeden výskyt je pomìrnì èastý, zavedl <EM>vim</EM>
+pro jeho ztìlesnìní dal¹í speciální znak. Je jím plus (<CODE
+CLASS=prikaz>\+</CODE>). Výraz <CODE CLASS=prikaz>a\+</CODE> má tedy stejný
+význam jako <CODE CLASS=prikaz>aa*</CODE>.
+<P>
+
+Druhým èasto pou¾ívaným poètem je nepovinný výskyt. Tedy test na nanejvý¹ jeden
+výskyt daného øetìzce. Ve <EM>vim</EM> se vyznaèuje pomocí <CODE
+CLASS=prikaz>\=</CODE>. Pokud byste napøíklad hledali koncovky HTML souborù,
+které mohou být <CODE>.htm</CODE> èi <CODE>.html</CODE>, poslou¾í vám <CODE
+CLASS=prikaz>/\.html\=\&gt;</CODE>. Dvojznak <CODE CLASS=prikaz>\=</CODE> za
+posledním písmenem øíká, ¾e "l" v øetìzci mù¾e být a nemusí.
+<P>
+
+
+<H2>Speciální znaky</H2>
+
+Mo¾ná jste si pov¹imli konstrukce <CODE CLASS=prikaz>\.</CODE> v pøíkladu z
+pøedchozího odstavce. Jeho prostøednictvím je zadán po¾adavek na výskyt teèky.
+<EM>vim</EM> pou¾ívá obvyklé konvence operaèního systému Unix. Pokud mají
+nìkteré znaky speciální význam (jako napøíklad ".", "*", "$" èi "\"), lze je do
+regulárního výrazu vlo¾it tak, ¾e jim pøedsadíte zpìtné lomítko. Proto
+hledáte-li hvìzdièku, zdejte <CODE CLASS=prikaz>\*</CODE> a pøi odhalování
+zpìtných lomítek vám pomù¾e <CODE CLASS=prikaz>\\</CODE>.
+<P>
+
+
+<H2>Závorky</H2>
+
+Opakování se týká pouze posledního regulárního výrazu. V øetìzci <CODE
+CLASS=prikaz>ahoj\+</CODE> se proto opakování vztahuje jen na písmeno "j",
+nikoli na celé slovo "ahoj". Pokud chcete do opakování zahrnout víceznakový
+regulární výraz, obalte jej speciálními závorkami ve tvaru <CODE
+CLASS=prikaz>\(</CODE> a <CODE CLASS=prikaz>\)</CODE>. V na¹em pøípadì by
+regulární výraz vypadal takto: <CODE CLASS=prikaz>\(ahoj\)\+</CODE>.
+<P>
+
+Závorky mají ve skuteènosti je¹tì mnohem zajímavìj¹í funkci. <EM>vim</EM> si
+toti¾ zapamatuje øetìzec, který jim vyhovìl, a pozdìji jej mù¾ete pou¾ít.
+Speciální konstrukce <CODE CLASS=prikaz>\<EM>n</EM></CODE> toti¾ pøedstavuje
+<CODE><EM>n</EM></CODE>-tý zapamatovaný øetìzec. Tato schopnost se uplatní
+pøedev¹ím pøi nahrazování, ale i v hledání ji obèas mù¾ete výhodnì vyu¾ít.
+Pokud napøíklad hledáte pìtiznakové palindromy (slova, která se nemìní, kdy¾
+jsou ètena pozpátku&nbsp;- napøíklad "rotor"), nasaïte <CODE
+CLASS=prikaz>\(.\)\(.\).\2\1</CODE>. Editor vyhledá v¹echny øetìzce, obsahující
+libovolný znak (který si zapamatuje pod èíslem&nbsp;1), za ním je¹tì jeden
+libovolný znak (zapamatován pod èíslem&nbsp;2) a je¹tì jeden, za ním¾ následuje
+znak zapamatovaný pod èíslem&nbsp;2 a na závìr je¹tì první zapamatovaný.
+<P>
+
+
+<H2>Nebo</H2>
+
+Posledním vylep¹ením regulárních výrazù je mo¾nost vyjádøit "nebo". Zajistí ji
+dvojznak <CODE CLASS=prikaz>\|</CODE>. Hledáte-li slovo "ahoj" nebo "nazdar",
+mù¾ete pou¾ít pøíkaz <CODE CLASS=prikaz>/ahoj\|nazdar</CODE>. Nebo má ze v¹ech
+zde zmiòovaných konstrukcí nejni¾¹í prioritu. Dvojznaky <CODE
+CLASS=prikaz>\|</CODE> vlastnì rozdìlí regulární výraz na nìkolik èástí.
+<EM>vim</EM> pak vyhledá øetìzce, které vyhovují alepspoò jedné z nich.
+<P>
+
+
+<H2>Víceøádkové vzory</H2>
+
+Jednou z tradièních vlastností regulárních výrazù je jejich omezení na jeden
+øádek. Od verze&nbsp;6 v¹ak tohle ve <EM>vim</EM> u¾ neplatí. Nyní lze
+do regulárního výrazu zaøadit dvojznak <CODE CLASS=prikaz>\n</CODE>, kterému
+vyhoví jedinì konec øádku. Mù¾ete jej pou¾ívat i uvnitø hranatých závorek,
+tak¾e napøíklad <CODE CLASS=prikaz>[&nbsp;\n]</CODE> znamená "tady mù¾e být
+mezera nebo konec øádku".
+<P>
+
+Druhým zpùsobem, jak vzít do hry konec øádku, je pøedøazení kombinace <CODE
+CLASS=prikaz>\_</CODE> pøed nìkteré speciální znaky. Napøíklad teèka
+reprezentuje libovolný znak kromì konce øádku. Trojici znakù <CODE
+CLASS=prikaz>\_.</CODE> v¹ak vyhoví libovolný znak vèetnì konce øádku.
+<P>
+
+Podobnì znaky <CODE CLASS=prikaz>^</CODE> a <CODE CLASS=prikaz>$</CODE> se
+mohly vyskytnout jen na zaèátku/konci regulárního výrazu, aby mìly svùj
+speciální ohranièující význam. Hledáte-li <CODE CLASS=prikaz>^ab</CODE>, hledá
+se øetìzec "ab" na zaèátku øádku. Hledáte-li <CODE CLASS=prikaz>a^b</CODE>,
+hledá se øetìzec "a^b" kdekoli. Nyní máte k dispozici konstrukce <CODE
+CLASS=prikaz>\_^</CODE> a <CODE CLASS=prikaz>\_$</CODE>, které pøedstavují
+zaèátek/konec øádku kdekoli v regulárním výrazu. Tak¾e napøíklad regulární
+výraz <CODE CLASS=prikaz>^[0-9].*\n\_^-</CODE> hledá øádek, který zaèíná
+èíslicí a øádek za ním zaèíná pomlèkou. V¹imnìte si konstrukce <CODE
+CLASS=prikaz>.*\n</CODE>, která øíká "tady mohou být libovolné znaky a za nimi
+konec øádku. Reprezentuje zbytek prvního øádku (text za úvodní èíslicí).
+<P>
+
+<!--/STRANKA-->
+<!--NAVIG-->
+<DIV ALIGN=RIGHT>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0">
+<TR>
+<TD><A HREF="hledani.htm"><IMG SRC="zpet.gif" ALT="&lt;-- predchozi " BORDER="0"></A></TD>
+<TD><A HREF="index.htm"><IMG SRC="obs.gif" ALT=" [obsah] " BORDER="0"></A></TD>
+<TD><A HREF="soubor.htm"><IMG SRC="vpred.gif" ALT=" dalsi --&gt;" BORDER="0"></A></TD>
+</TR>
+</TABLE>
+</DIV>
+<!--/NAVIG-->
+
+<SMALL>&copy; 1997, 1998 Pavel Satrapa</SMALL>
+
+ </TD>
+</TR>
+</TABLE>
+
+</BODY>
+</HTML>

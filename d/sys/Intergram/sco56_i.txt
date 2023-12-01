@@ -1,0 +1,206 @@
+
+Instalation SCO OpenServer 5.0.6 on ASUS CUSL2-C
+------------------------------------------------
+
+## 01. BEGIN
+
+Keyboard: US English
+
+Licence Number: 4CG001861
+Licence Code: mmvgqwtr
+
+Fresh Instalation
+
+System Name: orasrv2
+Domain Name: intergram.cz
+Sec.profile: Low
+Time zone:   Europe,
+             Central European Time (CET),
+             Daylight savings time: yes
+Language:    Standard C (English)
+
+Initial system profile:
+- Standard Enterprise system configuration: no
+- Lightweight character terminal configuration: yes
+- Database services: yes
+
+Hard disk setup: Interactive fdisk/divvy (Next disks: defer)
+Optional software: SCO OpenServer ...  (press SPACE for ->)
+- Operating System Services: all
+- Grafical Environment: none
+- Connectivity, include only:
+  Network Adapter Drivers
+  TCP/IP Runtime System
+  NFS Runtime System
+- Internet FastStart: none
+- Documentation: some selected
+- Language Support: none
+
+Configuring optional software
+- Network card: (manually select)
+  3Com Fast EtherLink Server NIC (2:3:0)
+- Network address: 10.1.0.7 / 255.255.0.0
+  Gateway: 10.1.0.4
+  Nameserver: 10.1.0.6
+- Video and graphics: none
+- Mouse: none
+- Email system: sendmail
+
+Root password: root
+
+## 02. HARD DISK INITIALIZATION
+
+Initialization Selection: 1
+-> fdisk
+2. Use Entire Disk for UNIX
+(current hdd: /dev/rdsk/0s0)
+q
+(scsi version: 3, vendor: SEAGATE, product: ST318437LW)
+1. Scan entire UNIX partition
+1. Thorough scan
+Destructive scan: y
+q
+(default space for bad blocks: 665)
+Swap-space=256000 [1K blocks]
+Boot space allocation: 20000 (default)
+/u filesystem? (y/n)y
+-> divvy
+- boot:    EAFS             0 -     19.999
+- swap:    NON FS      20.000 -    275.999
+- root:    HTFS       276.000 -    875.999
+- u11:     HTFS       876.000 -  5.999.999
+- u12:     HTFS     6.000.000 - 11.999.999
+- u13:     HTFS    12.000.000 - 17.952.626
+- recover: NON FS  17.952.627 - 17.952.636
+- (d1057all WHOLE DISK      0 - 17.952.637
+(8032 1K blocks reserver for the system)
+q
+i[nslall]
+Default mount points:
+/dev/u11 -> /u11
+/dev/u12 -> /u12
+sw install
+reboot
+
+## 03. STARTUP SCRIPTS, NETWORK
+
+$ cd /etc/rc2.d
+$ mv S25pm s25pm
+$ mv S85nis s85nis
+$ mv S86netbios s86netbios
+
+$ netconfig
+Add new adapter:
+  3Com Fast EtherLink Server NIC (2:4:0)
+  192.168.1.2 / 255.255.255.0
+
+## 04. ADDING NEXT DISKS
+
+Supposition: mkdev .scsi: 3. Display current SCSI configuration
+... contains next disks
+Also in: cat /etc/conf/cf.d/mscsi
+
+Adding next disks (scsi_id=1, ...):
+(mkdev hd <scsi_ID> <adapt_number> <lun> <adapt_name> <bus>)
+$ mkdev hd 1 0 0 ad160 0
+
+- swap1:   NON FS           0 -    511.999
+- u21:     HTFS       512.000 -  5.999.999
+- u22:     HTFS     6.000.000 - 11.999.999
+- u23:     HTFS    12.000.000 - 17.952.626
+
+$ mkdev fs
+1. Add a new filesystem to system
+Device name: /dev/u21
+Directory: /u21
+1. Always mount
+Do you want to allow users to mount this file system? (y/n)n
+... atd ...
+
+Adding next disks (scsi_id=2, ...):
+(mkdev hd <scsi_ID> <adapt_number> <lun> <adapt_name> <bus>)
+$ mkdev hd 2 0 0 ad160 0
+
+- swap2:   NON FS           0 -    511.999
+- u31:     HTFS       512.000 -  5.999.999
+- u32:     HTFS     6.000.000 - 11.999.999
+- u33:     HTFS    12.000.000 - 17.952.626
+... atd ...
+
+
+International settings
+scoadmin i
+Settings -> Codeset -> Internal
+ISO8859-2
+
+## 05. TAPE
+
+mkdev tape
+1. Configure a SCSI or EIDE tape drive
+1. Install a SCSI Tape Drive
+ad160,0,0,6,0 (device_name, device_no, bus_no, scsi_id, lun)
+Update SCSI configuration? (y/n) y
+Vendor Identification string: Tandberg
+  (the string returned by the SCSI device INQUIRY command)
+SCSI version: 2
+  (1 for SCSI-1, 2 for SCSI-2)
+Response Data Format: default  (???)
+  (0 for SCSI-1, 1 for the common command set (CCS) REQUEST SENSE
+   command, or 2 for SCSI-2)
+1. Generic SCSI-1/SCSI-2 tape drive
+New special devices:
+  /dev/xct0  -> /dev/xStp0
+  /dev/rct0  -> /dev/rStp0  -> /dev/rmt/0b
+  /dev/nrct0 -> /dev/nrStp0 -> /dev/rmt/0bn
+q ...
+relink kernel
+
+## 06. PARALLEL
+
+mkdev parallel
+1. Add a parallel port
+1. Parallel Adapter at adress: 378-37f
+IRQ=7
+relink kernel
+
+## 07. DEVELOPMENT SYSTEM
+
+custom
+Software -> Install New -> from "local" -> CD-ROM Drive 0
+Chose: SCO OpenServer Development System (press space on)
+Licence Number: 4CF007729
+Licence Code:   xphhbiuo
+Licence Data:   g0;k;mgb4djt
+-> [Licence]
+
+## 08. KERNEL FOR ORACLE
+
+... neni treba, release 5.0.6 ma default hodnoty dostatecne velke
+
+cd /etc/conf/cf.d
+./configure
+15. Semaphores
+SEMMNI=70
+16. Shared data
+SHMMAX=134 217 728 (tj. 128 MB)
+./link_unix
+
+## 09. ADD USER LICENCES
+
+scoadmin
+-> Licence Manager -> Licence -> Licence Additional Users...
+Licence Number: 5FL047572
+Licence Code: udkxjmdj
+Licence Data: g0;k;u25;m1xd6p2
+... tune kernel: Yes
+... relink kernel, reboot
+
+## 10. "/usr/local/bin"
+
+$ ls -ld /usr/local  ... kontrola, po instalaci to byl symb.link nekam do
+                         SCO adresaru ... s prazdnym obsahem
+$ mkdir /u11/local /u11/local/bin
+$ ln -s /u11/local /usr/local
+
+.profile (root): PATH ... add '/usr/local/bin'
+pro ostatni uzivatele: je v /etc/default/login

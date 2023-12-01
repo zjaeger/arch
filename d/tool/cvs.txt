@@ -1,0 +1,115 @@
+-- cvs.txt
+--
+-- 2007-10-19
+-- 2008-09-25
+
+## 1. CVSNT installation
+
+- latest release of CVSNT: www.cvsnt.org
+
+- create CVS directories
+
+  repository: D:\User\cvsrepo
+  cvstemp:    C:\Gnu\cvsnt\temp ... security: full control for all accounts including SYSTEM
+                                (SYSTEM is not included in Everyone)
+
+- installation
+
+  Select Components:
+  - Command line client
+  - Server Components
+    - CVSNT Password Agent (?)
+  - SSPI (:sspi:) protocol
+  - ...
+  Select Additional Tasks:
+  - Install cvsnt service
+  - Install cvsnt lock service
+
+  REBOOT!!!
+
+- configuration
+
+  Start CVSNT Control Panel applet
+  - add repository
+    Location: D:/User/cvsrepo    # name without spaces!!!
+    Name:     /User/cvsrepo
+  - Advanced
+    Impersonation enabled: ON (use filesystem permissions)
+    Lockserver listens locally only
+    CVS server port: 2401
+    Lock Server Port: 2402
+    ... press Apply Button ...
+
+  Create Windows Group: CVSUsers
+  grant "full acces" to repository to CVSUsers
+  ? grant "full acces" to "cvstemp" to CVSUsers ?
+  add users to CVSUsers
+
+  Create Windows User: CVSAdmin
+  member of: CVSUsers
+  cvsnt services run as: CVSAdmin
+
+  Windows Firewall: port 2401 (+ cvsservice.exe)
+
+  set CVSROOT=:sspi:<computer_name>:<repository_name>
+
+  example:
+
+  /* set CVSROOT=:sspi:crbpr802.praha.rb.cz:/Users/cvsrepo */
+  set CVSROOT=:sspi:C34000961357.ness.com:/User/cvsrepo
+  set CVSROOT=:sspi:crbness9.praha.rb.cz:/User/cvsrepo
+
+- repository backup
+
+  net stop cvs
+  xcopy D:\User\cvsrepo "\\server\cvsbackup /Q /S /C /H /R /O /Y
+  net start cvs
+
+  NOTE: /O (kopie prav dle ACL v RF nefungoval)
+
+## 2. WinCVS Installation
+
+  - install Python first (WinCVS uses it (?))
+  - install WinCVS (contains GUI CVS interface only)
+
+## 3. Use CVS
+
+  Create a CVS repository if it doesn't exist:
+
+    cvs init
+
+  Import sources into CVS (for any new project: <prj_name>):
+
+    cvs import -m "<message>" <prj_name> <vendor_tag> <release_tags>
+
+  Checkout sources for editing (checkout, get)
+  
+    cvs checkout <prj_name>
+
+  Check files into the repository:
+
+    cvs commit -m "<message>"
+
+  Display status information on checked out files
+
+    cvs status -q
+
+  Bring work tree in sync with repository
+
+    cvs update
+
+  Help:
+
+    cvs --help
+    cvs --help-commands
+
+## 4. Links
+
+CVSNT Installation for Windows
+http://www.devguy.com/fp/cfgmgmt/cvs/cvs_admin_nt.htm
+
+TortoiseCVS lets you work with files under CVS version control directly from Windows Explorer.
+http://www.tortoisecvs.org/
+
+http://www.cvsnt.org/manual/html/
+http://www.cvsnt.org/wiki/InstallationTips

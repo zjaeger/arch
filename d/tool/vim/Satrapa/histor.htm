@@ -1,0 +1,154 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<HTML>
+<HEAD>
+<TITLE>vim - editor pøíkazového øádku</TITLE>
+<LINK REL=StyleSheet HREF="vim.css" TYPE="text/css">
+</HEAD>
+<BODY BACKGROUND="papir.gif" BGCOLOR="#FFFFFF" TEXT="#000000" LINK="#FF0000"
+      VLINK="#990000" ALINK="#00FF00">
+
+<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="0">
+<TR>
+ <TD><IMG SRC="nic.gif" WIDTH="150" HEIGHT="1"></TD>
+ <TD>
+<!--STRANKA-->
+
+<H1>Editor pøíkazového øádku</H1>
+
+Èasto se vám stane, ¾e byste chtìli znovu pou¾ít nìkterý z pøedchozích
+Ex-pøíkazù. Nebo jej lehce upravit. Zejména pøi ladìní slo¾itìj¹ích
+nahrazovacích pøíkazù je taková potøeba takøka bytostná. <EM>vim</EM> nabízí
+pomocnou ruku.
+<P>
+
+Má toti¾ vestavìn editor pøíkazového øádku. Chová se tak, jak jsme u podobných
+nástrojù zvyklí&nbsp;- umí vyvolávat døíve pou¾ívané pøíkazy, dovolí vám po
+nich ¹mejdit kurzorem a upravovat je a dokoce dovede i doplòovat názvy souborù
+èi jiných objektù.
+<P>
+
+Základními nástroji pro pohyb v historii pøíkazù jsou klávesy <CODE
+CLASS="klavesa">[¹ipka&nbsp;nahoru]</CODE> a <CODE
+CLASS="klavesa">[¹ipka&nbsp;dolù]</CODE>. Jejich prostøednictvím mù¾ete
+vyvolávat star¹í èi novìj¹í pøíkazy. Kapacita historie je dána volbou <CODE
+CLASS="prikaz">history</CODE>. Napøíklad pøíkazem <CODE
+CLASS="prikaz">:set&nbsp;history=50</CODE> naøídíte, aby si editor pamatoval
+padesát pøíkazù.
+ <P>
+
+Pokud napí¹ete zaèátek pøíkazu a pak stisknete <CODE
+CLASS="klavesa">[¹ipku&nbsp;nahoru]</CODE>, bude <EM>vim</EM> nabízet jen ty
+zapamatované pøíkazy, které zaèínají vámi zadaným øetìzcem. Tím lze putování
+historií podstatnì urychlit.
+<P>
+
+<BLOCKQUOTE CLASS="priklad">
+<STRONG>Pøíklad:</STRONG><BR>
+Øeknìme, ¾e konvertujete skupinu souborù z textového formátu MS&nbsp;DOSu do
+Unixu a nemáte po ruce nic vhodnìj¹ího, ne¾ <EM>vim</EM>. Klasickým postupem je
+spustit <CODE>vim&nbsp;*.txt</CODE> a pro ka¾dý ze souborù pak provést trojici
+pøíkazù
+
+<BLOCKQUOTE>
+<CODE CLASS="prikaz">:set notextmode</CODE><BR>
+<CODE CLASS="prikaz">:w</CODE><BR>
+<CODE CLASS="prikaz">:n</CODE>
+</BLOCKQUOTE>
+
+U prvního souboru je budete muset vypsat, ale u dal¹ích pak staèí ji¾ pouhá
+sekvence <CODE CLASS="klavesa">:s[¹ipka&nbsp;nahoru]</CODE> a na pøíkazovém
+øádku se objeví celý pøíkaz <CODE CLASS="prikaz">:set&nbsp;notextmode</CODE>.
+Stejného výsledku dosáhnete trojím stisknutím klávesy <CODE
+CLASS="klavesa">[¹ipka&nbsp;nahoru]</CODE>.
+
+</BLOCKQUOTE>
+
+V rámci øádku se pak mù¾ete pohybovat kurzorovými klávesami <CODE
+CLASS="klavesa">[doleva]</CODE> a <CODE CLASS="klavesa">[doprava]</CODE>.
+Chování editoru pøipomíná vkládací re¾im. Pí¹ete-li viditelné znaky, vsouvají
+se do øádku, <CODE CLASS="klavesa">[Backspace]</CODE> ma¾e znak pøed kurzorem
+atd. atp.
+<P>
+
+Kromì pøíkazového øádku mù¾ete stejný editor pou¾ívat i pro vyhledávané vzory,
+výrazy a vstupní øádky funkce <CODE>input()</CODE>. Ka¾dá z tìchto ètyø
+kategorií má svou vlastní historii a nemíchá se s ostatními.
+
+
+<H2>Doplòování</H2>
+
+<EM>Moc</EM> milou vìcièkou je automatické doplòování názvù souborù, voleb a
+dal¹ích konstrukcí. Nebudu dlouho chodit kolem horké ka¹e a namlsám vás
+pøíkladem.
+
+<BLOCKQUOTE CLASS="priklad">
+<STRONG>Pøíklad:</STRONG><BR>
+Zadejte <CODE CLASS="klavesa">:e </CODE> (za "e" je mezera) a stisknìte <CODE
+CLASS="klavesa">[Tab]</CODE>. Editor pípne a nabídne vám jméno prvního souboru
+z aktuálního adresáøe. Kdy¾ <CODE CLASS="klavesa">[Tab]</CODE> opakujete,
+nabízí dal¹í a dal¹í soubory.
+</BLOCKQUOTE>
+
+Klávesa <CODE CLASS="klavesa">[Tab]</CODE> toti¾ aktivuje automatické doplnìní
+právì rozepsaného slova. <EM>vim</EM> dovede doplòovat
+
+<UL>
+<LI> jména pøíkazù
+<LI> jména hesel
+<LI> jména souborù
+<LI> jména voleb
+</UL>
+
+Chová se inteligentnì&nbsp;- doplòované objekty vybírá podle pozice, kde se
+momentálnì nachází kurzor. Napøíklad ve vý¹e uvedeném pøíkladu byl kurzor na
+pozici parametru pøíkazu <CODE CLASS="prikaz">:e</CODE>, kterým má být jméno
+souboru. Proto se nabízely názvy souborù. Kdybyste místo <CODE
+CLASS="prikaz">:e </CODE> zahájili pøíkaz <CODE CLASS="prikaz">:set </CODE>,
+nabízel by názvy voleb.
+<P>
+
+Kdy¾ zadáte poèáteèní znaky, nabízí editor pouze jména, která zaèínají uvedeným
+øetìzcem. Vyhovuje-li jediné, bude doplnìno. Jestli¾e existuje nìkolik
+vyhovujících alternativ, <EM>vim</EM> pípne (aby upozornil, ¾e by cosi mohlo
+drhnout) a doplní první vyhovující jméno. Pokud vám nevyhovuje, stisknìte
+<CODE CLASS="klavesa">[Tab]</CODE> znovu a dostanete dal¹í. A tak dále poøád
+dokola.
+<P>
+
+Klávesou <CODE CLASS="klavesa">Ctrl-D</CODE> si vypí¹ete v¹echna vyhovující
+jména, tak¾e budete mít pøehled. Pomocí <CODE CLASS="klavesa">Ctrl-N</CODE> a
+<CODE CLASS="klavesa">Ctrl-P</CODE> mù¾ete poskakovat mezi jednotlivými
+mo¾nostmi.
+<P>
+
+Automatické doplòování ve skuteènosti není pevnì svázáno s klávesou <CODE
+CLASS="klavesa">[Tab]</CODE>. Napøíklad pùvodní editor <EM>vi</EM> k tomuto
+úèelu pou¾íval <CODE CLASS="klavesa">Ctrl-E</CODE> a stejnì se chová i
+<EM>vim</EM>, pokud pracuje v (implicitním) kompatibilním re¾imu. Klávesu,
+která má aktivovat automatické doplnìní urèuje volba <CODE
+CLASS="prikaz">wildchar</CODE>. Napøíklad po provedení <CODE
+CLASS="prikaz">:set&nbsp;wildchar=&lt;F5&gt;</CODE> bude doplòovat funkèní
+klávesa <CODE CLASS="klavesa">[F5]</CODE>.
+<P>
+
+<!--/STRANKA-->
+<!--NAVIG-->
+<DIV ALIGN=RIGHT>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0">
+<TR>
+<TD><A HREF="nahrad.htm"><IMG SRC="zpet.gif" ALT="&lt;-- predchozi " BORDER="0"></A></TD>
+<TD><A HREF="index.htm"><IMG SRC="obs.gif" ALT=" [obsah] " BORDER="0"></A></TD>
+<TD><A HREF="visual.htm"><IMG SRC="vpred.gif" ALT=" dalsi --&gt;" BORDER="0"></A></TD>
+</TR>
+</TABLE>
+</DIV>
+<!--/NAVIG-->
+
+<SMALL>&copy; 1997, 1998 Pavel Satrapa</SMALL>
+
+ </TD>
+</TR>
+</TABLE>
+
+</BODY>
+</HTML>

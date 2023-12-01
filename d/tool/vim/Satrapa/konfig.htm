@@ -1,0 +1,144 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<HTML>
+<HEAD>
+<TITLE>vim - konfiguracni soubory</TITLE>
+<LINK REL=StyleSheet HREF="vim.css" TYPE="text/css">
+</HEAD>
+<BODY BACKGROUND="papir.gif" BGCOLOR="#FFFFFF" TEXT="#000000" LINK="#FF0000"
+      VLINK="#990000" ALINK="#00FF00">
+
+<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="0">
+<TR>
+ <TD><IMG SRC="nic.gif" WIDTH="150" HEIGHT="1"></TD>
+ <TD>
+<!--STRANKA-->
+
+<H1>Konfiguraèní soubory</H1>
+
+Ka¾dý slu¹ný program lze konfigurovat. Cílem je, aby u¾ivatel mohl upravovat
+jeho chování a vybrat z nabízených mo¾ností ten model, který mu vyhovuje
+nejlépe.
+<P>
+
+V pøípadì <EM>vim</EM> je konfigurace nìkolikaúrovòová a vychází z
+konfiguraèních souborù. Jedná se o bì¾né textové soubory, obsahující pøíkazy
+<EM>vim</EM> (jedná se o Ex-pøíkazy, tedy takové, které zapisujete na pøíkazový
+øádek). Pøi startu editoru dojde k jejich automatickému provedení, jako byste
+je poka¾dé napsali na klávesnici. Jediným rozdílem je, ¾e do konfiguraèních
+souborù se pøíkazy zapisují bez úvodní dvojteèky.
+<P>
+
+Pracujete-li v Unixu, naète se nejprve systémový konfiguraèní soubor. Jeho
+jméno vám sdìlí výstup pøíkazu <CODE CLASS="prikaz">:version</CODE>, nicménì
+zpravidla se jedná o <CODE>/usr/share/vim/vimrc</CODE> nebo
+<CODE>/usr/local/share/vim/vimrc</CODE>. Tento soubor udr¾uje správce systému a
+nastavení z nìj jsou globální pro v¹echny. Je vhodné zahájit jej pøíkazem <CODE
+CLASS="prikaz">set&nbsp;nocompatible</CODE>, jinak se bude zpracovávat v re¾imu
+kompatibilním s <EM>vi</EM>.
+<P>
+
+Následuje u¾ivatelská konfigurace, která mù¾e pocházet ze ètyø míst. Pou¾ije se
+první existující místo, zbylá jsou ignorována:
+<P>
+
+<OL>
+<LI> promìnná prostøedí <CODE>VIMINIT</CODE>
+<LI> u¾ivatelský soubor <CODE>vimrc</CODE>, jeho jméno také prozradí <CODE
+CLASS="prikaz">:version</CODE>, nicménì bývá to <CODE>$HOME/.vimrc</CODE>,
+<CODE>$HOME/_vimrc</CODE> èi (v MS-DOSu) <CODE>$VIM/_vimrc</CODE>
+<LI> promìnná prostøedí <CODE>EXRC</CODE>
+<LI> u¾ivatelský soubor <CODE>exrc</CODE>
+</OL>
+<P>
+
+Tøetím krokem pak mù¾e být inicializace lokální pro adresáø. Její pøípustnost
+øídí volba <CODE CLASS="prikaz">exrc</CODE>. Pokud je zapnuta (<CODE
+CLASS="prikaz">:set&nbsp;exrc</CODE>), hledá v aktuálním adresáøi soubory
+<CODE>.vimrc</CODE>, <CODE>_vimrc</CODE>, <CODE>.exrc</CODE> èi
+<CODE>_exrc</CODE>. První existující pou¾ije, ostatní ignoruje.
+<P>
+
+Pøi vypnuté volbì <CODE CLASS="prikaz">exrc</CODE> (co¾ je implicitní stav) se
+na tyto lokální soubory nebere ohled. Dùvodem je pochopitelnì bezpeènost.
+Pomocí vykøièníku mù¾ete toti¾ v rámci inicializace spustit i externí pøíkazy.
+Kdybyste si pak editor spustili v aresáøi, ve kterém nìkdo pøipravil
+destruktivní fale¹ný inicializaèní soubor, mohli byste splakat nad výdìlkem.
+<P>
+
+Druhou úroveò ochrany pøed nebezpeènými lokálními konfiguracemi pøedstavuje
+volba <CODE CLASS="prikaz">secure</CODE>. Kdy¾ u¾ pomocí <CODE
+CLASS="prikaz">:set&nbsp;exrc</CODE> povolíte lokální konfigurace, uva¾ujte o
+omezení jejich mo¾ností pomocí <CODE CLASS="prikaz">:set&nbsp;secure</CODE>.
+Pokud je tato volba zapnuta (implicitnì není), je v <EM>lokálních</EM>
+konfiguraèních souborech zakázáno:
+<UL>
+<LI> provádìt externí pøíkazy
+<LI> zapisovat do souborù
+<LI> definovat automatické pøíkazy (kterými by se daly zlé pøíkazy odlo¾it na
+     pozdìji)
+</UL>
+Navíc se zobrazují provedené mapovací pøíkazy. Pøed o¹klivostmi jste tedy
+pomìrnì slu¹nì chránìni.
+<P>
+
+Jak je vidìt, autoøi <EM>vi</EM> se zabývali ochranou pøed makroviry ji¾ v
+dobì, kdy jistí nejmenovaní vizionáøi je¹tì nemìli tu¹ení, co to je textový
+editor.
+<P>
+
+<BLOCKQUOTE CLASS="priklad">
+<STRONG>Pøíklad:</STRONG><BR>
+Mùj konfiguraèní soubor vypadá asi takto:
+<BLOCKQUOTE>
+<PRE>
+set nocompatible
+set exrc
+set history=1000
+set backspace=2
+set nojoinspaces
+set ruler
+set showcmd
+set showmatch
+set hlsearch
+set smartindent
+set shiftwidth=4
+set smarttab
+set expandtab
+set textwidth=79
+set wildmenu
+
+set background=dark
+
+syntax on
+</PRE>
+</BLOCKQUOTE>
+</BLOCKQUOTE>
+
+Pokud startuje verze editoru pro grafické u¾ivateské rozhraní, následuje je¹tì
+jeho inicializace. Víceménì se opakuje vý¹e popsaný postup, ale jako jméno
+souboru se místo <CODE>vimrc</CODE> pou¾ívá <CODE>gvimrc</CODE>. Podrobnìj¹í
+popis najdete v kapitole o
+<A HREF="gui.htm">grafické verzi</A> editoru.
+<P>
+
+<!--/STRANKA-->
+<!--NAVIG-->
+<DIV ALIGN=RIGHT>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0">
+<TR>
+<TD><A HREF="volby.htm"><IMG SRC="zpet.gif" ALT="&lt;-- predchozi " BORDER="0"></A></TD>
+<TD><A HREF="index.htm"><IMG SRC="obs.gif" ALT=" [obsah] " BORDER="0"></A></TD>
+<TD><A HREF="auto.htm"><IMG SRC="vpred.gif" ALT=" dalsi --&gt;" BORDER="0"></A></TD>
+</TR>
+</TABLE>
+</DIV>
+<!--/NAVIG-->
+
+<SMALL>&copy; 1997, 1998 Pavel Satrapa</SMALL>
+
+ </TD>
+</TR>
+</TABLE>
+
+</BODY>
+</HTML>

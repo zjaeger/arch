@@ -1,0 +1,84 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<HTML>
+<HEAD>
+<TITLE>vim versus vi</TITLE>
+<LINK REL=StyleSheet HREF="vim.css" TYPE="text/css">
+</HEAD>
+<BODY BACKGROUND="papir.gif" BGCOLOR="#FFFFFF" TEXT="#000000" LINK="#FF0000"
+      VLINK="#990000" ALINK="#00FF00">
+
+<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="0">
+<TR>
+ <TD><IMG SRC="nic.gif" WIDTH="150" HEIGHT="1"></TD>
+ <TD>
+<!--STRANKA-->
+
+<H1><EM>vim</EM> versus <EM>vi</EM></H1>
+
+<EM>vim</EM> vznikl jako následovník <EM>vi</EM> a je s ním podle vyjádøení
+autora na 99&nbsp;% kompatibilní. Pøi své práci jsem zatím nenarazil na pøípad,
+kdy by nìkterý postup èi pøíkaz <EM>vi</EM> ve <EM>vim</EM> nefungoval.
+<P>
+
+Samozøejmì v øadì vìcí bylo pùvodní chování <EM>vi</EM> vylep¹eno. Za
+nejvýznamnìj¹í rozdíly pova¾uji:
+
+<UL>
+<LI> Víceúrovòové undo. Ve <EM>vim</EM> lze odvolat nìkolik posledních operací
+(co se vejde do pamìti) a pøípadnì odvolané operace zopakovat (redo).
+
+<LI> Souèasná práce na nìkolika souborech. Pøíkazem <CODE>:split</CODE> lze
+rozdìlit obrazovku a bez problémù pak pøená¹et èásti souborù mezi sebou.
+
+<LI> Historie a editor pøíkazového øádku. Po stisknutí dvojteèky se mù¾ete
+kurzorovými klávesami pohybovat mezi pøedchozími pøíkazy, upravit nìkterý z
+nich a znovu pou¾ít.
+
+<LI> Vylep¹ený vkládací re¾im (lze v nìm pohybovat kurzorem po textu). Navíc je
+doplnìn mo¾ností formátování textu (hlídání pravého okraje).
+
+<LI> Vizuální re¾im vyznaèování blokù písma vèetnì sloupcových.
+
+<LI> Nápovìda.
+
+<LI> Doplòování èástí pøíkazového øádku a slov v textu.
+
+<LI> Podpora my¹i a GUI.
+
+<LI> K dispozici je i nahrávání maker, kdy editor ukládá vámi provádìnou
+sekvenci operací a pozdìji ji na pøání zopakuje.
+
+</UL>
+<P>
+
+Základním nástrojem pro urèení míry kompatibility s <EM>vi</EM> je volba <CODE
+CLASS="prikaz">compatible</CODE>. Kdy¾ ji zapnete (pøíkazem&nbsp;<CODE
+CLASS="prikaz">:set&nbsp;compatible</CODE>), bude se <EM>vim</EM> sna¾it být co
+nejvíce kompatibilní s pùvodním <EM>vi</EM>. Toto nastavení je implicitní, co¾
+mnì osobnì velice vadí, proto¾e èlovìk pøijde o vìt¹inu vý¹e uvedených
+vymo¾eností. Proto jednou z prvních konfiguraèních akcí, které v¾dy konám, je
+provedení <CODE CLASS="prikaz">:set&nbsp;nocompatible</CODE> v globálním <A
+HREF="konfig.htm">konfiguraèním souboru</A>.
+<P>
+
+<!--/STRANKA-->
+<!--NAVIG-->
+<DIV ALIGN=RIGHT>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0">
+<TR>
+<TD><A HREF="proc.htm"><IMG SRC="zpet.gif" ALT="&lt;-- predchozi " BORDER="0"></A></TD>
+<TD><A HREF="index.htm"><IMG SRC="obs.gif" ALT=" [obsah] " BORDER="0"></A></TD>
+<TD><A HREF="vimemacs.htm"><IMG SRC="vpred.gif" ALT=" dalsi --&gt;" BORDER="0"></A></TD>
+</TR>
+</TABLE>
+</DIV>
+<!--/NAVIG-->
+
+<SMALL>&copy; 1997, 1998 Pavel Satrapa</SMALL>
+
+ </TD>
+</TR>
+</TABLE>
+
+</BODY>
+</HTML>

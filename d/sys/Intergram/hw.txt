@@ -1,0 +1,18 @@
+
+net0:
+  192.168.1.2 / 24
+  ora2
+  3Com Fast EtherLink NIC (3C980C), PCI bus=2, Device=3, Function=0
+net1:
+  10.1.0.7 / 16
+  orasvr2
+  3Com Fast EtherLink NIC (3C980C), PCI bus=2, Device=4, Function=0
+
+gateway: 10.1.0.4
+nameserver: 10.1.0.6
+
+CPU Operating Speed:	800(133)
+  External clock	133MHz
+  FSB Rate (CPU:SDRAM:PCI): 4:3:1
+  Multiplier Factor	x6
+  System memory frequency:	133MHz

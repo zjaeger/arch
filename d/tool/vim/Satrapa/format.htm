@@ -1,0 +1,147 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<HTML>
+<HEAD>
+<TITLE>vim - formatovani textu</TITLE>
+<LINK REL=StyleSheet HREF="vim.css" TYPE="text/css">
+</HEAD>
+<BODY BACKGROUND="papir.gif" BGCOLOR="#FFFFFF" TEXT="#000000" LINK="#FF0000"
+      VLINK="#990000" ALINK="#00FF00">
+
+<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="0">
+<TR>
+ <TD><IMG SRC="nic.gif" WIDTH="150" HEIGHT="1"></TD>
+ <TD>
+<!--STRANKA-->
+
+<H1>Formátování textu</H1>
+
+Abych pøede¹el pøípadnému nedorozumìní, pøedem vyjasním pozice. <EM>vim</EM> je
+ASCII editor, nikoli typografický nástroj. V této èásti budu proto mluvit o
+formátování textu, tedy uspoøádání jednotlivých znakù do øádkù a sloupcù.
+Nebudu se zabývat sazbou, èili estetickou úpravou textu, která vy¾aduje práci s
+proporcionálním písmem, jeho rùznými druhy a velikostmi. V oblasti sazby nemá
+<EM>vim</EM> co nabídnout. Mù¾e poslou¾it pouze jako nástroj k editaci
+zdrojových textù pro specializované typografické programy, jako je tøeba TeX.
+Sám ho pou¾ívám právì tímto zpùsobem.
+
+
+<H2>Pravý okraj a jeho dodr¾ování</H2>
+
+Pùvodní <EM>vi</EM> byl navr¾en pøedev¹ím k vytváøení zdrojových textù
+programù. V nich bývají øádky krátké a proto problém hlídání pravého okraje
+nebyl nijak zvlá¹» palèivý. Pro editaci bì¾ných textù je v¹ak tato vlastnost
+nezbytná.
+<P>
+
+Ve <EM>vim</EM> lze nastavit ¹íøku øádku (èili polohu pravého okraje) pomocí
+<BLOCKQUOTE>
+<CODE CLASS=prikaz>:set textwidth=<EM>¹íøka</EM></CODE>
+</BLOCKQUOTE>
+kde <EM>¹íøka</EM> udává poèet znakù na øádku. Implicitní hodnotou je nula, pøi
+ní¾ <EM>vim</EM> pravý okraj nehlídá a øádky mohou být ¹iroké, co hrdlo ráèí.
+Jakmile do <CODE CLASS=prikaz>textwidth</CODE> ulo¾íte nenulovou hodnotu, zaène
+se editor starat o pravý okraj. Dìlá to obvyklým zpùsobem. Jakmile jej pøi
+psaní pøekroèíte, vyhledá poslední mezeru od konce øádku, v jejím místì øádek
+ukonèí a slovo, které právì pí¹ete, pøesune na zaèátek dal¹ího.
+<P>
+
+Pøi zápisu se mù¾e uplanit té¾ automatické odsazování. Zapnete je pomocí <CODE
+CLASS=prikaz>:set&nbsp;autoindent</CODE>. Jakmile øádek zahájíte mezerou èi
+nìkolika mezerami, <EM>vim</EM> automaticky bude pøidávat stejný poèet mezer na
+zaèátek ka¾dého øádku pod ním. Existují je¹tì dva dal¹í re¾imy odsazování
+(<CODE CLASS=prikaz>:set&nbsp;smartindent</CODE> a <CODE
+CLASS=prikaz>:set&nbsp;cindent</CODE>), které vycházejí vstøíc formátování
+zdrojových textù v jazyce&nbsp;C. Pro psaní bì¾ných textù jsou spí¹e na obtí¾.
+
+
+<H2>Zmìna formátování</H2>
+
+Pøi úpravách textu snadno docílíte toho, ¾e øádek pøekroèí pravý okraj nebo se
+naopak neúmìrnì zkrátí. V takových pøípadech pøichází ke slovu pøeformátování,
+které text znovu uspoøádá v rámci souèasných okrajù.
+<P>
+
+Základním pøíkazem pro pøeformátování èásti textu je <CODE
+CLASS=klavesa>gq</CODE>. Za ním uveïte pohybový pøíkaz, který urèí èást textu,
+jí¾ se formátování dotkne. Velmi èasto jsou pou¾ívány kombinace <CODE
+CLASS=klavesa>gqj</CODE> (formátuje tento a následující øádek) a <CODE
+CLASS=klavesa>gq}</CODE> (formátuje od pozice kurzoru a¾ do konce odstavce).
+Kurzor je po provedení formátovacího pøíkazu pøemístìn na místo, kam by jej
+pøesunul dotyèný pohybový pøíkaz. Díky tomu lze snadno pokraèovat ve
+formátování dal¹ích prvkù textu prostým opakováním (pøíkaz&nbsp;<CODE
+CLASS=klavesa>.</CODE>).
+<P>
+
+Speciálním pøípadem je kombinace <CODE CLASS=klavesa>gqap</CODE>
+(mnemotechnika: "ap" je z anglického "a paragraph"). Ta zajistí formátování
+celého odstavce, v nìm¾ se momentálnì nachází kurzor. Je pøibli¾nì
+ekvivalentem kombinace <CODE CLASS=klavesa>{gq}</CODE> (návrat na zaèátek
+odstavce a formátování textu a¾ po jeho konce). Tato operace je velmi
+praktická, proto¾e èasto provedete zásah kdesi v odstavci a následnì jej
+chcete celý pøerovnat.
+<P>
+
+
+<H2>Zarovnání textu</H2>
+
+Kromì nejbì¾nìj¹ího formátování, dodr¾ujícího pøedepsaný pravý okraj, mù¾ete
+pou¾ít je¹tì nìkolik ménì obvyklých zpùsobù. V¹echny se vyvolávají v podobì <A
+HREF="ex.htm">ex-pøíkazù</A> a týkají se proto v¾dy skupiny øádkù:
+
+<DIV ALIGN=CENTER>
+<TABLE BORDER="0">
+<TR>
+ <TH>pøíkaz</TH>
+ <TH>význam</TH>
+</TR>
+<TR>
+ <TD><CODE CLASS=prikaz>:ce</CODE> nebo <CODE CLASS=prikaz>:center</CODE></TD>
+ <TD>na støedovou osu</TD>
+</TR>
+<TR>
+ <TD><CODE CLASS=prikaz>:ri</CODE> nebo <CODE CLASS=prikaz>:right</CODE></TD>
+ <TD>k pravému okraji</TD>
+</TR>
+<TR>
+ <TD><CODE CLASS=prikaz>:le</CODE> nebo <CODE CLASS=prikaz>:left</CODE></TD>
+ <TD>k levému okraji</TD>
+</TR>
+</TABLE>
+</DIV>
+
+Rozsah øádkù, kterých se má tato zmìna dotknout, je nejvýhodnìj¹í urèit ve
+<A HREF="visual.htm">vizuálním re¾imu</A>. V pøípadì <CODE
+CLASS=prikaz>:right</CODE> a <CODE CLASS=prikaz>:center</CODE> mù¾ete jako
+parametr stanovit ¹íøku øádku, která se má pøi formátování pou¾ít. Napøíklad
+centrování pro øádek o ¹íøce 50&nbsp;znakù zajistí pøíkaz
+<BLOCKQUOTE>
+<CODE CLASS=prikaz>:ce 50</CODE>
+</BLOCKQUOTE>
+Pokud údaj chybí, pou¾ije se aktuální hodnota <CODE
+CLASS=prikaz>textwidth</CODE> a jestli¾e je nulová, pou¾ije <EM>vim</EM> ¹íøku
+obrazovky èi okna. Zadáte-li èíselný parametr pøíkazu <CODE
+CLASS=prikaz>:left</CODE>, bude pochopen jako poèet mezer, které má vlo¾it pøed
+ka¾dý pøeformátovaný øádek. Implicitní hodnotou je nula.
+<P>
+
+<!--/STRANKA-->
+<!--NAVIG-->
+<DIV ALIGN=RIGHT>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0">
+<TR>
+<TD><A HREF="visual.htm"><IMG SRC="zpet.gif" ALT="&lt;-- predchozi " BORDER="0"></A></TD>
+<TD><A HREF="index.htm"><IMG SRC="obs.gif" ALT=" [obsah] " BORDER="0"></A></TD>
+<TD><A HREF="makro.htm"><IMG SRC="vpred.gif" ALT=" dalsi --&gt;" BORDER="0"></A></TD>
+</TR>
+</TABLE>
+</DIV>
+<!--/NAVIG-->
+
+<SMALL>&copy; 1997, 1998 Pavel Satrapa</SMALL>
+
+ </TD>
+</TR>
+</TABLE>
+
+</BODY>
+</HTML>

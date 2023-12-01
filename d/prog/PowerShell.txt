@@ -1,0 +1,144 @@
+# PowerShell
+
+--------------------------------------------------------------------------------
+PS D:\u\P3400349\w\oth\java> $PSVersionTable
+
+Name                           Value
+----                           -----
+PSVersion                      5.1.17763.134
+PSEdition                      Desktop
+PSCompatibleVersions           {1.0, 2.0, 3.0, 4.0...}
+BuildVersion                   10.0.17763.134
+CLRVersion                     4.0.30319.42000
+WSManStackVersion              3.0
+PSRemotingProtocolVersion      2.3
+SerializationVersion           1.1.0.1
+
+--------------------------------------------------------------------------------
+PS D:\u\P3400349\w\oth\java> $PSVersionTable.PSVersion
+
+Major  Minor  Build  Revision
+-----  -----  -----  --------
+5      1      17763  134
+
+--------------------------------------------------------------------------------
+PS D:\u\P3400349\w\oth> Get-ExecutionPolicy
+Restricted
+
+--------------------------------------------------------------------------------
+(run PS as administrator)
+PS C:\windows\system32> Set-ExecutionPolicy -ExecutionPolicy Unrestricted
+
+Execution Policy Change
+The execution policy helps protect you from scripts that you do not trust. Changing the execution policy might expose
+you to the security risks described in the about_Execution_Policies help topic at
+https:/go.microsoft.com/fwlink/?LinkID=135170. Do you want to change the execution policy?
+[Y] Yes  [A] Yes to All  [N] No  [L] No to All  [S] Suspend  [?] Help (default is "N"): Y
+
+https://docs.microsoft.com/cs-cz/powershell/module/microsoft.powershell.core/about/about_execution_policies?view=powershell-5.1
+
+--------------------------------------------------------------------------------
+PS C:\Users\P3400349> Get-Command *Service
+
+CommandType     Name                                               Version    Source
+-----------     ----                                               -------    ------
+Cmdlet          Get-Service                                        3.1.0.0    Microsoft.PowerShell.Management
+Cmdlet          New-Service                                        3.1.0.0    Microsoft.PowerShell.Management
+Cmdlet          Restart-Service                                    3.1.0.0    Microsoft.PowerShell.Management
+Cmdlet          Resume-Service                                     3.1.0.0    Microsoft.PowerShell.Management
+Cmdlet          Set-Service                                        3.1.0.0    Microsoft.PowerShell.Management
+Cmdlet          Start-Service                                      3.1.0.0    Microsoft.PowerShell.Management
+Cmdlet          Stop-Service                                       3.1.0.0    Microsoft.PowerShell.Management
+Cmdlet          Suspend-Service                                    3.1.0.0    Microsoft.PowerShell.Management
+
+--------------------------------------------------------------------------------
+PS D:\u\P3400349\w\oth\java> get-process oracle | Select ID,Name,WS,VM,Threads, StartTime, ProcessName
+
+
+Id          : 3708
+Name        : oracle
+WS          : 115548160
+VM          : 5972496384
+Threads     : {1816, 1228, 3460, 12440...}
+StartTime   :
+ProcessName : oracle
+
+--------------------------------------------------------------------------------
+PS C:\Users\P3400349> Get-Service | Where-Object { $_.ServiceName -like "Ora*" }
+PS C:\Users\P3400349> Get-Service Ora*
+
+Status   Name               DisplayName
+------   ----               -----------
+Stopped  OracleJobSchedu... OracleJobSchedulerXE
+Stopped  OracleServiceXE    OracleServiceXE
+Running  OracleXETNSList... OracleXETNSListener
+
+--------------------------------------------------------------------------------
+PS C:\Users\P3400349> Get-Process | where { $_.ProcessName -like "tns*" }
+
+Handles  NPM(K)    PM(K)      WS(K)     CPU(s)     Id  SI ProcessName
+-------  ------    -----      -----     ------     --  -- -----------
+    275      24    16808      20832              6440   0 TNSLSNR
+
+--------------------------------------------------------------------------------
+PS C:\Users\P3400349> Get-Process | Where-Object {$_.ProcessName -like 'tns*' } | Format-List
+
+Id      : 6440
+Handles : 275
+CPU     :
+SI      : 0
+Name    : TNSLSNR
+
+PS C:\Users\P3400349> Get-service OracleServiceXE | Format-List *
+
+
+Name                : OracleServiceXE
+RequiredServices    : {}
+CanPauseAndContinue : False
+CanShutdown         : False
+CanStop             : False
+DisplayName         : OracleServiceXE
+DependentServices   : {}
+MachineName         : .
+ServiceName         : OracleServiceXE
+ServicesDependedOn  : {}
+ServiceHandle       :
+Status              : Stopped
+ServiceType         : Win32OwnProcess
+StartType           : Manual
+Site                :
+Container           :
+
+--------------------------------------------------------------------------------
+PS D:\u\P3400349\w\oth\java> Get-ChildItem *.java | select-string Xtest
+
+Xtest.java:3:public class Xtest
+Xtest_1.java:1:// Xtest_1
+Xtest_1.java:5:class Xtest_1
+
+--------------------------------------------------------------------------------
+PS D:\u\P3400349\w\oth\java> Get-ChildItem *.java | select-string Xtest | Format-table Path,LineNumber -AutoSize
+
+Path                                  LineNumber
+----                                  ----------
+D:\u\P3400349\w\oth\java\Xtest.java            3
+D:\u\P3400349\w\oth\java\Xtest_1.java          1
+D:\u\P3400349\w\oth\java\Xtest_1.java          5
+
+--------------------------------------------------------------------------------
+PS D:\u\P3400349\w\oth> Get-Content w.ps1
+using assembly  System.Windows.Forms
+using namespace System.Windows.Forms
+
+$form = [Form] @{
+  Text = 'My First Form'
+}
+$button = [Button] @{
+  Text = 'Push Me!'
+  Dock = 'Fill'
+}
+$button.add_Click{
+  $form.Close()
+}
+$form.Controls.Add($button)
+$form.ShowDialog()

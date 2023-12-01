@@ -1,0 +1,156 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<HTML>
+<HEAD>
+<TITLE>vim - zotaveni po padu</TITLE>
+<LINK REL=StyleSheet HREF="vim.css" TYPE="text/css">
+</HEAD>
+<BODY BACKGROUND="papir.gif" BGCOLOR="#FFFFFF" TEXT="#000000" LINK="#FF0000"
+      VLINK="#990000" ALINK="#00FF00">
+
+<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="0">
+<TR>
+ <TD><IMG SRC="nic.gif" WIDTH="150" HEIGHT="1"></TD>
+ <TD>
+<!--STRANKA-->
+
+<H1>Zotavení po pádu</H1>
+
+Vìt¹ina z vás tu situaci nepochybnì zná. Pracujete na textu hodinu, dvì. A pak
+vám vypnou proud. Teprve v tom okam¾iku si uvìdomíte, jak dlouhá doba uplynula
+od jeho posledního ulo¾ení. Èlovìk v takové chvíli zpravidla vykøikuje slova,
+která zde nehodlám citovat. Pokud v¹ak pou¾íváte <EM>vim</EM>
+
+<BLOCKQUOTE>
+<STRONG>Nepropadejte panice!</STRONG>
+</BLOCKQUOTE>
+
+<EM>vim</EM> si toti¾ bìhem va¹í práce neustále udr¾uje tak zvaný pracovní
+soubor (swap file). Do nìj si dìlá poznámky o va¹í èinnosti. Na základì ulo¾ené
+podoby textu a tohoto pracovního souboru doká¾e velmi dobøe zrekonstruovat
+editaci, která skonèila nekorektnì (vypnuli proud, zhroutil se sytém a
+podobnì). Utpìné ztráty zpravidla nepøesáhnou jeden øádek.
+
+
+<H2>Pracovní soubor</H2>
+
+Jméno pracovního souboru se shoduje se jménem souboru editovaného, k nìmu¾ je
+pøipojena pøípona <CODE>.swp</CODE>. V Unixu se navíc pøed jméno pøidává teèka,
+aby nestra¹il pøi výpisu seznamu souborù. Pokud má systém souborù omezenou délku
+jména (populární 8+3 v MS&nbsp;DOSu), budou dosavadní teèky ve jménì nahrazeny
+podt¾ítky a výsledek pøípadnì zkrácen a zjednoznaènìn.
+<P>
+
+Pracovní soubor je zalo¾en automaticky pøi zahájení editace souboru a zrovna
+tak automaticky se po jejím úspì¹ném ukonèení zlikviduje. Nemusíte se o nìj
+vùbec starat, <EM>vim</EM> si v¹e zajistí sám.
+<P>
+
+Implicitnì je vytvoøen ve stejném adresáøi, jako editovaný soubor. Nelíbí-li se
+vám takové chování, mù¾ete adresáø pro pracovní soubory nastavit pomocí
+<CODE CLASS=prikaz>:set directory=<EM>adresáø</EM></CODE>.
+<P>
+
+Aktuální stav editace se do pracovního souboru zaznamená, kdy¾ buï ètyøi
+vteøiny nenapí¹ete ¾ádný znak (lze nastavit volbou
+<CODE CLASS=prikaz>updatetime</CODE>, zadejte hodnotu v milisekundách) nebo
+jste napsali 200&nbsp;znakù (ovlivòuje volba
+<CODE CLASS=prikaz>updatecount</CODE>).
+<P>
+
+Také si mù¾ete kdykoli dupnout a ulo¾it aktuální stav editovaného textu do
+pracovního souboru pøíkazem
+
+<BLOCKQUOTE>
+<CODE CLASS=prikaz>:preserve</CODE>
+</BLOCKQUOTE>
+
+Jakmile jej provedete, nebude ji¾ pùvodní soubor k pøípadnému obnovení
+potøebný. V¹echny informace si editor najde v pracovním souboru.
+
+
+<H2>Obnovení</H2>
+
+Pøi zahájení editace souboru si <EM>vim</EM> stanoví jméno odpovídajícího
+pracovního souboru a podívá se, zda náhodou neexistuje. Pokud jej najde,
+signalizuje to, ¾e se stalo cosi nepatøièného. Proto vás upozorní hlá¹ením
+
+<BLOCKQUOTE><PRE>
+ATTENTION
+Found a swap file by the name ...
+</PRE></BLOCKQUOTE>
+
+K takové situaci mohlo dojít v zásadì ze dvou dùvodù:
+
+<OL>
+<LI> Jiný exempláø <EM>vim</EM> pracuje na tomté¾ souboru. V takovém pøípadì
+doporuèuji novì spu¹tìný editor zase pìknì ukonèit a úpravy realizovat v tom
+døíve bì¾ícím.
+
+<LI> ®ádný dal¹í exempláø nebì¾í, ale minulá editace dopadla tvrdì a na záda.
+</OL>
+
+Nás zajímá druhý pøípad, kdy je tøeba provést resuscitaci souboru, jeho¾
+editace skonèila zhroucením. Klasickou reakcí je ukonèit editor a okam¾itì jej
+spustit znovu, ov¹em navíc s parametrem <CODE CLASS=prikaz>-r</CODE> (recover),
+kterým pøiká¾ete vzkøísit padlý soubor - napøíklad
+
+<BLOCKQUOTE><PRE>
+vim -r dopis.txt
+</PRE></BLOCKQUOTE>
+
+Pohodlnìj¹í (a tudí¾ mnou preferovanou) cestou je reagovat na vý¹e zmiòované
+upozornìní o existenci pracovního souboru lakonickým pou¾itím pøíkazu
+
+<BLOCKQUOTE>
+<CODE CLASS=prikaz>:recover</CODE>
+</BLOCKQUOTE>
+
+V obou pøípadech byste se mìli ocitnout v editaèní seanci zhruba v takovém
+stavu, ve kterém byla nekorektnì ukonèena. Doporuèuje se nyní soubor ulo¾it pod
+jiným jménem a porovnat (napøíklad prostøednictvím pøíkazu <CODE
+CLASS="prikaz">:diffsplit</CODE>) s pùvodním textem. Budete-li spokojeni (já
+jsem poka¾dé byl), sma¾te pùvodní i pracovní soubor, zachránìnému dejte jeho
+pùvodní jméno a pokraèujte v editaci.
+
+
+<H2>©petka plamenù</H2>
+
+V¹imnìte si, ¾e <EM>vim</EM> dìlá pøesnì to, co èlovìk potøebuje. Zcela
+nenápadnì, ani¾ by o tom u¾ivatel vìdìl a ani¾ by to znatelnì zasahovalo do
+jeho práce, si dìlá poznámky o tom, co se dìlo. Ozve se jen v pøípadì, ¾e
+zjistí problém (existující pracovní soubor pøi zahájení editace).
+<P>
+
+Naproti tomu bì¾né editory øe¹í stejný problém periodickým ukládáním textu, co¾
+ani zdaleka není toté¾. Ukládají vìt¹í objem dat a to èasto vede k viditelnému
+zpo¾dìní v èinnosti editoru. Navíc pokud si po hodinì práce usmyslíte, ¾e jste
+vyrazili slepou ulièkou a nejlep¹í bude vrátit se k pùvodní verzi souboru, máte
+smùlu. Text byl mezitím nìkolikrát ulo¾en. Takovou situaci si necucám z palce,
+párkrát se mi to stalo.
+<P>
+
+Mimochodem&nbsp;- bìhem nìkolika let pou¾ívání <EM>vim</EM> nepamatuji, ¾e by
+se editor sám o sobì nìkdy zhroutil.
+<P>
+
+<!--/STRANKA-->
+<!--NAVIG-->
+<DIV ALIGN=RIGHT>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0">
+<TR>
+<TD><A HREF="auto.htm"><IMG SRC="zpet.gif" ALT="&lt;-- predchozi " BORDER="0"></A></TD>
+<TD><A HREF="index.htm"><IMG SRC="obs.gif" ALT=" [obsah] " BORDER="0"></A></TD>
+<TD><A HREF="info.htm"><IMG SRC="vpred.gif" ALT=" dalsi --&gt;" BORDER="0"></A></TD>
+</TR>
+</TABLE>
+</DIV>
+<!--/NAVIG-->
+
+<SMALL>&copy; 1997, 1998 Pavel Satrapa</SMALL>
+
+ </TD>
+</TR>
+</TABLE>
+
+</BODY>
+</HTML>

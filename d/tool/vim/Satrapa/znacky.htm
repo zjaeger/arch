@@ -1,0 +1,110 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<HTML>
+<HEAD>
+<TITLE>vim - znaèky</TITLE>
+<LINK REL=StyleSheet HREF="vim.css" TYPE="text/css">
+</HEAD>
+<BODY BACKGROUND="papir.gif" BGCOLOR="#FFFFFF" TEXT="#000000" LINK="#FF0000"
+      VLINK="#990000" ALINK="#00FF00">
+
+<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="0">
+<TR>
+ <TD><IMG SRC="nic.gif" WIDTH="150" HEIGHT="1"></TD>
+ <TD>
+<!--STRANKA-->
+
+<H1>Znaèky</H1>
+
+V dosavadních kapitolách jsme pro¹li pestrou øadou nejrùznìj¹ích pohybù, které
+<EM>vim</EM> nabízí. Zatím v¹ak mezi nimi chybìla mo¾nost zapíchnout si kamsi
+do textu ¹pendlíèek, ke kterému se lze kdykoli snadno vrátit. Právì k tomu
+slou¾í znaèky.
+<P>
+
+
+<H2>Definice</H2>
+
+Chcete-li na aktuální pozici kurzoru polo¾it znaèku, stisknìte <CODE
+CLASS="klavesa">m<EM>&lt;písmeno&gt;</EM></CODE>, kde <EM>&lt;písmeno&gt;</EM>
+je malé èi velké písmeno anglické abecedy.
+<P>
+
+Znaèka není v textu nijak viditelná. Jedná se o pouhou vnitøní konstrukci
+<EM>vim</EM>. Jestli¾e si chcete prohlédnout, kde jsou jednotlivé znaèky
+rozmístìny, pou¾ijte pøíkaz <CODE CLASS="prikaz">:marks</CODE>.
+<P>
+
+
+<H2>Pou¾ití</H2>
+
+Kdy¾ se chcete pozdìji vrátit na pozici znaèky, máte k dispozici dva mo¾né
+pøíkazy: <CODE CLASS="klavesa">'<EM>&lt;písmeno&gt;</EM></CODE> nebo <CODE
+CLASS="klavesa">`<EM>&lt;písmeno&gt;</EM></CODE>. Oba pøesunou kurzor na øádek,
+na nìm¾ le¾í znaèka pojmenovaná uvedeným písmenem. Zatímco zpìtný apostrof
+(<CODE CLASS="klavesa">`</CODE>) vás pøemístí pøímo na pozici znaèky, apostrof
+obyèejný (<CODE CLASS="klavesa">'</CODE>) pøesune kurzor na první neprázdný
+znak dotyèného øádku. Osobnì pova¾uji za u¾iteènìj¹í obrácený apostrof.
+<P>
+
+Je významný rozdíl, jestli pro znaèku pou¾ijete malé nebo velké písmeno.
+Znaèky malé (pojmenované malými písmeny) jsou toti¾ lokální a mù¾ete na nì
+poskoèit, jen pokud se právì nacházíte v dotyèném souboru. Ka¾dý soubor tedy má
+svých vlastních 26&nbsp;lokálních znaèek.
+<P>
+
+Velké znaèky (pojmenované velkými písmeny) naproti tomu obsahují kromì èísla
+øádku a sloupce také informaci o jménì souboru. Skoèíte-li na tuto znaèku,
+mù¾ete pøeskoèit i do jiného souboru. V takovém pøípadì bude  aktuální soubor
+uzavøen a místo nìj se naète soubor obsahující znaèku (pochopitelnì je zde
+ochrana pøed ztrátou neulo¾ených zmìn v souboru).
+<P>
+
+Jestli¾e si prostøednictvím volby <CODE CLASS="prikaz">viminfo</CODE> ukládáte
+informace o editaci, ulo¾í se i velké (globální) znaèky. Pøi pøí¹tím startu
+editoru je pak mù¾ete pou¾ívat, jako byste editaci vùbec nepøeru¹ili. Naproti
+tomu malé znaèky pøi uzavøení souboru, který je obsahuje, zanikají.
+
+
+<H2>Speciality</H2>
+
+Ve výstupu pøíkazu <CODE CLASS="prikaz">:marks</CODE> objevíte nìkolik
+podivnì pojmenovaných znaèek. Jedná se o speciality, které se nenastavují
+ruènì. Tyto znaèky aktualizuje automaticky sám editor.
+<P>
+
+Velmi zajímavý efekt pøiná¹í zdvojení znaku pro skok na znaèku (tedy <CODE
+CLASS="klavesa">''</CODE> èi <CODE CLASS="klavesa">``</CODE>). Vrátí vás zpìt
+na pozici pøed posledním skokem. Ten mohl být zpùsoben lecèím&nbsp;- hledáním,
+pøíkazem pro nahrazení, skokem na znaèku èi heslo.
+<P>
+
+Znaèky <CODE CLASS="klavesa">[</CODE> a <CODE CLASS="klavesa">]</CODE> editor
+pokládá na zaèátek a konec naposledy vlo¾eného èi zpracovaného (nìjakým
+operátorem) textu. Obdobnì zaèátek a konec naposledy vybrané vizuální oblasti
+vyznaèí pomocí <CODE CLASS="klavesa">&lt;</CODE> a <CODE
+CLASS="klavesa">&gt;</CODE>. Tyto speciální znaky mù¾ete pou¾ít jako bì¾ná
+jména znaèek.
+<P>
+
+
+<!--/STRANKA-->
+<!--NAVIG-->
+<DIV ALIGN=RIGHT>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0">
+<TR>
+<TD><A HREF="makro.htm"><IMG SRC="zpet.gif" ALT="&lt;-- predchozi " BORDER="0"></A></TD>
+<TD><A HREF="index.htm"><IMG SRC="obs.gif" ALT=" [obsah] " BORDER="0"></A></TD>
+<TD><A HREF="dopln.htm"><IMG SRC="vpred.gif" ALT=" dalsi --&gt;" BORDER="0"></A></TD>
+</TR>
+</TABLE>
+</DIV>
+<!--/NAVIG-->
+
+<SMALL>&copy; 1997, 1998 Pavel Satrapa</SMALL>
+
+ </TD>
+</TR>
+</TABLE>
+
+</BODY>
+</HTML>

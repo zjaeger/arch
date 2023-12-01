@@ -1,0 +1,13 @@
+BODY { background: url(papir.gif) #FFFFFF;
+       background-repeat: repeat-y;
+       color:      #000000;
+     }
+
+A:link { color: #FF0000 }
+A:visited { color: #990000 }
+A:active {color: #00FF00 }
+
+.prikaz { background: #CCCC99 }
+.klavesa { background: #CCCCCC; color: #000000 }
+.priklad { color: #333300 }
+

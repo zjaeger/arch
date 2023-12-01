@@ -1,0 +1,322 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<HTML>
+<HEAD>
+<TITLE>vim - makra</TITLE>
+<LINK REL=StyleSheet HREF="vim.css" TYPE="text/css">
+</HEAD>
+<BODY BACKGROUND="papir.gif" BGCOLOR="#FFFFFF" TEXT="#000000" LINK="#FF0000"
+      VLINK="#990000" ALINK="#00FF00">
+
+<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="0">
+<TR>
+ <TD><IMG SRC="nic.gif" WIDTH="150" HEIGHT="1"></TD>
+ <TD>
+<!--STRANKA-->
+
+<H1>Makra</H1>
+
+Obvyklým prostøedkem pro výrazné zrychlení práce s editorem je definice a
+pou¾ívání makroinstrukcí. Díky nim si mù¾ete urèité èasto opakované postupy
+pøedprogramovat a pak je realizovat stiskem jedné èi nìkolika málo kláves.
+Dobøe definovaná sada maker doká¾e u¹etøit spoustu èasu.
+
+
+<H2>Makra na pomeranèích</H2>
+
+Editor se makro zpravidla uèí odezíráním. U¾ivatel øekne "teï se dívej" a
+editor si zapamatuje sekvenci provádìných operací a¾ do okam¾iku, kdy u¾ivatel
+øekne "dost". Poté lze zapamatovanou posloupnost operací kdykoli zopakovat.
+<P>
+
+V pøípadì <EM>vim</EM> slou¾í k této èinnosti pøíkaz <CODE
+CLASS=klavesa>q<EM>registr</EM></CODE>. Jako jméno <EM>registru</EM> mù¾e
+vystupovat libovolné malé písmeno nebo èíslice. Editor zahájí re¾im nahrávání a
+pøíkazy si ukládá do uvedeného registru. Jakmile znovu pou¾ijete pøíkaz <CODE
+CLASS=klavesa>q</CODE> (tentokrát ji¾ bez jakékoli dou¹ky), nahrávání bude
+ukonèeno.
+<P>
+
+Zapamatovanou sekvenci pak mù¾ete kdykoli zopakovat prostøednictvím <CODE
+CLASS=klavesa>@<EM>registr</EM></CODE>.
+<P>
+
+<BLOCKQUOTE CLASS=priklad>
+<STRONG>Pøíklad:</STRONG><BR>
+
+Èasto edituji textové soubory, z nich¾ vytváøím WWW stránky. Tu a tam chci v
+textu nìkteré slovo zobrazit písmem psacího stroje, co¾ v praxi znamená pøed nì
+vlo¾it znaèku <CODE>&lt;CODE&gt;</CODE> a za nì <CODE>&lt;/CODE&gt;</CODE>.
+Vzhledem k názvu znaèky si takové makro ulo¾ím pod písmenem "c". Nejprve je
+editor nauèím:
+
+<DIV ALIGN=CENTER>
+<TABLE BORDER="0" WIDTH="80%" CELLSPACING="10">
+<TR VALIGN="TOP">
+ <TD><CODE CLASS=klavesa>qc</CODE></TD>
+ <TD><EM>zapamatovat do registru "c"</EM></TD>
+</TR>
+<TR VALIGN="TOP">
+ <TD><CODE CLASS=klavesa>i&lt;CODE&gt;[Esc]</CODE></TD>
+ <TD><EM>vlo¾it pøed aktuální znak znaèku <CODE>&lt;CODE&gt;</CODE> a vrátit se
+ do normálního re¾imu</EM></TD>
+</TR>
+<TR VALIGN="TOP">
+ <TD><CODE CLASS=klavesa>e</CODE></TD>
+ <TD><EM>pøesunout kurzor na konec slova</EM></TD>
+</TR>
+<TR VALIGN="TOP">
+ <TD><CODE CLASS=klavesa>a&lt;/CODE&gt;[Esc]</CODE></TD>
+ <TD><EM>pøidat za aktuální znak znaèku <CODE>&lt;/CODE&gt;</CODE> a vrátit se
+ do normálního re¾imu</EM></TD>
+</TR>
+<TR VALIGN="TOP">
+ <TD><CODE CLASS=klavesa>q</CODE></TD>
+ <TD><EM>ukonèit nahrávání</EM></TD>
+</TR>
+</TABLE>
+</DIV>
+
+V levém sloupci jsou klávesy, kterými vytvoøím makro, v pravém pak jejich
+vysvìtlení. Makro pøedpokládá, ¾e v okam¾iku jeho vyvolání stojí kurzor na
+prvním znaku slova. Vyvolat je kombinací <CODE CLASS=klavesa>@c</CODE>.
+</BLOCKQUOTE>
+
+Makro lze kdykoli pozdìji pøedefinovat tak, ¾e prostì definujete pøíslu¹ný
+registr znovu. Pokud v¹ak pøíkazu <CODE CLASS=klavesa>q</CODE> pøedáte velké
+písmeno, nebude stávající obsah registru vymazán a zapamatované pøíkazy budou
+pøidány na jeho konec.
+
+
+<H2>Makra podle mistra kuchaøe</H2>
+
+Opravdoví mu¾ové a ¾eny v¹ak vý¹e popsaný druh maker pøíli¹ nepou¾ívají. Mají k
+tomu tyto dùvody:
+
+<OL>
+<LI> Mají dostatek pøedstavivosti na to, aby <EM>vìdìli</EM>, co jednotlivé
+     pøíkazy dìlají a nemusí se na nì bìhem definice makra zbabìle dívat. To by
+     bylo pod jejich profesionální èest.
+
+<LI> Vyvolání makra vy¾aduje pøíli¹ mnoho kláves (ne¾ èlovìk namaèká zavináè,
+     uplyne spousta èasu) a tudí¾ zpomaluje.
+
+<LI> Abeceda je pøíli¹ malá a nabízí jen 26&nbsp;registrù.
+</OL>
+
+Syroví u¾ivatelé proto dávají vìt¹inou pøednost klasické definici maker
+pøevzaté z pùvodního <CODE>vi</CODE>, zde v¹ak ponìkud vylep¹ené.
+<P>
+
+Jejím ztìlesnìním je pøíkaz
+
+<BLOCKQUOTE>
+<CODE CLASS=prikaz>:map&nbsp;<EM>makro</EM>&nbsp;<EM>význam</EM></CODE>
+</BLOCKQUOTE>
+
+Øíká, ¾e kdykoli v normálním re¾imu pou¾ijete <EM>makro</EM>, má se ve
+skuteènosti provést sekvence pøíkazù, která byla definována jako jeho
+<EM>význam</EM>. V roli <EM>makra</EM> mù¾e vystupovat témìø libovolná klávesa
+èi jejich kombinace. Pøi výbìru v¹ak buïte opatrní, abyste si nevhodnou
+definicí makra neodøízli pøístup k nìkterému z dùle¾itých pøíkazù.
+<P>
+
+Èasto chcete, aby makro bylo spou¹tìno urèitou speciální klávesou (klávesou v
+kombinaci s <CODE CLASS=klavesa>Ctrl</CODE>, <CODE CLASS=klavesa>Alt</CODE>
+nebo nìkterou funkèní klávesou). Abyste do pøíkazu vlo¾ili odpovídající kód,
+stisknìte nejprve <CODE CLASS=klavesa>Ctrl-V</CODE> a pak ký¾enou klávesu.
+<CODE CLASS=klavesa>Ctrl-V</CODE> toti¾ vyøadí pøípadný speciální význam
+klávesy, která následuje za ním.
+<P>
+
+<BLOCKQUOTE CLASS=priklad>
+<STRONG>Pøíklad:</STRONG><BR>
+
+Rozhodl jsem se, ¾e klávesovou kombinací <CODE CLASS=klavesa>Ctrl-V</CODE> budu
+do textu vkládat "logo" programu <EM>vim</EM>. Jeliko¾ pracuji na HTML
+stránkách, má tvar <CODE>&lt;EM&gt;vim&lt;/EM&gt;</CODE>. Odpovídající pøíkaz
+bych definoval takto:
+
+<BLOCKQUOTE>
+<CODE CLASS=prikaz>:map&nbsp;^V&nbsp;i&lt;EM&gt;vim&lt;/EM&gt;^[</CODE>
+</BLOCKQUOTE>
+
+V¹imnìte si speciálních znakù <CODE>^V</CODE> a <CODE>^]</CODE>. První
+symbolizuje <CODE CLASS=klavesa>Ctrl-V</CODE> (aktivaèní klávesa makra) a
+vlo¾il jsem jej klávesovou kombinací <CODE
+CLASS=klavesa>Ctrl-V</CODE>&nbsp;<CODE CLASS=klavesa>Ctrl-V</CODE>. Druhý znak
+je ztìlesnìním závìreèného <CODE CLASS=klavesa>[Esc]</CODE>, kterým se po
+vlo¾ení nápisu vrátím do normálního re¾imu. Tento znak jsem vlo¾il pomocí
+<CODE CLASS=klavesa>Ctrl-V</CODE>&nbsp;<CODE CLASS=klavesa>[Esc]</CODE>.
+<P>
+
+Pùvodnì v¹ak <CODE CLASS=klavesa>Ctrl-V</CODE> v normálním re¾imu zahájí
+vyznaèování sloupcového <A HREF="visual.htm">vizuálního bloku</A>. O tuto
+mo¾nost bych nerad pøi¹el a volba tohoto kódu proto není pøíli¹ ¹»astná.
+<P>
+
+Radìji si vytvoøím dvojznaky pro vkládání jednotlivých textù, kterých
+nepochybnì bude více. Odpovídající makra budou v¾dy zahájena funkèní klávesou
+<CODE CLASS=klavesa>[F5]</CODE>. Podle následujících písmen se pak urèí, který
+text má být vlo¾en. Definuji si dva: pro znaèku <EM>vim</EM> (makro <CODE
+CLASS=klavesa>[F5]v</CODE>) a svou elektronickou adresu (makro <CODE
+CLASS=klavesa>[F5]ps</CODE>):
+
+<BLOCKQUOTE>
+<CODE CLASS=prikaz>:map&nbsp;&lt;F5&gt;v&nbsp;i&lt;EM&gt;vim&lt;/EM&gt;^[</CODE>
+<CODE CLASS=prikaz>:map&nbsp;&lt;F5&gt;ps&nbsp;iPavel.Satrapa@vslib.cz^[</CODE>
+</BLOCKQUOTE>
+
+</BLOCKQUOTE>
+
+Stisknete-li klávesu, kterou zaèíná název nìkterého víceznakového makra (v
+pøedchozím pøíkladu by to byla klávesa <CODE CLASS=klavesa>[F5]</CODE>),
+<EM>vim</EM> nezobrazí ¾ádný výsledek a èeká na pokraèování. Jak postupnì
+maèkáte dal¹í klávesy, kontroluje je s definicí makra. Jakmile jméno odpovídá,
+provede pøíslu¹né makro. Jestli¾e se v¹ak od názvu makra odchýlíte, provede
+pøíkazy, odpovídající stisknuté posloupnosti kláves. O nic tedy nepøijdete.
+<P>
+
+Standardnì má editor nastaven urèitý interval, po který èeká na doplnìní makra.
+Jestli¾e uplyne, ani¾ byste stiskli nìjakou klávesu, rezignuje na zkompletování
+makra a opìt se zachová, jako kdyby dosud namaèkaná kombinace kláves nebyla
+zaèátkem makra.
+<P>
+
+Chcete-li se pøesvìdèit, jaká makra jsou v souèasné dobì definována, pou¾ijte
+samotný pøíkaz <CODE CLASS=prikaz>:map</CODE>. Zajímá-li vás význam urèité
+konkrétní klávesy èi kombinace kláves, zadejte <CODE
+CLASS=prikaz>:map&nbsp;<EM>makro</EM></CODE>.
+<P>
+
+O likvidaci makra se postará <CODE
+CLASS=prikaz>:unmap&nbsp;<EM>makro</EM></CODE> a pokud snad chcete zru¹it naráz
+v¹echny definice, pou¾ijte <CODE CLASS=prikaz>:mapclear</CODE>.
+
+
+<H2>Makra a re¾imy</H2>
+
+V pøedchozí èásti jsem si dovolil situaci ponìkud zjednodu¹it. <EM>vim</EM>
+toti¾ pøipou¹tí definici maker v rùzných re¾imech a podle toho se ponìkud li¹í
+pøíkazy, které je tøeba pou¾ívat. Poznají se zpravidla podle pøedpony, která se
+pøidá ke jménu pøíkazu. Následující tabulka uvádí pøehled základních pøíkazù a
+re¾imy, v nich¾ pracují.
+
+<DIV ALIGN=CENTER>
+<TABLE BORDER="0" WIDTH="75%">
+<TR>
+ <TH ROWSPAN="2" WIDTH="20%" ALIGN=LEFT>Pøíkaz</TH>
+ <TH COLSPAN="4">Re¾im</TH>
+</TR>
+<TR>
+ <TH WIDTH="20%">normální (pøíkazový)</TH>
+ <TH WIDTH="20%">vizuální</TH>
+ <TH WIDTH="20%">vkládání</TH>
+ <TH WIDTH="20%">pøíkazový øádek</TH>
+</TR>
+<TR>
+ <TD><CODE CLASS=prikaz>:map</CODE></TD>
+ <TD ALIGN=CENTER BGCOLOR="#CCCCCC">+</TD>
+ <TD ALIGN=CENTER BGCOLOR="#CCCCCC">+</TD>
+ <TD ALIGN=CENTER BGCOLOR="#CCCCCC">&nbsp;</TD>
+ <TD ALIGN=CENTER BGCOLOR="#CCCCCC">&nbsp;</TD>
+</TR>
+<TR>
+ <TD><CODE CLASS=prikaz>:nmap</CODE></TD>
+ <TD ALIGN=CENTER BGCOLOR="#CCCCCC">+</TD>
+ <TD ALIGN=CENTER BGCOLOR="#CCCCCC">&nbsp;</TD>
+ <TD ALIGN=CENTER BGCOLOR="#CCCCCC">&nbsp;</TD>
+ <TD ALIGN=CENTER BGCOLOR="#CCCCCC">&nbsp;</TD>
+</TR>
+<TR>
+ <TD><CODE CLASS=prikaz>:vmap</CODE></TD>
+ <TD ALIGN=CENTER BGCOLOR="#CCCCCC">&nbsp;</TD>
+ <TD ALIGN=CENTER BGCOLOR="#CCCCCC">+</TD>
+ <TD ALIGN=CENTER BGCOLOR="#CCCCCC">&nbsp;</TD>
+ <TD ALIGN=CENTER BGCOLOR="#CCCCCC">&nbsp;</TD>
+</TR>
+<TR>
+ <TD><CODE CLASS=prikaz>:map!</CODE></TD>
+ <TD ALIGN=CENTER BGCOLOR="#CCCCCC">&nbsp;</TD>
+ <TD ALIGN=CENTER BGCOLOR="#CCCCCC">&nbsp;</TD>
+ <TD ALIGN=CENTER BGCOLOR="#CCCCCC">+</TD>
+ <TD ALIGN=CENTER BGCOLOR="#CCCCCC">+</TD>
+</TR>
+<TR>
+ <TD><CODE CLASS=prikaz>:imap</CODE></TD>
+ <TD ALIGN=CENTER BGCOLOR="#CCCCCC">&nbsp;</TD>
+ <TD ALIGN=CENTER BGCOLOR="#CCCCCC">&nbsp;</TD>
+ <TD ALIGN=CENTER BGCOLOR="#CCCCCC">+</TD>
+ <TD ALIGN=CENTER BGCOLOR="#CCCCCC">&nbsp;</TD>
+</TR>
+<TR>
+ <TD><CODE CLASS=prikaz>:cmap</CODE></TD>
+ <TD ALIGN=CENTER BGCOLOR="#CCCCCC">&nbsp;</TD>
+ <TD ALIGN=CENTER BGCOLOR="#CCCCCC">&nbsp;</TD>
+ <TD ALIGN=CENTER BGCOLOR="#CCCCCC">&nbsp;</TD>
+ <TD ALIGN=CENTER BGCOLOR="#CCCCCC">+</TD>
+</TR>
+</TABLE>
+</DIV>
+<P>
+
+Velmi zajímavá jsou makra ve vkládacím re¾imu, proto¾e jimi si mù¾ete podstatnì
+usnadnit a zrychlit vytváøení textu.
+<P>
+
+<BLOCKQUOTE CLASS=priklad>
+<STRONG>Pøíklad:</STRONG><BR>
+
+Jako pøíklad uvedu jedno z mých HTML maker. Pou¾íval jsem je pøi psaní tìchto
+stránek pro vkládání informací o klávesách, které je potøeba stisknout. Vyvolá
+se klávesou <CODE CLASS=klavesa>Ctrl-K</CODE> ("K" jako¾to "klávesa") a vlo¾í
+do textu øetìzec <CODE>&lt;CODE&nbsp;CLASS=klavesa&gt;&lt;/CODE&gt;</CODE>.
+Poté vrátí kurzor mezi obì znaèky, abych mohl ihned psát kód klávesy. Definice
+makra vypadá následovnì:
+
+<BLOCKQUOTE><PRE>
+:imap ^K &lt;CODE CLASS=klavesa&gt;&lt;/CODE&gt;^[F&lt;i
+</PRE></BLOCKQUOTE>
+
+Slo¾itìj¹í je makro <CODE CLASS=klavesa>Ctrl-Q</CODE>, které doplòuje párovou
+znaèku. Pou¾ívám je tak, ¾e napí¹i zahajovací znaèku (øeknìme
+<CODE>&lt;STRONG&gt;</CODE>) a poté stisknu <CODE CLASS=klavesa>Ctrl-Q</CODE>.
+Editor doplní <CODE>&lt;/STRONG&gt;</CODE> a vrátí kurzor mezi znaèky, abych
+mohl psát tìlo. Definice je tato:
+
+<BLOCKQUOTE><PRE>
+imap ^Q &lt;/&gt;^[2F&lt;lywf&gt;f/pF&lt;i
+</PRE></BLOCKQUOTE>
+
+Editor nejprve pøipí¹e základ ukonèující znaèky (<CODE
+CLASS=prikaz>&lt;/&gt;</CODE>), vrátí se do normálního re¾imu (<CODE
+CLASS=prikaz>^[</CODE>), pøesune se za zaèátek zahajující znaèky (<CODE
+CLASS=prikaz>2F&lt;l</CODE>), zkopíruje slovo (<CODE CLASS=prikaz>yw</CODE>),
+pøejde na lomítko v ukonèující znaèce (<CODE CLASS=prikaz>f&gt;f/</CODE>),
+vlo¾í za nìj zkopírované slovo (<CODE CLASS=prikaz>p</CODE>), vrátí se na
+zahajovací &lt; této znaèky (<CODE CLASS=prikaz>F&lt;</CODE>) a vrátí se zpìt
+do vkládacího re¾imu (<CODE CLASS=prikaz>i</CODE>).
+
+</BLOCKQUOTE>
+
+
+<!--/STRANKA-->
+<!--NAVIG-->
+<DIV ALIGN=RIGHT>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0">
+<TR>
+<TD><A HREF="format.htm"><IMG SRC="zpet.gif" ALT="&lt;-- predchozi " BORDER="0"></A></TD>
+<TD><A HREF="index.htm"><IMG SRC="obs.gif" ALT=" [obsah] " BORDER="0"></A></TD>
+<TD><A HREF="znacky.htm"><IMG SRC="vpred.gif" ALT=" dalsi --&gt;" BORDER="0"></A></TD>
+</TR>
+</TABLE>
+</DIV>
+<!--/NAVIG-->
+
+<SMALL>&copy; 1997, 1998 Pavel Satrapa</SMALL>
+
+ </TD>
+</TR>
+</TABLE>
+
+</BODY>
+</HTML>

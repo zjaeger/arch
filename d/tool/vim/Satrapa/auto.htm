@@ -1,0 +1,157 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<HTML>
+<HEAD>
+<TITLE>vim - automaticke prikazy</TITLE>
+<LINK REL=StyleSheet HREF="vim.css" TYPE="text/css">
+</HEAD>
+<BODY BACKGROUND="papir.gif" BGCOLOR="#FFFFFF" TEXT="#000000" LINK="#FF0000"
+      VLINK="#990000" ALINK="#00FF00">
+
+<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="0">
+<TR>
+ <TD><IMG SRC="nic.gif" WIDTH="150" HEIGHT="1"></TD>
+ <TD>
+<!--STRANKA-->
+
+<H1>Automatické pøíkazy</H1>
+
+Tato konstrukce vám umo¾òuje definovat èinnosti, které mají být provedeny pøi
+ka¾dém výskytu urèité události. Jejich prostøednictvím lze zajistit vhodné
+nastavení pro jednotlivé typy souborù. Hledáte-li pokroèilej¹í pøíklad, v
+on-line dokumentaci najdete ukázku automatických pøíkazù, které umo¾òují
+editovat komprimované soubory. Pøed zahájením editace dojde k jejich rozbalení
+a po ulo¾ení na disk se opìt zabalí. Zadejte <CODE
+CLASS="prikaz">:help&nbsp;gzip-example</CODE>.
+
+
+<H2>Definice</H2>
+
+Automatický pøíkaz lze definovat pøíkazem
+
+<BLOCKQUOTE>
+<CODE CLASS="prikaz">:autocmd <EM>&lt;událost&gt; &lt;vzor&gt;
+&lt;pøíkaz&gt;</EM></CODE>
+</BLOCKQUOTE>
+
+<EM>&lt;událost&gt;</EM> vyjadøuje, pøi jaké pøíle¾itosti má být pøíkaz
+proveden. Události odpovídají rùzným význmaným milníkùm v ¾ivotì programu, jako
+je tøeba naètení souboru, vstup do okna èi ukonèení editoru.
+<P>
+
+<EM>&lt;vzor&gt;</EM> urèuje, na jaké soubory se tento automatický pøíkaz
+vztahuje. Mù¾ete pou¾ívat ¾olíkové znaky v obvyklých významech. <EM>pøíkaz</EM>
+pak øíká, co se vlastnì má provést.
+<P>
+
+<BLOCKQUOTE CLASS="priklad">
+<STRONG>Pøíklad:</STRONG><BR>
+
+Hlídání pravého okraje ve vzdálenosti 78&nbsp;znakù pro soubory s pøíponami
+<CODE>.tex</CODE> a <CODE>.html</CODE> by zajistil pøíkaz
+<P>
+
+<BLOCKQUOTE>
+<CODE CLASS="prikaz">:autocmd BufRead *.tex,*.html set textwidth=78</CODE>
+</BLOCKQUOTE>
+</BLOCKQUOTE>
+
+<BLOCKQUOTE CLASS="priklad">
+<STRONG>Pøíklad:</STRONG><BR>
+
+Kdykoli zahájíte editaci nového (dosud neexistujícího) souboru s pøíponou
+<CODE>.html</CODE>, editor má naèíst ¹ablonu <CODE>empty.html</CODE>, abyste
+nemuseli ruènì vypisovat v¹echny "obalové" znaèky. O takové chování se postará
+pøíkaz
+<P>
+<BLOCKQUOTE>
+<CODE CLASS="prikaz">:autocmd BufNewFile *.html r $VIM/empty.html</CODE>
+</BLOCKQUOTE>
+</BLOCKQUOTE>
+
+Pokud k pøíkazu <CODE CLASS="prikaz">:autocmd</CODE> pøipojíte vykøièník, bude
+automatické pøíkazy naopak odstraòovat. Mù¾ete jej pou¾ít v plném tvaru (s
+uvedením události, vzoru pro jméno souboru i pøíkazu) a pak odstraní jediný
+pøíkaz. Jestli¾e nìkterou z èástí vynecháte nebo místo události uvedete
+hvìzdièku, odstraní v¹echny, které vyhovují ostatním podmínkám.
+
+<BLOCKQUOTE CLASS="priklad">
+<STRONG>Pøíklad:</STRONG><BR>
+
+V¹echny automatické pøíkazy pro soubory s pøíponou <CODE>.html</CODE> byste
+odstranili pomocí
+<P>
+
+<BLOCKQUOTE>
+<CODE CLASS="prikaz">:autocmd! * *.html</CODE>
+</BLOCKQUOTE>
+
+Naproti tomu v¹echny automatické pøíkazy pro událost <CODE>BufRead</CODE> by
+zlikvidoval pøíkaz
+<P>
+
+<BLOCKQUOTE>
+<CODE CLASS="prikaz">:autocmd! BufRead</CODE>
+</BLOCKQUOTE>
+</BLOCKQUOTE>
+
+Kdy¾ pøíkazu <CODE CLASS="prikaz">:autocmd</CODE> (bez vykøièníku) neuvedete
+pøíkaz nebo dokonce více informací, vypí¹e existující automatické pøíkazy,
+které vyhovují va¹emu zadání. Samotné <CODE CLASS="prikaz">:autocmd</CODE> pak
+zobrazí v¹echny existující automatické pøíkazy. Pokud máte zapnuto
+<A HREF="syntax.htm">zvýrazòování syntaxe</A>, budete jejich mno¾stvím
+pøekvapeni.
+
+
+<H2>Události</H2>
+
+<EM>vim</EM> nabízí ¹iroký sortiment událostí. Vìt¹inou jsou spojeny s
+vyrovnávací pamìtí, souborem, oknem èi samotným editorem. V následující tabulce
+uvádím pøehled tìch, které pova¾uji za nejèastìji pou¾ívané.
+<P>
+
+<DIV ALIGN="CENTER">
+<TABLE BORDER="0">
+<TR><TD><CODE>BufNewFile</CODE></TD>
+    <TD>zahajuje editaci dosud neexistujícího souboru</TD></TR>
+<TR><TD><CODE>BufReadPre</CODE></TD>
+    <TD>pøed naètením editovaného souboru</TD></TR>
+<TR><TD><CODE>BufRead</CODE>, <CODE>BufReadPost</CODE></TD>
+    <TD>po naètení editovaného souboru</TD></TR>
+<TR><TD><CODE>BufWrite</CODE>, <CODE>BufWritePre</CODE></TD>
+    <TD>pøed ulo¾ením editovaného souboru</TD></TR>
+<TR><TD><CODE>BufWritePost</CODE></TD>
+    <TD>po ulo¾ení editovaného souboru</TD></TR>
+<TR><TD><CODE>BufEnter</CODE></TD>
+    <TD>po vstupu do vyrovnávací pamìti</TD></TR>
+<TR><TD><CODE>BufLeave</CODE></TD>
+    <TD>pøed opu¹tìním vyrovnávací pamìti</TD></TR>
+<TR><TD><CODE>WinEnter</CODE></TD>
+    <TD>po vstupu do okna</TD></TR>
+<TR><TD><CODE>WinLeave</CODE></TD>
+    <TD>pøed opu¹tìním okna</TD></TR>
+</TABLE>
+</DIV>
+<P>
+
+
+<!--/STRANKA-->
+<!--NAVIG-->
+<DIV ALIGN=RIGHT>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0">
+<TR>
+<TD><A HREF="konfig.htm"><IMG SRC="zpet.gif" ALT="&lt;-- predchozi " BORDER="0"></A></TD>
+<TD><A HREF="index.htm"><IMG SRC="obs.gif" ALT=" [obsah] " BORDER="0"></A></TD>
+<TD><A HREF="zotaveni.htm"><IMG SRC="vpred.gif" ALT=" dalsi --&gt;" BORDER="0"></A></TD>
+</TR>
+</TABLE>
+</DIV>
+<!--/NAVIG-->
+
+<SMALL>&copy; 1997, 1998 Pavel Satrapa</SMALL>
+
+ </TD>
+</TR>
+</TABLE>
+
+</BODY>
+</HTML>

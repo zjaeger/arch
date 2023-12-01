@@ -1,0 +1,91 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<HTML>
+<HEAD>
+<TITLE>vim - porovnani souboru</TITLE>
+<LINK REL=StyleSheet HREF="vim.css" TYPE="text/css">
+</HEAD>
+<BODY BACKGROUND="papir.gif" BGCOLOR="#FFFFFF" TEXT="#000000" LINK="#FF0000"
+      VLINK="#990000" ALINK="#00FF00">
+
+<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="0">
+<TR>
+ <TD><IMG SRC="nic.gif" WIDTH="150" HEIGHT="1"></TD>
+ <TD>
+<!--STRANKA-->
+
+<H1>Porovnání souborù</H1>
+
+Existence svislých oken ve <EM>vim</EM>&nbsp;6 mne sama o sobì do transu
+nepøivedla, ale umo¾nila jednu moc pìknou vychytávku: porovnání souborù. urèitì
+u¾ jste byli v situaci, kdy máte dvì verze tého¾ souboru. Podle èasu zmìny sice
+víte, která je novìj¹í, ale nejste si tak úplnì jisti, v èem se vlastnì li¹í, a
+neradi byste o nìco pøi¹li. Chtìlo by to nástroj pro vzájemné porovnání.
+<P>
+
+Takových nástrojù je celá øada. V Unixu <CODE>diff</CODE> a jeho grafické
+verze, v MS-DOSu <CODE>fc</CODE>. Ov¹em ¾ádný z nich se mi nelíbil tolik, jako
+porovnávání ve <EM>vim</EM>. Nyní staèí zadat pøíkaz
+
+<BLOCKQUOTE>
+<CODE>vimdiff </CODE><EM>soubor1</EM><CODE> </CODE><EM>soubor2</EM>
+</BLOCKQUOTE>
+
+pøípadnì
+
+<BLOCKQUOTE>
+<CODE>gvimdiff </CODE><EM>soubor1</EM><CODE> </CODE><EM>soubor2</EM>
+</BLOCKQUOTE>
+
+pokud dáváte pøednost grafické verzi. Objeví se zhruba toto:
+<P>
+
+<DIV ALIGN="CENTER">
+<A HREF="diff.gif"><IMG SRC="idiff.gif" ALT="[obrazek]"
+     WIDTH="400" HEIGHT="303" BORDER="0"></A>
+</DIV>
+<P>
+
+Jak vidíte, obì verze jsou pøehlednì umístìny vedle sebe a jejich odli¹nosti
+barevnì vyznaèeny. Vim zároveò vyu¾ívá schopnosti skládání a slo¾í nezajímavé
+(stejné) èásti textu, aby vám zùstaly na oèích pøedev¹ím zmìny.
+<P>
+
+Mezi jednotlivými odli¹nostmi se mù¾ete snadno pohybovat. Pøíkaz <CODE
+CLASS="klavesa">]c</CODE> pøesune kurzor na zaèátek následující zmìny a pøíkaz
+<CODE CLASS="klavesa">[c</CODE> je vrátí na zaèátek zmìny pøedchozí.
+<P>
+
+Mù¾ete také pøevzít zmìny z protìj¹ího okna pøíkazem <CODE
+CLASS="prikaz">:diffget</CODE>. Jedná se o bì¾ný <EM>ex</EM>-pøíkaz, tak¾e mu
+rozmezím øádkù zadáváte, které èásti souboru se má týkat. <CODE
+CLASS="prikaz">:%diffget</CODE> pokryje celý soubor. <EM>vim</EM> upraví øádky
+editovaného souboru tak, aby se shodovaly s protìj¹ím.
+<P>
+
+Podobnì, leè v opaèném smìru funguje <CODE CLASS="prikaz">:diffput</CODE>.
+Tentokrát se zmìny pøená¹ejí z editovaného souboru do protìj¹ího okna. Ov¹em
+tyto slu¾by u¾ nejsou tak atraktivní. To nejdùle¾itìj¹í na porovnávání je
+<EM>vìdìt</EM> a tuto slu¾bu plní <EM>vim</EM> velmi dobøe.
+<P>
+
+<!--/STRANKA-->
+<!--NAVIG-->
+<DIV ALIGN=RIGHT>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0">
+<TR>
+<TD><A HREF="gui.htm"><IMG SRC="zpet.gif" ALT="&lt;-- predchozi " BORDER="0"></A></TD>
+<TD><A HREF="index.htm"><IMG SRC="obs.gif" ALT=" [obsah] " BORDER="0"></A></TD>
+<TD><A HREF="volby.htm"><IMG SRC="vpred.gif" ALT=" dalsi --&gt;" BORDER="0"></A></TD>
+</TR>
+</TABLE>
+</DIV>
+<!--/NAVIG-->
+
+<SMALL>&copy; 1997, 1998 Pavel Satrapa</SMALL>
+
+ </TD>
+</TR>
+</TABLE>
+
+</BODY>
+</HTML>

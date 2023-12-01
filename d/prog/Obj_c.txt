@@ -1,0 +1,145 @@
+Objective C
+-----------
+
+#import <Window.h>	... obdoba #include
+
+@encode ... char *iname = @encode(int) ;	
+		/* text. retezec se zakodovanim typu */
+
+
+typ: id		/* identifikace objektu;
+		   z hlediska typ.kontroly - obdoba (void *) */
+		   prazdna hodnota: nil  (odp. (id)NULL )
+
+# --- Zpravy ---
+
+	odeslani zpravy:  [objekt zprava]  (vyraz vraci hodnotu typu id)
+	( objekt - vyraz typu id ; zprava - zprava Objektive C )
+
+	[a!=nil?a:b triParam:1 :2 :3 ] ;
+
+	/* objekt a neexistuje; pak zpravu posli objektu b 
+	   oddelovac parametru: ':' */
+
+	[[w initX:10 Y:20] title:"Okno"] ;
+
+	/* objekt postupne obdrzi obe zpravy */
+
+# --- Tridy ---
+
+	odeslani zpravy tride (trida je rovnez objekt):  [jm_tridy zprava] ;
+
+	main()
+	  {
+	   id  myWindow ;	/* deklarace ident.objektu */
+
+	   myWindow = [Window alloc] ;	/* vytvoreni objektu; Window - trida */
+	   [myWindow show] ;
+	  }
+
+	Zakladni trida: 'Object'
+
+# --- Zakladni zpravy tridy Object ---
+
+	alloc	/* vraci nil - neuspech */
+	new	/* asi totez, jako	[[x alloc] init] ; */
+	name	/* vrati jmeno tridy jako text.retezec */
+	class	/* vrati identifikator objektu, ktery tridu reprezentuje */
+	superclass	/* ... nejblizsi nadtridy */
+	free
+	copy	/* vytvori identickou kopii sama sebe, vrati ident. nebo nil */
+	isKindOf:
+		[obj isKindOf:[Object class]]  /* vrati vzdy YES */
+	isMemberOf:
+		[obj isMemberOf:[Object class]] /* prakt.vzdy: NO */
+	responsTo:	/* obj oznami, je-li schopen zprac.zpravu, ktera 
+			   je parametren zpravy responsTo */
+	perform:	/* odeslani obecne zpravy */
+	forward::	/* spec.zprava gen.runtime Obj.C, pokud prijemce
+			   dostal neznamou zpravu */
+	conformsTo:	/* trida overi, zda odpovida protokolu zadanemu
+			   jako parametr zpravy; vraci: YES or NO */
+	initialize	/* tato zprava se zasila kazde tride pred prvnim
+			   pouzitim */
+	...
+
+# --- Vytvareni trid ---
+
+	popis tridy: interface, implementace
+
+	direktivy v interface:
+		@private
+		@protected
+		@public
+
+	/* --- Complex.h --- */
+
+	#import <Object.h>
+	@interface Complex: Object
+	{
+	 float  re, im ;
+	}
+	+newRe: (float)r Im: (float)i ;
+	-initRe: (float)r Im: (float)i ;
+	-(float)re ;
+	-add:n ;
+	/* ..... */
+	@end
+
+	/* + ... zpravy interpretovane tridou
+	   - ... zpravy interpretovane objektem */
+
+	#import <Complex.h>
+	@implementation Complex
+	+newRe: (float)r Im: (float)i
+	  { return [[self alloc] initRe:r Im:i ] ; }
+	-initRe: (float)r Im:(float)i
+	  { re = r ; im = i ; return self ; }
+	-(float)re
+	  { return re ; }
+	-add:n
+	  {
+	   /* osetreni: je-li prijemcem odpovidajici objekt */
+
+	   if( [n isKindOf:[Complex class]] )
+	     { re += [n re] ; im += [n im] ; }
+	   else
+	     [self error:"add: bad parameter class %s!",[n class] name]] ;
+
+	   return self ;
+	  }
+
+
+	/* ..... */
+	@end
+
+# --- Komunikace mezi objekty v ruznych procesech ---
+
+	oneway ... specifikace zpravy bez navratove hodnoty (neceka se
+		   na vysledek)
+
+		@interface ...
+			...
+			-(oneway void) result:(float)x
+			...
+		@end
+
+	in, out, inout ... zprac.parametru typu ukazatel
+
+			-abc:(int in *a) :(int out *b) :(int inout *c)
+			  {
+			   *b = 0 ; *c += *a ;
+			  }
+
+	bycopy  ... jako soucast zpravy se preda cely objekt
+
+# --- Operace nad zpravami ---
+
+	direktiva: @selector ; typ: SEL	
+
+		- parametrizace zpravy  [obj perform:<vyraz typu SEL>]
+
+		  [obj xmess]  ==  [obj perform:@selector(xmess)]
+
+	presmerovani: forward::
+

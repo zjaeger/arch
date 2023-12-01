@@ -1,0 +1,80 @@
+OpenStep 4.2, 6.3.2003
+----------------------------------------------------------------------
+
+BIOS: Video ROM BIOS Shadow = Disabled
+
+CD: OpenStep 4.2 (install disk)
+boot from "Mach_boot_disk"
+change to "Mach_driver_disk"
+
+---> 6. Adaptec 2940 PCI SCSI (v4.00) (Dev:11 Func:0 Bus: 0)
+(bylo treba vybrat "6" 2x po sobe (?))
+
+The startup disk in this computer is:
+	SCSI Disk at target 0 (Seagate ST39140W) - 8683 MB
+
+---> 1 (install OPENSTEP on this disk)
+---> 4 (for advanced options: run fdisk)
+create NEXTSTEP partition (on /dev/rsd0h): cca 1 GB
+set active new NEXTSTEP partition
+---> 3 (erase the "new OPENSTEP" partition and use it ...)
+---> 1 (start installing OPENSTEP)
+Reboot
+
+Add Display Devices: Generic SVGA Adapter (v4.00)
+NEXTSTEP Software Packages: select
+Install
+Reboot
+
+Passwords for users 'root' and 'me'
+NextAdmin -> UserManager.app (root/Everest, me/me)
+
+Matrox: driver from: http://mirko.yourbox.net/drivers/Matrox.html
+$ mkdir /me/matrox
+$ cd /me/matrox
+$ gzip -cd ...tgz | tar xvf -
+"doubleclick" on MatroxMGA.config (/me/matrox)
+Run: Configure.app:
+Add Display Devices: Matrox MGA G200 (8MB)(Dev:0 Func:0 Bus:1)(v0.9)
+Select Display Mode: 1024 x 768 85 Hz RGB:555/16
+Reboot
+
+CD: OpenStep DEVELOPER 4.2
+CD -> NextCD -> Packages
+- DeveloperDoc.pkg
+- DeveloperTools.pkg
+- DeveloperLibs.pkg
+- ProfileLibs.pkg
+
+CD: OpenStep Updater 4.2
+CD -> OPENSTEP4.2_Mach -> Patches
+- OS42MachUserPatch4.pkg
+Reboot
+CD -> OPENSTEP4.2_Mach -> Patches
+- OS42MachDeveloperPatch4.pkg
+- OS42MachProfileLibPatch4.pkg
+CD -> OPENSTEP4.2_Mach -> Drivers -> OS4.2ReleaseDrivers
+- Adaptec2940SCSIDriver.pkg
+- EtherLinkXL.pkg
+- Floppy.pkg
+- SoundBlaster16.pkg (poznamka: nefunguje pro Creative VIBRA16X PnP)
+
+Run: Configure.app:
+- use new Adaptec2940... driver
+- Add Network Devices: 3Com EtherLink XL (Dev:9 Func:0 Bus:0)(v4.02)
+Run: SimpleNetworkStarter
+
+------------------------------------------------------------------------
+Tohle jsou info o novych Weobjects 5
+http://www.apple.com/webobjects/
+http://www.apple.com/webobjects/directory.html
+http://developer.apple.com/techpubs/webobjects/webobjects.html
+
+WebObjects 4.5:
+http://developer.apple.com/techpubs/webobjects/WebObjects_4.5/webobjects.html
+
+tak posilam seznam archivu s NEXTSTEP/OPENSTEP software:
+http://www.peanuts.org
+http://softrak.stepwise.com/categories?os=30
+ftp://ftp.next.peak.org/pub/openstep/
+ftp://ftp.next.peak.org/pub/next/

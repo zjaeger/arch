@@ -1,0 +1,9 @@
+
+
+Shift + F10
+cmd> diskpart
+diskpart> list disk
+diskpart> select disk 0
+diskpart> list partition
+diskpart> clean
+diskpart> convert GPT

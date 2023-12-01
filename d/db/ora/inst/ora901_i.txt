@@ -1,0 +1,162 @@
+
+Oracle 9.0.1 Server
+---------------------------------------
+10.6.2003
+
+## 0. Requirements
+------------------
+
+  RAM: 512 MB
+  swap >= 400 MB
+  disk: sw cca 2.5 GB, /tmp (or $TEMP and $TMPDIR) cca 400 MB
+  Linux kernel >= 2.4
+  GLIBC >= 2.2
+  JRE: 1.3.1 (Oracle applications)
+  JDK: Sun JDK 1.3.1 and Blackdown 1.1.8_v3 (Oracle HTTP Server)
+
+  Check requirements
+  $ grep MemTotal /proc/meminfo
+  $ swapon -s
+  $ uname -a
+  $ ls -l /lib/libc-*	# version GLIBC
+  $ ulimit  # shell file size limit ('ulimit -f' - unlimited)
+
+## 1. Instalace Oracle 9.0.1
+----------------------------
+
+## 1.1. root: configure kernel
+------------------------------
+
+  Minimum requirements:
+
+  SEMMNI	100	max. number of sem.sets
+  SEMMNS	256	(Oracle: processes)*2 + 10 (for each DB)
+  SEMMSL	100	max. num. of sem. per user id
+  SEMOPM	100	(max. op. per semop CALL)
+  SEMVMX	32767	(max value of sem.)
+  SHMMAX	2147483648
+  SHMMIN	1	(minimum allowable size of single sh-mem seg.)
+  SHMMNI	100	max.num. of shared mem.segments
+  SHMSEG	4096	max.num. of sh-segm. one process can attach
+
+  # SEMMSL SEMMNS SEMOPM SEMMNI
+  # 100    256    100    100	... Oracle requirements
+  # 250	 32000	  32     128	... Debian default
+  $ echo 250 32000 100 128 > /proc/sys/kernel/sem
+
+  # SHMMAX: 512 MB
+  $ echo 536870912 > /proc/sys/kernel/shmmax
+
+## 1.2. root: priprava instalace
+--------------------------------
+
+- create new groups -> /etc/group
+  $ groupadd -g 80 dba
+  $ groupadd -g 81 oper
+  $ groupadd -g 82 oinst
+  $ groupadd -g 83 orahttp
+
+- create new users
+  $ useradd -d /u32/app/oracle -g 82 -G 80 -m -u 200 oracle
+  $ passwd oracle
+  $ useradd -d /u32/app/apache -g 82 -G 83 -m -u 201 apache
+  $ passwd apache
+
+- create /var/opt/oracle
+  $ mkdir /var/opt/oracle
+  $ chown oracle /var/opt/oracle
+  $ chgrp dba /var/opt/oracle
+  $ chmod 755 /var/opt/oracle
+
+- requirements for Java on Oracle CD
+  locales (Debian): for Java on Oracle CD
+    $ dpkg-reconfigure locales  # for en_US, cs_CZ
+    (generate catalog: /usr/lib/locale/$LANG/* )
+    check: LANG=en_US
+
+- mount the Product Instalation CD-ROM
+  $ mount -t iso9660 /dev/cdrom /cdrom
+
+
+## 1.3. oracle: "environment"
+-----------------------------
+
+- upravit .bash_profile
+  doplnit (na zacatek):
+    ORACLE_BASE=$HOME ; export ORACLE_BASE
+    . $ORACLE_BASE/.oraenv
+  upravit:
+    umask 022
+
+- vytvorit soubor .oraenv
+
+  ORACLE_HOME=$ORACLE_BASE/prod/901
+  ORACLE_DOC=$ORACLE_BASE/doc
+  ORA_NLS33=$ORACLE_HOME/ocommon/nls/admin/data
+  ORACLE_TERM=xterm
+  ORACLE_SID=db1
+  PATH=$ORACLE_HOME/bin:$PATH
+  LD_LIBRARY_PATH=$ORACLE_HOME/lib
+  export ORACLE_HOME ORACLE_DOC ORA_NLS22 ORACLE_TERM ORACLE_SID PATH
+  export LD_LIBRARY_PATH
+  CLASSPATH=$ORACLE_HOME/JRE:$ORACLE_HOME/jlib:$ORACLE_HOME/rdbms/jlib:$ORACLE_HOME/network/jlib
+
+- zalozit adresarovy strom
+  mkdir: $ORACLE_HOME $ORACLE_HOME/bin $ORACLE_HOME/lib
+
+
+## 1.4. oracle: vlastni instalace
+---------------------------------
+
+- Uprava kvuli chybe installeru (as root):
+  $ ln -s /usr/lib/gcc-lib/i386-linux/2.95.4/libgcc.a $ORACLE_HOME/lib/libgcc.a
+
+- JDK
+  Download from: http://java.sun.com/j2se/1.3/download.html
+  - Linux self-extracting file: j2sdk-1_3_1_08-linux-i586.bin
+  Install as root: 
+  % cp j2sdk-1_*.bin /usr/local
+  % cd /usr/local
+  % chmod 700 j2sdk-1_*.bin
+  % ./j2sdk-1_*.bin
+  % ln -s /usr/local/jdk1.3.1_08 /usr/local/java
+
+- runInstaller (from "remote X-Server")
+  $ startx
+  run xterm
+  $ xhost +<oracle_node>  # pokud Xserver bezi jinde
+  $ rlogin <oracle_node> -l oracle
+  $ export DISPLAY=<xserver_node>:0
+  $ cd /cdrom
+  $ ./runInstaller
+
+  $ su root
+  # cd /tmp
+  # ./orainstRoot.sh
+  # exit
+
+  Languages: English, Czech
+  JDK Home: /usr/local/java
+  Software only
+
+  After First CD:
+  $ vi $ORACLE_HOME/lib/sysliblist
+    cont.: '-ldl -lm -lpthread -lc -lgcc'
+
+- Patch: 9014
+  download: p2517300_9014_LINUX.zip, unzip_lnx.C
+  $ gzip -dv unzip_lnx*
+  $ ./unzip_lnx p2517*  # -> lnx32_9014_patchset.tar
+  $ cd $ORACLE_BASE
+  $ mkdir patch
+  $ cd ./patch
+  $ tar xvf <path>/lnx32_9014_*tar
+  $ cd Disk1
+  $ runInstaller (from "remote X-Server")
+
+## 1.6. opravy
+------------------------------------------------------------
+
+$ORACLE_HOME/rdbms/admin/utlsampl.sql  ... vypusten posledni radek: EXIT
+$ORACLE_HOME/bin/dbshut ... namisto shutdown -> shutdowm immediate
+

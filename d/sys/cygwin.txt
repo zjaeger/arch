@@ -1,0 +1,40 @@
+X-Cygwin
+-------------------------------------------------------------------
+(4.5.2004)
+
+http://www.cygwin.com/
+http://x.cygwin.com/docs/ug/setup-cygwin-x-installing.html
+
+Install X-Cygwin:
+  http://x.cygwin.com/
+  Icon: Install X-Cygwin NOW
+
+Configure:
+
+  # ~/.Xdefaults
+  xterm*font: -misc-fixed-bold-r-normal--13-120-75-75-c-70-iso8859-1
+  xterm*background: black
+  xterm*foreground: gray
+
+  # ~/.bashrc
+  PS1-'$PWD: '
+  set -o vi
+
+  # startwin.bat
+  SET DISPLAY=127.0.0.1:0.0
+  SET HOME=D:\CGW\HOME
+  run XWin -multiwindow -clipboard -emulate3buttons
+  run xterm -sl 1000 -sb -rightbar -ms red -fg gray -bg black -e /usr/bin/bash -l
+
+/* --- unixts.rdm.cz --------------------------------------------------- */
+
+  # ~/.Xdefaults
+  xman*background: gray
+  xterm*background: gray
+
+  # .ksh
+  EXINIT='set autoindent ts=8'
+  alias gvim='/usr/users/zikmundt/opt/bin/vim -g -U ~fiesta/zdenek/.gvimrc'
+  alias xt5='xterm -sl 250 -sb -fg gray -bg black -fn -misc-fixed-bold-r-normal--0-0-75-75-c-0-iso8859-1 &'
+
+

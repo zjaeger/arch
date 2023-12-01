@@ -1,0 +1,59 @@
+SSH
+-----------------------------------------------------------
+
+  SSL: www.openssl.org
+  stunnel: mike.daewoo.com/computer/stunnel
+  zabezpeèení exitst. unix. složeb nad TCP (napø. POP, IMAP)
+
+  $ ssh -v -l <login_name> shell.isp.com
+
+# SSH:  Controll Characters
+
+  <ESC> ^Z	pøerušení spojení (odešle ssh na pozadí)
+  <ESC> .	ukonèení spojení
+  <ESC> ?	"help"
+  (<ESC> ... implicitnì ~)
+
+# Základní použití SSH1
+
+  a) klient: generování klíèových párù (public and private key)
+     $ ssh-keygen  # resp. ssh-keygen1
+     -> ~/.ssh/identity
+     -> ~/.ssh/identity.pub
+     (vytvoøí klíè. pár RSA)
+     (zmìna pøístupové fráze: $ssh-keygen -p)
+  b) server 
+     append ~/.ssh/identity.pub (from client)
+     -> ~/.ssh/autorized_keys (autorized_keys2 ... for OpenSSH)
+     (1 key = 1 row)
+  c) práva
+     $ chmod 755 ~/.ssh
+     $ chmod 644 ~/.ssh/authorized_keys
+
+# Základní použití SSH2
+
+  a) klient: generování klíèových párù (public and private key)
+     $ ssh-keygen  # resp. ssh-keygen2
+     -> ~/.ssh2/id_dsa_1024_a
+     -> ~/.ssh2/id_dsa_1024_a.pub
+     'IdKey id_dsa_1024_a' -> ~/.ssh2/identification
+     (vytvoøí klíè. pár DSA (default) nebo RSA)
+     (zmìna pøístupové fráze: $ssh-keygen -e)
+  b) server
+     copy ~/.ssh2/id_dsa_1024_a.pub from 'client' to 'server'
+     'Key id_dsa_1024_a.pub' -> ~/.ssh2/autorization
+  c) práva
+     (analogicky jako SSH1)
+
+# Agent
+
+  $ ssh-agent $SHELL
+  $ ssh-add	# add default key
+
+  $ ssh-add <file_with_an_other_key>
+  $ ssh-add -l	# list
+  $ ssh-add -d <file_with_an_other_key>		# delete key
+  $ ssh-add -D	# delete all keys
+
+  smìrování agenta (implicitnì zapnuto u SSH1 a SSH2, vypnuto u OpenSSH)
+ 

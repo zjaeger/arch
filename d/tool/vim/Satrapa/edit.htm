@@ -1,0 +1,285 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<HTML>
+<HEAD>
+<TITLE>vim - editace textu</TITLE>
+<LINK REL=StyleSheet HREF="vim.css" TYPE="text/css">
+</HEAD>
+<BODY BACKGROUND="papir.gif" BGCOLOR="#FFFFFF" TEXT="#000000" LINK="#FF0000"
+      VLINK="#990000" ALINK="#00FF00">
+
+<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="0">
+<TR>
+ <TD><IMG SRC="nic.gif" WIDTH="150" HEIGHT="1"></TD>
+ <TD>
+<!--STRANKA-->
+
+<H1>Editace textu</H1>
+
+
+Nejdùle¾itìj¹í editaèní operaci&nbsp;- vkládání nového textu&nbsp;- ji¾ znáte z
+pøedchozí stránky. Staèí pøejít do vkládacího re¾imu a psát a psát a psát.
+Pokud udìláte chybu, lze ji obvyklým zpùsobem umazat klávesou <CODE
+CLASS=klavesa>Backspace</CODE> a nahradit správným textem. Takto v¹ak <CODE
+CLASS=klavesa>Backspace</CODE> funguje jen do té doby, ne¾ opustíte vkládací
+re¾im. Pak je tøeba sáhnout k jiným prostøedkùm.
+
+
+<H2>Mazání</H2>
+
+S výjimkou vý¹e zmínìných elementárních oprav se mazání odehrává v normálním
+re¾imu. Základní operaci&nbsp;- smazání znaku pod kurzorem&nbsp;- obstará
+klávesa <CODE CLASS=klavesa>x</CODE>. Samozøejmì jí lze pøedsadit èíslo, tak¾e
+<CODE CLASS=klavesa>20x</CODE> zlikviduje 20&nbsp;znakù, poèínaje tím pod
+kurzorem.
+<P>
+
+Druhou obvyklou operací je smazání øádku. Na ten ji¾ budete potøebovat klávesy
+dvì, a sice <CODE CLASS=klavesa>dd</CODE>. Øádek, na nìm¾ se momentálnì nachází
+kurzor, bude zlikvidován.
+<P>
+
+
+<H2>Kopírování</H2>
+
+Ve¹keré likvidaèní operace mají jednu zajímavou vlastnost: vymazaný text se
+automaticky ukládá do registru, z nìj¾ jej následnì mù¾ete vlo¾it na
+jiné místo. O vlo¾ení se postará klávesa <CODE CLASS=klavesa>p</CODE> (vkládá
+za aktuální pozici) nebo <CODE CLASS=klavesa>P</CODE> (pøed aktuální pozici).
+<P>
+
+Chování vkládaného materiálu se li¹í podle jeho charakteru. Pokud se jedná o
+pouhou èást øádku, bude vlo¾en do aktuálního øádku za nebo pøed kurzor.
+Jestli¾e v¹ak text v registru obsahuje alespoò jeden celý øádek, bude vlo¾en
+za/pøed aktuální øádek.
+
+<BLOCKQUOTE CLASS=priklad>
+<STRONG>Pøíklad:</STRONG><BR>
+Hezkým pøíkladem èinnosti mazacích a vkládacích mechanismù je zmìna poøadí dvou
+po sobì jdoucích znakù. Obstará ji klávesová kombinace <CODE
+CLASS=klavesa>xp</CODE>&nbsp;- sledujte její chování:
+<P>
+
+Vyjdeme ze slova
+<BLOCKQUOTE><PRE>
+pohoda
+  ^
+</PRE></BLOCKQUOTE>
+Stisknutím <CODE CLASS=klavesa>x</CODE> bude z textu odstranìn znak pod
+kurzorem (písmeno "h") a zbytek øádku se posune doleva. Smazaný znak se
+automaticky ulo¾í do registru. Aktuální stav tedy vypadá takto:
+<BLOCKQUOTE><PRE>
+pooda
+  ^
+</PRE></BLOCKQUOTE>
+Stisknutím klávesy <CODE CLASS=klavesa>p</CODE> vlo¾íte obsah registru
+za aktuální pozici. Jeliko¾ v registru je jediný znak ("h"), bude vlo¾en
+do øádku za kurzor a vznikne:
+<BLOCKQUOTE><PRE>
+poohda
+   ^
+</PRE></BLOCKQUOTE>
+
+</BLOCKQUOTE>
+
+<BLOCKQUOTE CLASS=priklad>
+<STRONG>Pøíklad:</STRONG><BR>
+Druhý pøíklad zamìøím na likvidaci øádkù. Øeknìme, ¾e máme text
+<BLOCKQUOTE><PRE>
+raz
+d<STRONG><U>v</U></STRONG>a
+tøi
+ètyøi
+</PRE></BLOCKQUOTE>
+Kurzor je na druhém øádku (odpovídající znak je vyznaèen tuènì a podtr¾en).
+Pou¾ijete-li pøíkaz <CODE CLASS=klavesa>2dd</CODE>, odstraníte druhý a tøetí
+øádek:
+<BLOCKQUOTE><PRE>
+raz
+<STRONG><U>è</U></STRONG>tyøi
+</PRE></BLOCKQUOTE>
+Chcete-li se vrátit k pùvodnímu stavu, staèí stisknout <CODE
+CLASS=klavesa>P</CODE>. Jeliko¾ registr obsahuje více ne¾ øádek, bude
+jeho obsah vlo¾en jako samostatné øádky pøed øádek s kurzorem. Vznikne tedy
+opìt pùvodní text
+<BLOCKQUOTE><PRE>
+raz
+<STRONG><U>d</U></STRONG>va
+tøi
+ètyøi
+</PRE></BLOCKQUOTE>
+
+</BLOCKQUOTE>
+
+Pokud chcete øádek (nebo jejich skupinu) pøesunout do registru, ale
+ponechat v textu, pou¾ijte <CODE CLASS=klavesa>yy</CODE>. Tento pøíkaz ulo¾í do
+registru aktuální øádek. Chcete-li tedy zdvojit aktuální øádek,
+pou¾ijte <CODE CLASS=klavesa>yyp</CODE>.
+<P>
+
+Ka¾dé ulo¾ení do registru samozøejmì znamená, ¾e jeho stávající obsah
+bude zlikvidován. Z tohoto dùvodu je podstatný rozdíl, zda pøi mazání pìti
+znakù pìtkrát stisknete klávesu <CODE CLASS=klavesa>x</CODE> nebo pou¾ijete
+<CODE CLASS=klavesa>5x</CODE>. V prvním pøípadì se provede pìt samostatných
+pøíkazù mazání. Ka¾dý z nich vlo¾í do registru právì likvidovaný znak
+a zru¹í jeho pøedchozí obsah. Po provedení posledního tudí¾ v registru
+bude jediný (poslední vymazaný) znak. Naproti tomu <CODE
+CLASS=klavesa>5x</CODE> vyma¾e naráz v¹ech pìt znakù a do registru
+ulo¾í celou pìtici.
+
+
+<H2>Odvolávání a vracení</H2>
+
+Dìjiny nás uèí, ¾e umìní v pravou chvíli odvolat bývá rozhodující mezi bytím a
+nebytím. Proto vìt¹ina moderních editorù doká¾e odvolávat poslední provedené
+zmìny a (pokud si to u¾ivatel znovu rozmyslí) zase je vracet zpìt. V pøípadì
+<EM>vim</EM> k odvolání poslední editaèní operace slou¾í klávesa <CODE
+CLASS=klavesa>u</CODE> (jako¾to "undo"). Mù¾ete ji pou¾ívat opakovanì a
+odvolávat tak dal¹í a dal¹í akce.
+<P>
+
+Pokud si pozdìji uvìdomíte, ¾e nìkterá z editaèních operací zase nebyla a¾ tak
+¹patná, mù¾ete ji vrátit pomocí <CODE CLASS=klavesa>Ctrl-R</CODE> (redo). Opìt
+je lze pou¾ívat opakovanì.
+<P>
+
+Speciální druh odvolání pøedstavuje klávesa <CODE CLASS=klavesa>U</CODE>.
+Odvolá v¹echny zmìny, provedené na naposledy zmìnìném øádku.
+
+
+<H2>Editaèní lahùdky</H2>
+
+Nastal èas nasadit sprint a zmizet milovníkùm pøesýpacích hodin za obzorem. Pro
+tuto èást jsem si nechal nìkolik specialit, které práci s <EM>vim</EM> velmi
+významnì zrychlují.
+<P>
+
+První chu»ovkou je prostá teèka. Pøíkaz <CODE CLASS=klavesa>.</CODE> zopakuje
+va¹i poslední editaèní operaci. To znamená poslední vlo¾ení, smazání èi zmìnu
+textu. Pohyby nejsou pova¾ovány za editaèní operace.
+<P>
+
+<BLOCKQUOTE CLASS=priklad>
+<STRONG>Pøíklad:</STRONG><BR>
+Strohý popis èinnosti teèky nezní nijak bombasticky. Je tøeba si v¹ak uvìdomit,
+¾e editaèní operace mù¾e být dosti inteligentní, místy a¾ rafinovaná. Napøíklad
+budu mít seznam tøí jmen
+<BLOCKQUOTE><PRE>
+Mojmír Slizký
+Jiøí Milý
+Leonid Vasiljeviè Brown
+</PRE></BLOCKQUOTE>
+který chci zaøadit na WWW stránku. Chci, aby jeho podoba zùstala zachována,
+tedy aby ka¾dé jméno bylo na samostatném øádku. To znamená, ¾e na konec ka¾dého
+z nich je tøeba pøipsat <CODE>&lt;BR&gt;</CODE>. Pøesunu kurzor na první øádek
+a pou¾iji pøíkaz <CODE CLASS=klavesa>A&lt;BR&gt;[Esc]</CODE>. Tím jsem na jeho
+konec pøidal <CODE>&lt;BR&gt;</CODE>. Nyní staèí jen støídavì maèkat <CODE
+CLASS=klavesa>kurzor&nbsp;dolù</CODE> a <CODE CLASS=klavesa>.</CODE> a pøidávat
+<CODE>&lt;BR&gt;</CODE> na konce dal¹ích a dal¹ích øádkù.
+
+</BLOCKQUOTE>
+
+<A NAME="pohyb">Nejkouzelnìj¹í</A> mo¾ností v¹ak je kombinace editaèního
+pøíkazu s libovolným pohybem. Pokud pøed pohybem stisknete kouzelnou klávesu,
+bude se editaèní operace týkat textu od aktuální polohy kurzoru a¾ po cílovou
+pozici, na ni¾ se dostane provedením dotyèného pohybu. Základními kouzelnými
+klávesami jsou
+
+<DIV ALIGN=CENTER>
+<TABLE BORDER="0">
+<TR VALIGN=TOP>
+ <TD><CODE CLASS=klavesa>d</CODE></TD>
+ <TD>vymazání (delete), likvidovaný text se ulo¾í do registru</TD>
+</TR>
+<TR VALIGN=TOP>
+ <TD><CODE CLASS=klavesa>y</CODE></TD>
+ <TD>kopírování do registru (yank)</TD>
+</TR>
+<TR VALIGN=TOP>
+ <TD><CODE CLASS=klavesa>c</CODE></TD>
+ <TD>zmìna (nahrazení novým obsahem; change)</TD>
+</TR>
+</TABLE>
+</DIV>
+<P>
+
+Tak¾e napøíklad zmìnu slova zaøídíte tak, ¾e najedete kurzorem na jeho zaèátek
+a pou¾ijete pøíkaz <CODE CLASS=klavesa>cw</CODE>. Likvidaci odstavce (od
+aktuální pozice do konce) obstará <CODE CLASS=klavesa>d}</CODE>. Mým èasto
+pou¾ívaným pøíkazem je zmìna lokátoru v odkazu ve zdrojovém textu WWW stránky.
+Pøesunu kurzor za zahajující uvozovky a pak nasadím <CODE
+CLASS=klavesa>ct"</CODE>, èím¾ po¾aduji zmìnu textu a¾ po následující uvozovky.
+<P>
+
+Samozøejmì je k dispozici té¾ opakování. Nezále¾í pøi nìm na tom, zda pou¾ijete
+<CODE CLASS=klavesa>2dw</CODE> nebo <CODE CLASS=klavesa>d2w</CODE>. V obou
+pøípadech budou vymazána dvì slova a ulo¾ena do vyrovnávací pamìti.
+Skuteènost, ¾e zmiòované vylomeniny lze navíc snadno opakovat pomocí teèky,
+pøedstavuje zcela novou úroveò rozko¹e pøi pou¾ívání <EM>vim</EM>.
+<P>
+
+Kromì základních tøí modifikátorù <CODE CLASS=klavesa>d</CODE>, <CODE
+CLASS=klavesa>y</CODE> a <CODE CLASS=klavesa>c</CODE> je k dispozici je¹tì øada
+dal¹ích. K pou¾ívání nìkterých z nich budete potøebovat pokroèilej¹í
+znalosti. Zde se omezím na pouhý výèet.
+
+<DIV ALIGN=CENTER>
+<TABLE BORDER="0">
+<TR VALIGN=TOP>
+ <TD><CODE CLASS=klavesa>g~</CODE></TD>
+ <TD>zamìní malá/velká písmena v textu</TD>
+</TR>
+<TR VALIGN=TOP>
+ <TD><CODE CLASS=klavesa>gu</CODE></TD>
+ <TD>pøevede text na malá písmena</TD>
+</TR>
+<TR VALIGN=TOP>
+ <TD><CODE CLASS=klavesa>gU</CODE></TD>
+ <TD>pøevede text na velká písmena</TD>
+</TR>
+<TR VALIGN=TOP>
+ <TD><CODE CLASS=klavesa>!</CODE></TD>
+ <TD>zpracuje text externím programem</TD>
+</TR>
+<TR VALIGN=TOP>
+ <TD><CODE CLASS=klavesa>=</CODE></TD>
+ <TD>zpracuje text externím formátovaèem; jeho jméno lze nastavit pomocí <CODE
+ CLASS=prikaz>:set&nbsp;equalprg</CODE>; není-li nastaveno, uspoøádá se jako
+ zdrojový text v&nbsp;C</TD>
+</TR>
+<TR VALIGN=TOP>
+ <TD><CODE CLASS=klavesa>gq</CODE></TD>
+ <TD>pøeformátuje text podle platných okrajù</TD>
+</TR>
+<TR VALIGN=TOP>
+ <TD><CODE CLASS=klavesa>&gt;</CODE></TD>
+ <TD>posune text doprava</TD>
+</TR>
+<TR VALIGN=TOP>
+ <TD><CODE CLASS=klavesa>&lt;</CODE></TD>
+ <TD>posune text doleva</TD>
+</TR>
+</TABLE>
+</DIV>
+<P>
+
+<!--/STRANKA-->
+<!--NAVIG-->
+<DIV ALIGN=RIGHT>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0">
+<TR>
+<TD><A HREF="pohyby.htm"><IMG SRC="zpet.gif" ALT="&lt;-- predchozi " BORDER="0"></A></TD>
+<TD><A HREF="index.htm"><IMG SRC="obs.gif" ALT=" [obsah] " BORDER="0"></A></TD>
+<TD><A HREF="hledani.htm"><IMG SRC="vpred.gif" ALT=" dalsi --&gt;" BORDER="0"></A></TD>
+</TR>
+</TABLE>
+</DIV>
+<!--/NAVIG-->
+
+<SMALL>&copy; 1997, 1998 Pavel Satrapa</SMALL>
+
+ </TD>
+</TR>
+</TABLE>
+
+</BODY>
+</HTML>
