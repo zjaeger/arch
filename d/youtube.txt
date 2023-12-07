@@ -1,0 +1,16 @@
+
+DBeaver
+https://www.youtube.com/watch?v=LEx96-CkB1Q&ab_channel=DatabaseStar
+
+Docker
+https://www.youtube.com/watch?v=pg19Z8LL06w&ab_channel=TechWorldwithNana
+https://www.youtube.com/watch?v=3c-iBn73dDE&ab_channel=TechWorldwithNana
+
+Jenkins
+https://www.youtube.com/watch?v=6YZvp2GwT0A&t=374s&ab_channel=DevOpsJourney
+
+DevOps
+https://www.youtube.com/watch?v=0yWAtQ6wYNM&t=11s&ab_channel=TechWorldwithNana
+
+GIT
+https://www.youtube.com/watch?v=_qSB6jN4A3s&ab_channel=David%C5%A0etek-Hacknisvoubudoucnost

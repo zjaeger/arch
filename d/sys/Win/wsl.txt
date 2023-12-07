@@ -1,0 +1,31 @@
+WSL - Windows Subsystem for Linux
+--------------------------------------------------------------------------------
+
+PS D:\> wsl --set-default-version 2
+
+PS D:\> wsl -l -v
+  NAME      STATE           VERSION
+* Ubuntu    Running         2
+
+
+Installation Guide for Windows 10
+https://docs.microsoft.com/en-us/windows/wsl/install-win10#step-4---download-the-linux-kernel-update-package
+
+- Enable the Windows Subsystem for Linux (run appwiz.cpl - Linux subsystem, Virtual Machine)
+- Check requirements for running WSL 2
+  For x64 systems: Version 1903 or higher, with Build 18362 or higher.
+  (run "winver" or "ver" on command prompt)
+- Enable Virtual Machine feature
+- Download the Linux kernel update package
+  https://wslstorestorage.blob.core.windows.net/wslblob/wsl_update_x64.msi
+- Set WSL 2 as your default version
+  powerShell: wsl --set-default-version 2
+- Install your Linux distribution (MS Store)
+- Set your distribution version to WSL 1 or WSL 2
+  powerShell: wsl --list --verbose
+  powerShell: wsl --set-version <distribution name> <versionNumber>
+- Update and upgrade packages
+  bash: sudo apt update && sudo apt upgrade
+
+Create a user account and password for your new Linux distribution
+https://docs.microsoft.com/en-us/windows/wsl/user-support

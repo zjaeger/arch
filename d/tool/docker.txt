@@ -1,0 +1,200 @@
+Docker
+--------------------------------------------------------------------------------
+https://www.youtube.com/watch?v=pg19Z8LL06w&ab_channel=TechWorldwithNana
+https://www.youtube.com/watch?v=3c-iBn73dDE&ab_channel=TechWorldwithNana
+
+Docker Desktop
+
+  application for Windows and MacOS (environment for running Linux containers)
+  Uses a Hypervisor layer with lightweight Linux distro
+
+  https://docs.docker.com/desktop/install/windows-install/
+  
+  Docker Desktop includes:
+  - Docker Engine (daemon process "dockerd")
+  - Docker CLI – Client
+  - GUI Client
+
+How to install Linux on Windows with WSL
+https://learn.microsoft.com/en-us/windows/wsl/install
+(restart Windows OS after Docker Desktop installation)
+
+Dockerhub (Docker registry)
+https://hub.docker.com/
+
+--------------------------------------------------------------------------------
+COMMANDS
+--------------------------------------------------------------------------------
+
+$ docker help {command}
+
+$ docker images
+$ docker ps [-a]
+
+$ docker pull {name}:{tag}
+$ docker pull nginx:1.25
+
+$ docker tag {old_name}:{tag} {new_name}:{tag} # image rename
+
+$ docker run [-d] [--name {container_name}] [-p {host_port}:{container_port}] {name}:{tag}
+$ docker run --name web-app -d -p 9000:80 nginx:1.25
+
+{container} : {container_id} OR {container_name}
+
+$ docker stop {container}
+$ docker start {container}
+$ docker rm {container}
+$ docker rmi {image}
+
+$ docker logs {container}
+
+$ docker exec -it {container} /bin/bash  # -it : interactive terminal
+
+$ docker network ls
+
+
+--------------------------------------------------------------------------------
+BUILD IMAGE
+--------------------------------------------------------------------------------
+
+Dockerfile
+--------------------------------------------------------------------------------
+Base image – obviously lightweight Linux OS
+- FROM: build this image from the specified image
+- ENV: environment variables
+- COPY: copies files or directories from <src> and adds them to the container at the path <dest>
+  (COPY is executed on the host)
+  COPY <src> on our machine <dest> in the container
+- WORKDIR: sets the working directory for all following commands
+- RUN: will execute any command in a shell inside container environment
+- CMD: the instructions that is to be executed when Docker container starts
+  (there can only be one "CMD" instruction in a Dockerfile)
+
+Dockerfile example
+--------------------------------------------------------------------------------
+FROM node:19-alpine
+
+COPY package.json /app/
+COPY src /app/
+
+WORKDIR  /app
+
+RUN npm install
+
+CMD ["node","server.js"]
+--------------------------------------------------------------------------------
+
+docker build {path}
+docker build –t node-app:1.0 .
+
+--------------------------------------------------------------------------------
+Docker network example
+--------------------------------------------------------------------------------
+# commands
+
+## create docker network
+docker network create mongo—network
+
+## start mongodb
+docker run —d \
+-p 27017:27017 \
+-e MONGO_INITDB_ROOT_USERNAME=admin \
+-e MONGO_INITDB_ROOT_PASSWORD=password \
+—-net mongo—network \
+—-name mongodb \
+mongo
+
+## start mongo-express
+docker run —d \
+-p 8081:8081 \
+-e ME_CONFIG_MONGODB_ADMINUSERNAME=admin \
+-e ME_CONFIG_MONGODB_ADMINPASSWORD=password \
+-e ME_CONFIG_MONGODB_SERVER=mongodb \
+——net mongo—network \
+——name mongo—express \
+mongo—express
+
+--------------------------------------------------------------------------------
+Docker Compose equivalent
+mongo.yaml
+--------------------------------------------------------------------------------
+version: '3'
+services:
+  mongodb:
+    image: mongo
+    ports:
+    - 27017:27017
+    environment:
+    - MONGO_INITDB_ROOT_USERNAME=admin
+    - MONGO_INITDB_ROOT_PASSWORD=password
+  mongo—express:
+    image: mongo—express
+    ports:
+    - 8080:8081
+    environment:
+    - ME_CONFIG_MONGODB_ADMINUSERNAME=admin
+    - ME_CONFIG_MONGODB_ADMINPASSWORD=password
+    - ME_CONFIG_MONGODB_SERVER=mongodb
+--------------------------------------------------------------------------------
+
+$ docker-compose -f mongo.yaml up -d
+$ docker-compose -f mongo.yaml down
+
+
+--------------------------------------------------------------------------------
+Dockerfile example
+--------------------------------------------------------------------------------
+FROM node:19-alpine
+
+ENV MONGO_DB_USERNAME=admin \
+    MONGO_DB_PASSWORD=password
+
+RUN mkdir -p /home/app
+
+COPY . /home/app
+
+CMD ["node","server.js"]
+--------------------------------------------------------------------------------
+
+$ docker build --tag {name:tag} {dest_path}
+$ docker build -t my-app:1.0 .
+
+$ docker images # lists also the new image my-app
+
+--------------------------------------------------------------------------------
+Docker Volume
+--------------------------------------------------------------------------------
+
+- Host Volumes
+  docker run
+  -v {host_directory}:{container_directory}
+
+- Anonymous Volumes
+  docker run
+  -v {container_directory}
+  (host directory automatically created by Docker)
+
+- Named Volumes ***
+  docker run
+  -v {volume_name}:{container_directory}
+
+  mongo.yaml
+  ----------------------------------------
+  ..
+  services:
+    mongodb:
+      image: mongo
+      ports:
+      - 27017:27017
+      volumes:
+      - db-data:/var/lib/mongo/data # container directory?
+      ....
+  volumes:
+    db-data:
+      driver: local
+  ----------------------------------------
+
+Docker Volume Locations
+  - Windows: C:\ProgramData\docker\volumes
+  - Linux:   /var/lib/docker/volumes
+  - MacOS:   /var/lib/docker/volumes
