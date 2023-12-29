@@ -31,6 +31,8 @@ $ docker help {command}
 $ docker images
 $ docker ps [-a]
 
+$ docker inspect {image}
+
 $ docker pull {name}:{tag}
 $ docker pull nginx:1.25
 
@@ -47,10 +49,13 @@ $ docker rm {container}
 $ docker rmi {image}
 
 $ docker logs {container}
+$ docker port {container}
 
 $ docker exec -it {container} /bin/bash  # -it : interactive terminal
 
 $ docker network ls
+$ docker volume ls
+$ docker volume inspect {volume}
 
 
 --------------------------------------------------------------------------------
