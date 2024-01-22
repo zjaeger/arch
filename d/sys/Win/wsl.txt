@@ -1,12 +1,14 @@
 WSL - Windows Subsystem for Linux
 --------------------------------------------------------------------------------
 
+--------------------------------------------------------------------------------
+## Windows 10
+--------------------------------------------------------------------------------
 PS D:\> wsl --set-default-version 2
 
 PS D:\> wsl -l -v
   NAME      STATE           VERSION
 * Ubuntu    Running         2
-
 
 Installation Guide for Windows 10
 https://docs.microsoft.com/en-us/windows/wsl/install-win10#step-4---download-the-linux-kernel-update-package
@@ -29,3 +31,124 @@ https://docs.microsoft.com/en-us/windows/wsl/install-win10#step-4---download-the
 
 Create a user account and password for your new Linux distribution
 https://docs.microsoft.com/en-us/windows/wsl/user-support
+
+--------------------------------------------------------------------------------
+## Windows 11
+--------------------------------------------------------------------------------
+
+# https://learn.microsoft.com/en-us/windows/wsl/install
+# https://learn.microsoft.com/en-us/windows/wsl/basic-commands
+
+# https://learn.microsoft.com/en-us/windows/wsl/tutorials/gui-apps
+#
+# Intel® Graphics – Windows* DCH Drivers
+# (This will enable you to use a virtual GPU (vGPU) so you can benefit from hardware
+#  accelerated OpenGL rendering)
+# https://www.intel.com/content/www/us/en/download/19344/intel-graphics-windows-dch-drivers.html
+# ... failed on DELL Latitude 5540
+
+# -- CMD.EXE or PowerShell -----------------------------------------------------
+
+# update your WSL version to the latest version (--web-download : GitHub)
+wsl --update [ --web-download ]
+
+# immediately terminates all running distributions and the WSL 2
+wsl --shutdown
+
+# to unregister a WSL distribution (unistall: Settings -> Apps -> Installed apps)
+wsl --unregister <DistributionName>
+
+# list available Linux distributions
+wsl --list --online
+wsl -l -o
+
+# list installed Linux distributions
+wsl --list --verbose
+wsl -l -v
+
+# install WSL and the selected distribution (default: Ubuntu) of Linux.
+# CMD as Administrator
+wsl --install [<DistributionName>]
+# -- enter new UNIX username: alfa
+
+# %USERPROFILE%\AppData\Local\Microsoft\WindowsApps
+
+# -- Unix commands (Debian) ----------------------------------------------------
+export PS1='$PWD: '
+
+## /etc/apt: cat sources.list
+## deb http://deb.debian.org/debian bookworm main
+## deb http://deb.debian.org/debian bookworm-updates main
+## deb http://security.debian.org/debian-security bookworm-security main
+## deb http://ftp.debian.org/debian bookworm-backports main
+
+sudo apt update
+sudo apt upgrade
+
+sudo apt install lsb-release -y
+
+sudo apt install man
+sudo apt install git
+sudo apt install mc
+
+sudo apt install xterm
+
+# xclock, xcalc calculator, xclipboard for cut and paste, xev for event testing, etc.
+# https://www.x.org/wiki/UserDocumentation/GettingStarted/
+sudo apt install x11-apps -y
+
+# GVIM on Ubuntu
+sudo apt install vim         # version 2:8.1.2269-1ubuntu5.20, or
+sudo apt install vim-tiny    # version 2:8.1.2269-1ubuntu5.20
+sudo apt install vim-athena  # version 2:8.1.2269-1ubuntu5.20
+sudo apt install vim-gtk3    # version 2:8.1.2269-1ubuntu5.20
+sudo apt install vim-nox     # version 2:8.1.2269-1ubuntu5.20
+sudo apt install neovim-qt   # version 0.2.15-1build1
+
+# ------------------------------------------------------------------------------ 
+# .pgenv
+alias pg_ls='sudo pg_lsclusters'
+alias pg_start='sudo pg_ctlcluster 16 main start'
+alias pg_stop='sudo pg_ctlcluster 16 main stop'
+
+alias pg_st='sudo service postgresql status'
+alias pg_start2='sudo service postgresql start'
+alias pg_stop2='sudo service postgresql stop'
+
+alias pg_su='sudo -i -u postgres'
+
+# ------------------------------------------------------------------------------ 
+# .profile: add
+export PS1='$PWD: '
+alias xt='xterm -ls -bg black -fg grey -fs 10 -fa DejaVuSansMono &'
+. $HOME/.pgenv
+
+
+# --- Windows Terminal profile
+
+name: Git bash
+command line: C:/x/app/Git/bin/bash.exe -i -l
+starting directory: %USERPROFILE%
+icon: C:/x/app/Git/mingw64/share/git/git-for-windows.ico
+color scheme: Campbell
+font size: 12
+line heigth: 12
+font wigth: Normal
+cursor shape: "Bar(|)"
+intense text style: "Bright colors"
+
+name: Ubuntu
+command line: C:\Windows\system32\wsl.exe -d Ubuntu
+starting directory: ~
+icon: ms-appx:///ProfileIcons/{9acb9455-ca41-5af7-950f-6bca1bc9722f}.png # Penguin
+color scheme: Campbell
+font face: Cascadia Mono
+
+name: Ubuntu
+command line: ubuntu.exe
+starting directory: (empty)
+icon: https://assets.ubuntu.com/v1/49a1a858-favicon-32x32.png
+color scheme: Campbell
+font face: Cascadia Mono
+font size: 13
+line heigth: 1.2

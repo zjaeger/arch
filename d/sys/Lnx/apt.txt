@@ -1,0 +1,55 @@
+# Debian apt command
+# 2024-01-08
+#
+# https://linuxize.com/post/how-to-use-apt-command/
+
+# Updating package index (apt update)
+sudo apt update
+
+# To upgrade the installed packages to their latest versions run:
+sudo apt upgrade
+sudo apt upgrade package_name
+
+# Full Upgrading (apt full-upgrade)
+# The difference between upgrade and full-upgrade is that the later will remove the installed packages
+# if that is needed to upgrade the whole system.
+sudo apt full-upgrade
+
+# Installing packages:
+sudo apt install package_name
+sudo apt install package1 package2
+sudo apt install /full/path/file.deb  # to install local deb file
+
+# Removing Packages (apt remove)
+sudo apt remove package_name
+sudo apt remove package1 package2
+
+# The remove command will uninstall the given packages, but it may leave some configuration files behind.
+# If you want to remove the package including all configuration files, use purge instead of remove:
+sudo apt purge package_name
+
+# Remove Unused Packages (apt autoremove)
+# Whenever a new package that depends on other packages is installed on the system,
+# the package dependencies will be installed too. When the package is removed,
+# the dependencies will stay on the system. This leftover packages are no longer
+# used by anything else and can be removed.
+# To remove the unneeded dependencies use the following command:
+sudo apt autoremove
+
+# Listing Packages (apt list)
+# To list all available packages use the following command:
+sudo apt list
+sudo apt list | grep package_name
+sudo apt list --upgradeable
+sudo apt list --installed
+sudo dpkg-query -l
+
+# Searching Packages (apt search)
+# This command allows you to search for a given package in the list of the available packages:
+sudo apt search package_name
+# If found, the command will return the packages which name matches the search term.
+
+# Package Information (apt show)
+# The information about the package dependencies, installation size, the package source,
+# and so on might be useful before removing or installing a new package.
+sudo apt show package_name

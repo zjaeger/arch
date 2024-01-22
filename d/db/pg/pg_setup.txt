@@ -1,0 +1,51 @@
+PosrgreSQL setup
+--------------------------------------------------------------------------------
+2023-01-07
+
+/home/alfa: uname -a
+Linux XXXXXXXXXXXX 5.15.133.1-microsoft-standard-WSL2 #1 SMP Thu Oct 5 21:02:42 UTC 2023 x86_64 GNU/Linux
+
+# https://www.postgresqltutorial.com/postgresql-getting-started/install-postgresql-linux/
+#
+# create the file repository configuration (Debian)
+sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list'
+
+sudo apt install wget
+sudo apt install gnupg
+
+# import the repository signing key (Debian)
+wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
+
+# update the package list
+sudo apt update
+
+# install the latest version of PostgreSQL
+sudo apt install postgresql-16 postgresql-contrib
+
+psql --version
+
+sudo passwd postgres
+
+# start/stop
+sudo service postgresql status
+sudo service postgresql start
+sudo service postgresql stop
+
+sudo pg_lsclusters
+sudo pg_ctlcluster 14 main start
+sudo pg_ctlcluster 14 main stop
+
+psql
+psql> create database dvdrental ;
+psql> \q
+
+# https://www.postgresqltutorial.com/postgresql-getting-started/postgresql-sample-database
+# https://www.postgresqltutorial.com/wp-content/uploads/2019/05/dvdrental.zip
+# https://www.postgresqltutorial.com/wp-content/uploads/2018/03/printable-postgresql-sample-database-diagram.pdf
+
+pg_restore --dbname=dvdrental --verbose dvdrental.tar
+
+psql
+psql> \c dvdrental
+psql> \l dvdrental
+psql> select count(*) from film ;
