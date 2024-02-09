@@ -1,0 +1,13 @@
+# Services
+
+grant permissions on windows service to windows user 
+https://woshub.com/set-permissions-on-windows-service/ 
+ 
+C:\Users\Oracle>whoami /user 
+ 
+USER INFORMATION 
+---------------- 
+ 
+User Name           SID 
+=================== ============================================= 
+l34000101121\oracle S-1-5-21-3920199513-2424532615-747411955-1003 

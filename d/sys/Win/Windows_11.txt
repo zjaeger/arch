@@ -1,0 +1,71 @@
+# Windows 11
+
+#------------------------------------------------------------------------------ 
+# Settings 
+#------------------------------------------------------------------------------ 
+ 
+Settings -> Personalization -> Start: Off for all 
+Settings -> Personalization -> Start -> Folders: choose 
+ 
+Settings -> System -> Notifications 
+- (down) Get tips and suggestions when using Windows: OFF 
+ 
+Settings -> System -> Clipboard -> Clipboard history 
+  
+Settings -> Privacy & Security -> General: Off for all 
+  
+Settings -> Privacy & Security -> Speech: Off 
+Settings -> Privacy & Security -> Inking & typing personalization: Off 
+Settings -> Privacy & Security -> Diagnostics & feedback: 
+- Send optional diagnostic data: Off 
+- ... : Off 
+  
+Settings -> Privacy & Security -> Activity history: Off 
+Settings -> Privacy & Security -> Location 
+  
+Settings -> Apps -> Advanced app settings: 
+- Choose where to get apps 
+  
+Settings -> Apps -> Startup 
+  
+Settings -> Accounts -> Your info 
+- Account settings (Microsoft account ... Sign in with a local account instead 
+ 
+Corners: 
+# https://tech4gamers.com/disable-rounded-corners-windows-11/ 
+Computer\HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM 
+UseWindowFrameStagingBuffer = 0 (DWORD (32-bit) Value) 
+0 - no rounded corners 
+1 - Windows 11 rounded corners 
+... doesn't run
+ 
+
+#------------------------------------------------------------------------------ 
+# SAC
+#------------------------------------------------------------------------------ 
+Smart App Control 
+ 
+Introduced in the 22H2 update, Smart App Control (SAC) is a relatively new feature that prevents unauthorized applications from accessing your system. This blocks things like ransomware or spyware from compromising your data. 
+ 
+Windows 11 22H2 Smart App Control Settings and Registry 
+https://www.youtube.com/watch?v=BLgM3skP8-I 
+1:24: Smart app control will automatically turn off for Enterprise managed devices (Enterprise devices are being controlled by MDM Solutions, such as Intune) 
+
+[HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\CI\Policy] 
+"VerifiedAndReputablePolicyState"=dword:00000000 
+0: off 
+1: on 
+2: evaluation mode 
+ 
+https://gadgetstouse.com/blog/2023/02/08/windows-11-smart-app-control/ 
+https://www.lifewire.com/turn-on-off-smart-app-control-windows-11-6749523 
+https://helpdeskgeek.com/windows-11/how-to-enable-and-use-smart-app-control-in-windows-11/ 
+ 
+#------------------------------------------------------------------------------ 
+# Windows 11 version 22H2 New Features 
+#------------------------------------------------------------------------------ 
+https://www.youtube.com/watch?v=CPXTlH-u9mw 
+Start menu - groups 
+File Explorer - tabs 
+Clipchamp - Video Editor 
+… 
