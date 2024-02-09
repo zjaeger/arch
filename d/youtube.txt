@@ -1,3 +1,6 @@
+# youtube.txt
+#
+# 2024-02-09
 
 DBeaver
 https://www.youtube.com/watch?v=LEx96-CkB1Q&ab_channel=DatabaseStar
@@ -14,3 +17,6 @@ https://www.youtube.com/watch?v=0yWAtQ6wYNM&t=11s&ab_channel=TechWorldwithNana
 
 GIT
 https://www.youtube.com/watch?v=_qSB6jN4A3s&ab_channel=David%C5%A0etek-Hacknisvoubudoucnost
+
+Flyway 
+https://www.youtube.com/watch?v=qsacSRcHCCs&list=PLiodYeBznPh2nLQ2CPYyYJVPPC4373TWw

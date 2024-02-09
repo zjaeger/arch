@@ -1,0 +1,46 @@
+# jenkins.txt
+#
+# 2024-02-09
+
+Continuous Integration (CI) tool 
+Self-contained Java program 
+
+Pipeline syntax 
+- Scripted 
+  - First syntax 
+  - Groovy engine 
+  - Advanced scripting capabilities, high flexibility 
+  - Difficult to start 
+- Declarative 
+  - Recent addition 
+  - Easier to get started 
+ 
+https://hub.docker.com/r/jenkins/jenkins 
+https://github.com/jenkinsci/docker/blob/master/README.md 
+https://www.jenkins.io/doc/book/using/best-practices/ 
+ 
+$ docker pull jenkins/jenkins:jdk17 
+$ docker run -p 8080:8080 -p 50000:50000 -d -v jenkins_home:/var/jenkins_home jenkins/jenkins:jdk17 
+alfa / alfa 
+ 
+Types of Jenkins Projects 
+- Freestyle – simple, single task (e.g. run tests) 
+- Pipeline – whole delivery cycle (e.g. test | build | …) for a single branch 
+- Multibranch Pipeline – like Pipeline for multiple branches 
+
+
+Example:
+
+pipeline {
+  agent any
+  stages {
+    stage("build") {
+       steps {
+       }
+    }
+  }
+}
+
+node {
+   // groovy script
+}

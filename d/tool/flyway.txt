@@ -1,0 +1,72 @@
+# Flyway
+#
+# 2024-02-09
+#
+# https://documentation.red-gate.com/flyway 
+# https://www.red-gate.com/products/flyway/editions (download Community edition – command line) 
+
+Download flyway-commandline-10.7.1-windows-x64.zip 
+Unzip 
+ren flyway flyway.sh 
+ren flyway.cmd flyway.bat 
+cd conf 
+copy flyway.toml.example flyway.toml 
+edit flyway.toml 
+ 
+--------------------------------------------------------------------------------
+flyway.toml example: 
+--------------------------------------------------------------------------------
+# Oracle     : jdbc:oracle:thin:@//<host>:<port>/<service> 
+# Oracle     : jdbc:oracle:thin:@<tns_entry> 
+# PostgreSQL : jdbc:postgresql://<host>:<port>/<database>?<key1>=<value1>&<key2>=<value2> 
+# SQL Server : jdbc:sqlserver://<host>:<port>;databaseName=<database> 
+ 
+[environments.xe1] 
+url = "jdbc:oracle:thin:@//localhost/XEPDB1" 
+user = "sandbox" 
+password = "sandbox" 
+ 
+[flyway] 
+environment = "xe1" 
+locations = ["filesystem:/Temp/flyway"] 
+--------------------------------------------------------------------------------
+Pozn. /Temp/flyway odpovídá C:\Temp\flyway a tam se očekávají migrační Vxxxx__*.sql skripty 
+ 
+Flyway CLI and API 
+https://documentation.red-gate.com/fd/flyway-cli-and-api-183306238.html 
+ 
+
+Flyway-CLI example 
+--------------------------------------------------------------------------------
+ 
+C:\x\utl\flyway-10.7.1>flyway help 
+Usage 
+    flyway [options] [command] 
+    flyway help [command] 
+ 
+C:\x\utl\flyway-10.7.1> flyway migrate 
+Flyway Community Edition 10.7.1 by Redgate 
+ 
+See release notes here: https://rd.gt/416ObMi 
+Database: jdbc:oracle:thin:@(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=localhost)(PORT=1521))(CONNECT_DATA=(SERVICE_NAME=XEPDB1))) (Oracle 21.0) 
+Successfully validated 2 migrations (execution time 00:00.133s) 
+Current version of schema "SANDBOX": 0002 
+Schema "SANDBOX" is up to date. No migration necessary. 
+ 
+You are not signed in to Flyway, to sign in please run auth 
+ 
+C:\x\utl\flyway-10.7.1> flyway info 
+Flyway Community Edition 10.7.1 by Redgate 
+ 
+See release notes here: https://rd.gt/416ObMi 
+Database: jdbc:oracle:thin:@(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=localhost)(PORT=1521))(CONNECT_DATA=(SERVICE_NAME=XEPDB1))) (Oracle 21.0) 
+ 
+You are not signed in to Flyway, to sign in please run auth 
+Schema version: 0002 
+ 
++-----------+---------+-------------+------+---------------------+---------+----------+ 
+| Category  | Version | Description | Type | Installed On        | State   | Undoable | 
++-----------+---------+-------------+------+---------------------+---------+----------+ 
+| Versioned | 0001    | create      | SQL  | 2024-02-03 18:21:00 | Success | No       | 
+| Versioned | 0002    | data        | SQL  | 2024-02-03 18:30:15 | Success | No       | 
++-----------+---------+-------------+------+---------------------+---------+----------+ 
