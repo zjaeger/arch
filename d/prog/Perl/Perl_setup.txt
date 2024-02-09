@@ -3,7 +3,7 @@
 # 2024-02-09
 
 ================================================================================
-Perl as part of standard Oracle Client
+# Perl as part of standard Oracle Client
 ================================================================================
 
 --------------------------------------------------------------------------------
@@ -69,3 +69,27 @@ assoc .pl=PerlScript
 Path for Perl modules (.pm files - Perl shared code):
 a) copy module file into any directory from @INC
 b) set PERL5LIB=%USERPROFILE%\script\pm_lib (example)
+
+================================================================================
+# The Perl for MS Windows
+================================================================================
+
+https://strawberryperl.com/
+
+assoc .pl
+ftype Perl_program_file=C:\x\perl\perl\bin\perl.exe "%1" %*
+# no effect (?)
+# registry update:
+Computer\HKEY_CLASSES_ROOT\Applications\perl.exe\shell\open\command
+"C:\x\perl\perl\bin\perl.exe" "%1" %*
+
+https://metacpan.org/pod/DBD::Oracle
+
+set ORACLE_HOME=C:\x\ora\xe\product\21c\dbhomeXE
+
+uzip DBD-Oracle-1.83.tar.gz 
+cd DBD-Oracle-1.83
+perl Makefile.PL
+make
+make test
+make install
