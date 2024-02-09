@@ -1,0 +1,47 @@
+# git init
+#
+# 2024-02-09
+
+## init, config, pull
+
+# local GIT repository init
+git init 
+
+# parameters setting
+git config --global user.name "<first_name> <surname>" 
+git config --global user.email "<first_name>.<surname>@<domain>"
+git config http.sslVerify false 
+git remote add origin https://github.com/zjaeger/arch.git
+
+# parameters list
+git config -l 
+
+# synchronize "remote repository" -> "local dir" 
+git pull origin master 
+
+## clone
+
+git clone https://github.com/zjaeger/arch.git
+git config --global user.name "<first_name> <surname>" 
+git config --global user.email "<first_name>.<surname>@<domain>"
+
+## main commands
+
+# master repo -> local
+git pull origin master 
+
+# status
+git status 
+
+# add file to stage
+git add <filename> 
+
+# local commit for stagged files
+git commit -m "<message>" 
+
+# local -> master repo
+git push origin master 
+
+# last local commit rollback 
+# https://stackoverflow.com/questions/1611215/remove-a-git-commit-which-has-not-been-pushed
+git reset HEAD~ 

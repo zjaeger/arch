@@ -55,9 +55,7 @@
 
   example:
 
-  /* set CVSROOT=:sspi:crbpr802.praha.rb.cz:/Users/cvsrepo */
-  set CVSROOT=:sspi:C34000961357.ness.com:/User/cvsrepo
-  set CVSROOT=:sspi:crbness9.praha.rb.cz:/User/cvsrepo
+  set CVSROOT=:sspi:node9.any.cz:/User/cvsrepo
 
 - repository backup
 

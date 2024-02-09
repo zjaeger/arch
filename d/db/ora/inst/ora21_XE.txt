@@ -1,15 +1,19 @@
 -- ora21_XE.txt
 --
 -- 2024-01-09
-
+--
 -- download OracleXE213_Win64.zip from
 -- https://www.oracle.com/database/technologies/xe-downloads.html
 -- Windows user: "Oracle"
 -- unzip, run "setup.exe"
 --
 -- sys, system, pdbadmin: manager
--- https://localhost:5500/em/shell
-
+-- https://localhost:5500/em/shell ... ?
+--
+-- EM Express URL: https://localhost:5500/em/
+-- Multitenant container database: localhost:1521
+-- Pluggable database: localhost:1521/XEPDB1
+--
 -- Windows user "Oracle" member of:
 --   Administrators
 --   Users
@@ -19,7 +23,67 @@
 --   ORA_OraDB21Home1_SYSDG
 --   ORA_OraDB21Home1_SYSKM
 
+# ------------------------------------------------------------------------------
+# local static IP/address
+# ------------------------------------------------------------------------------
 
+Host file location in Windows
+C:\Windows\System32\drivers\etc
+
+Install Microsoft Loopback Adapter on windows 10
+Control Panel -> Device Manager -> (select "Network adapters") -> Action -> Add Legacy Hardware -> (manually select from a list):
+"Microsoft KM-TEST Loopback Adapter"
+
+Configuring the Loopback Adapter on Microsoft Windows
+https://oracledistilled.com/windows/configuring-the-loopback-adapter-on-microsoft-windows/
+(set static IP address: 192.168.111.111)
+192.168.111.111  loopback_xe local_static >> hosts
+
+# ------------------------------------------------------------------------------
+# init.ora
+# ------------------------------------------------------------------------------
+
+-- creates file %ORACLE_HOME%\database\INITXE.ORA
+connect sys/manager@localhost/XE as sysdba
+create pfile from spfile ;
+
+-- C:\x\ora\xe\product\21c\database\initXE.ora
+xe.__data_transfer_cache_size=0
+xe.__db_cache_size=805306368
+xe.__inmemory_ext_roarea=0
+xe.__inmemory_ext_rwarea=0
+xe.__java_pool_size=0
+xe.__large_pool_size=50331648
+xe.__oracle_base='C:\x\ora\xe\product\21c'#ORACLE_BASE set from environment
+xe.__pga_aggregate_target=536870912
+xe.__sga_target=1610612736
+xe.__shared_io_pool_size=67108864
+xe.__shared_pool_size=671088640
+xe.__streams_pool_size=0
+xe.__unified_pga_pool_size=0
+*.audit_file_dest='C:\x\ora\xe\product\21c\admin\XE\adump'
+*.audit_trail='db'
+*.compatible='21.0.0'
+*.control_files='C:\x\ora\xe\product\21c\oradata\XE\control01.ctl','C:\x\ora\xe\product\21c\oradata\XE\control02.ctl'
+*.db_block_size=8192
+*.db_name='XE'
+*.diagnostic_dest='C:\x\ora\xe\product\21c'
+*.dispatchers='(PROTOCOL=TCP) (SERVICE=XEXDB)'
+*.enable_pluggable_database=true
+*.local_listener='LISTENER_XE'
+*.nls_language='AMERICAN'
+*.nls_territory='AMERICA'
+*.open_cursors=300
+*.pga_aggregate_target=512m
+*.processes=1600
+*.remote_login_passwordfile='EXCLUSIVE'
+*.sga_target=1536m
+*.undo_tablespace='UNDOTBS1'
+*.recyclebin=OFF            # added
+
+# ------------------------------------------------------------------------------
+# settings
+# ------------------------------------------------------------------------------
 
 -- profile: set PASSWORD_LIFE_TIME UNLIMITED
 select USERNAME, PROFILE from DBA_USERS where USERNAME like 'SYS%'
@@ -29,54 +93,23 @@ select * from DBA_PROFILES s where s.PROFILE='DEFAULT'
 alter profile DEFAULT limit PASSWORD_LIFE_TIME UNLIMITED
 /
 
--- Connecting to Oracle Database XE
--- https://docs.oracle.com/en/database/oracle/oracle-database/18/xeinw/connecting-oracle-database-xe.html
--- Multitenant container database: host[:port] 
--- Pluggable database: host[:port]/service_name
-
--- cd <oracle_home>\bin
--- sqlplus / as sysdba
-SHUTDOWN IMMEDIATE
-STARTUP
-ALTER PLUGGABLE DATABASE ALL OPEN ;
-ALTER PLUGGABLE DATABASE ALL SAVE STATE ;
-
-select NAME, OPEN_MODE, to_char(OPEN_TIME,'DD.MM.YYYY HH24:MI:SS') as OPEN_TIME from v$PDBS
+-- database codepage
+select ORA_DATABASE_NAME, PARAMETER, VALUE
+from   NLS_DATABASE_PARAMETERS
+where  PARAMETER like '%CHARACTERSET'
 /
 
-create pfile from spfile ;
--- %ORACLE_HOME%\database\initXE.ora
--- *.local_listener=''  -- prev.value: 'LISTENER_XE'
-
--- trace:
--- %ORACLE_BASE%\product\18.0.0\diag\rdbms\xe\xe\trace\alert_xe.log
-
--- %ORACLE_HOME%\network\admin
--- tnsnames.ora
---   LISTENER_XE -> LISTENER
-
-LISTENER =
-  (ADDRESS = (PROTOCOL = TCP)(HOST = L34000963852.ness.com)(PORT = 1521))
-
-XE.local =
-  (DESCRIPTION =
-    (ADDRESS = (PROTOCOL = TCP)(HOST = L34000963852.ness.com)(PORT = 1521))
-    (CONNECT_DATA =
-      (SERVER = DEDICATED)
-      (SERVICE_NAME = XE)
-    )
-  )
-
--- added:
-XEPDB1.local =
-  (DESCRIPTION =
-    (ADDRESS = (PROTOCOL = TCP)(HOST = L34000963852.ness.com)(PORT = 1521))
-    (CONNECT_DATA =
-      (SERVER = DEDICATED)
-      (SERVICE_NAME = XEPDB1)
-    )
-  )
-
--- unlock
-alter user HR identified by hr account unlock
+NLS_LANG
+Original value: AMERICAN_AMERICA.WE8MSWIN1252
+(valid value: NLS_LANG="AMERICAN_AMERICA.UTF8)
+-- database charset:
+SELECT VALUE FROM NLS_DATABASE_PARAMETERS WHERE PARAMETER = 'NLS_CHARACTERSET'
 /
+
+# ------------------------------------------------------------------------------
+# Oracle*NET
+# ------------------------------------------------------------------------------
+
+# sqlnet.ora 
+SQLNET.AUTHENTICATION_SERVICES= (NONE) 
+NAMES.DIRECTORY_PATH= (TNSNAMES, EZCONNECT) 

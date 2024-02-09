@@ -1,0 +1,71 @@
+# Perl_setup.txt
+#
+# 2024-02-09
+
+================================================================================
+Perl as part of standard Oracle Client
+================================================================================
+
+--------------------------------------------------------------------------------
+## get %ORACLE_HOME%
+--------------------------------------------------------------------------------
+
+C:\> sqlplus /nolog
+
+SQL*Plus: Release 21.0.0.0.0 - Production on Fri Feb 9 13:55:21 2024
+Version 21.3.0.0.0
+
+Copyright (c) 1982, 2021, Oracle.  All rights reserved.
+
+sql> @%ORACLE_HOME%/x.sql
+SP2-0310: unable to open file "C:\x\ora\xe\product\21c\dbhomeXE/x.sql"
+
+ORACLE_HOME := C:\x\ora\xe\product\21c\dbhomeXE
+
+--------------------------------------------------------------------------------
+## Perl test
+--------------------------------------------------------------------------------
+
+C:\> set ORACLE_HOME=C:\x\ora\xe\product\21c\dbhomeXE
+
+C:\> %ORACLE_HOME%\perl\bin\perl -v
+
+This is perl 5, version 32, subversion 0 (v5.32.0) built for MSWin32-x64-multi-thread
+
+C:\> %ORACLE_HOME%\perl\bin\perl -V
+Summary of my perl5 (revision 5 version 32 subversion 0) configuration:
+
+  Platform:
+    osname=MSWin32
+  ................................
+  Built under MSWin32
+  Compiled at Jul 20 2020 18:31:39
+  @INC:
+    C:/x/ora/xe/product/21c/dbhomeXE/perl/site/lib
+    C:/x/ora/xe/product/21c/dbhomeXE/perl/lib
+
+--------------------------------------------------------------------------------
+## Perl setup
+--------------------------------------------------------------------------------
+
+BAT file: perl.bat
+------------------------------------------------
+set ORACLE_HOME=C:\x\ora\xe\product\21c\dbhomeXE
+%ORACLE_HOME%\perl\bin\perl %*
+------------------------------------------------
+
+BAT file: perldoc.bat
+------------------------------------------------
+set ORACLE_HOME=C:\x\ora\xe\product\21c\dbhomeXE
+%ORACLE_HOME%\perl\bin\perldoc.bat %*
+------------------------------------------------
+
+extension assoc.: run as Administrator:
+-------------------------------------------------------------------------
+ftype PerlScript=C:\x\ora\xe\product\21c\dbhomeXE\perl\bin\perl.exe %1 %* 
+assoc .pl=PerlScript 
+-------------------------------------------------------------------------
+
+Path for Perl modules (.pm files - Perl shared code):
+a) copy module file into any directory from @INC
+b) set PERL5LIB=%USERPROFILE%\script\pm_lib (example)
