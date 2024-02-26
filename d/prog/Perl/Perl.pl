@@ -1,5 +1,5 @@
 # Perl.pl
-# last update: 2019-02-13
+# last update: 2023-02-25
 
 use strict;
 use warnings;
@@ -18,9 +18,11 @@ use diagnostics;
 # debugger
 cmd> perl -d -e "1;"
 
-my $var; # its value is undef
+use utf8; # source code in UTF8
+use open ':encoding(UTF-8)'; # input/output default encoding will be UTF-8
+# no warnings 'utf8';
 
-use utf8;
+my $var; # its value is undef
 
 # You turn off only the bits you need. 
   {
@@ -883,7 +885,7 @@ use Data::Dumper;
 my %hash = ('abc' => 123, 'def' => [4,5,6]);
 print Dumper(\%hash);
 
-## --- Example -----------------------------------------------------------------
+## --- Example 1: cru_OPRAVA.pl ------------------------------------------------
 
 # cru_OPRAVA.pl
 #
@@ -1067,4 +1069,3 @@ sub gen_T_POL_P2
       close( $in ) ;
      }
   }
-

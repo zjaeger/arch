@@ -1,0 +1,6 @@
+# Cmd.txt
+#
+# https://stackoverflow.com/questions/57131654/using-utf-8-encoding-chcp-65001-in-command-prompt-windows-powershell-window
+
+# Switch to UTF8:
+chcp 65001
