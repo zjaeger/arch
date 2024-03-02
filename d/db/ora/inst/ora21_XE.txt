@@ -24,6 +24,15 @@
 --   ORA_OraDB21Home1_SYSKM
 
 # ------------------------------------------------------------------------------
+# Set Service Permission Using Process Explorer
+# ------------------------------------------------------------------------------
+https://woshub.com/set-permissions-on-windows-service/#h2_2
+- Run the Process Explorer as an administrator
+- Run Services and find out executable filename
+- Look for service executable filename at Process Explorer
+- then "context"->properties, [Permissions]
+
+# ------------------------------------------------------------------------------
 # local static IP/address
 # ------------------------------------------------------------------------------
 
