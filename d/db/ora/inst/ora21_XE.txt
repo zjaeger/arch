@@ -43,7 +43,7 @@ https://oracledistilled.com/windows/configuring-the-loopback-adapter-on-microsof
 # init.ora
 # ------------------------------------------------------------------------------
 
--- creates file %ORACLE_HOME%\database\INITXE.ORA
+-- creates file %ORACLE_BASE%\database\INITXE.ORA
 connect sys/manager@localhost/XE as sysdba
 create pfile from spfile ;
 

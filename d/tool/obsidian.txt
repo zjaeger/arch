@@ -1,0 +1,21 @@
+# obsidian.txt
+
+markup language
+
+# Heading 1
+### Heading 3
+
+**Bold**
+
+--- line
+
+> citace
+
+```Python
+code
+```
+
+[[ link ]]
+![[ link ]] ... nahled?
+
+[[ <page>#<section> ]]
